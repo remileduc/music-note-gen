@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Générateur de notes de musique
+==============================
 
-## Getting Started
+Ce projet consiste à mettre à disposition un générateur de notes de musique pour entrainement débutant :
+- apprendre à lire les notes sur une partition
+- apprendre le tempo et jouer en rythme
+- apprendre à jouer les notes d'une partition
+	- possibilité de sélectionner les notes qui seront générées
+	- génération aléatoire pour éviter les gestes mécaniques
 
-First, run the development server:
+Accès au générateur
+-------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Le générateur est disponible à cette adresse : <>
+Le site est automatiquement généré lorsque le code de ce dépôt est mis à jour.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Instruments de musiques
+-----------------------
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Créé pour l'entraînement au violon, il est possible de choisir les notes par cordes pour les jouer, dans un premier temps en pizzicati puis à l'archet, pour travailler
+la position des doigts.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+À terme, et si c'est demandé, je compte ajouter le même principe pour les autres instruments de la famille du violon (les notes par cordes ne sont pas les mêmes), la
+guitare, et éventuellement d'autres instruments qui s'y prêterait.
 
-## Learn More
+Crédits
+-------
 
-To learn more about Next.js, take a look at the following resources:
+L'intégralité du projet est sous licence [MIT](./LICENSE).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+L'affichage des partitions se fait grâce à librarie [VexFlow](https://github.com/0xfe/vexflow) (licence MIT).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Le favicon du site a été créé par [Bruno Heridet](https://iconduck.com/designers/bruno-heridet) (licence CC-BY 3.0) : <https://iconduck.com/icons/26579/violin>
