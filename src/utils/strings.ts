@@ -25,8 +25,8 @@ export const reStringNotes: StringNotes = [
 ];
 
 export const laStringNotes: StringNotes = [
-	["la", 5],
-	["si", 5],
+	["la", 4],
+	["si", 4],
 	["do", 5],
 	["re", 5],
 	["mi", 5],
