@@ -1,0 +1,28 @@
+.footer {
+	position: absolute;
+	bottom: 15;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	gap: 50px;
+	opacity: 0.75;
+}
+
+.footer a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.footer a:hover {
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+	.footer {
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+	}
+}

@@ -1,59 +1,12 @@
-import Image from "next/image";
 import styles from "./page.module.css";
-import AllKeysForString from "./components/AllKeysForString";
+import AllKeysForString from "@components/AllKeysForString";
 import { solStringNotes } from "@utils/Strings";
 
-export default function Home() {
-  return (
-	<div className={styles.page}>
+export default function Home()
+{
+	return (
 		<main className={styles.main}>
 			<AllKeysForString stringNotes={solStringNotes} />
 		</main>
-
-		<footer className={styles.footer}>
-			<a
-				href="https://github.com/remileduc"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<Image
-					aria-hidden
-					src="/remileduc.png"
-					alt="remileduc"
-					width={16}
-					height={16}
-				/>
-				Created by remileduc
-			</a>
-			<a
-				href="https://opensource.org/license/mit"
-				target="_blank"
-				rel="noopener noreferrer"
-				>
-				<Image
-					aria-hidden
-					src="/Open_Source_Initiative.svg"
-					alt="Open Source Initiative icon"
-					width={16}
-					height={16}
-				/>
-				Under the MIT License
-			</a>
-			<a
-				href="https://github.com/remileduc/music-note-gen"
-				target="_blank"
-				rel="noopener noreferrer"
-				>
-				<Image
-					aria-hidden
-					src="/github.svg"
-					alt="Github logo"
-					width={16}
-					height={16}
-				/>
-				See the code
-			</a>
-		</footer>
-	</div>
-  );
+	);
 }
