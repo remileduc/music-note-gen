@@ -9,7 +9,7 @@ import styles from "./AllKeysForString.module.css"
 
 export default function AllKeysForString({title, stringNotes}: {title: string, stringNotes: StringNotes})
 {
-	let partitionID = "partition" + title;
+	const partitionID = "partition" + title;
 
 	useEffect(() => {
 		const factory = new Factory({
@@ -27,7 +27,7 @@ export default function AllKeysForString({title, stringNotes}: {title: string, s
 		createSystems(factory, voices, 350);
 
 		factory.draw();
-	}, [stringNotes])
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className={styles.allkeysforstring}>

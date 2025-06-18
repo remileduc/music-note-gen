@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@components/Footer";
 import Header from "@components/Header";
+import Menu from "@components/Menu";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,8 +16,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			<body>
 				<Header />
 
-				<div className="page">
-					{children}
+				<div className="content">
+					<Menu />
+
+					<div className="page">
+						{children}
+					</div>
 				</div>
 
 				<Footer />
