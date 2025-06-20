@@ -4,30 +4,32 @@ import { Note } from "@utils/Note";
 import type { StringNotes } from "@utils/strings";
 import{ useEffect } from "react";
 import{ Factory } from "vexflow";
-import { createNotes, createSystems, createVoices } from "@utils/creators";
+import { createPartition } from "@utils/creators";
 import styles from "./AllKeysForString.module.css"
+
+function splitArray<T>(arr: T[], chunkSize: number) {
+	return Array.from(
+		{ length: Math.ceil(arr.length / chunkSize) },
+		(_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize)
+	);
+}
 
 export default function AllKeysForString({title, stringNotes}: {title: string, stringNotes: StringNotes})
 {
 	const partitionID = "partition" + title;
 
 	useEffect(() => {
+		document.getElementById(partitionID)?.replaceChildren();
 		const factory = new Factory({
-			renderer: { elementId: partitionID, width: 700, height: 150 },
+			renderer: { elementId: partitionID, width: 700, height: 160 },
 		});
 
-		const notes = createNotes(
-			factory,
-			stringNotes.map(([note, octave]) => new Note(note, octave)),
-			true
-		);
+		const notes = splitArray(stringNotes.map(([note, octave]) => new Note(note, octave)), 4);
 
-		const voices = createVoices(factory, notes);
-
-		createSystems(factory, voices, 350);
+		createPartition(factory, notes, true, 350);
 
 		factory.draw();
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [partitionID, stringNotes]);
 
 	return (
 		<div className={styles.allkeysforstring}>

@@ -35,6 +35,11 @@ export class Note
 		this.duration = duration;
 	}
 
+	clone()
+	{
+		return new Note(this.fname, this.octave, this.mod, this.duration);
+	}
+
 	toVexFlox(factory: Factory) : StaveNote
 	{
 		return factory.StaveNote({

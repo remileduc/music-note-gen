@@ -1,22 +1,64 @@
-import  { noBemol, noDiese, type Note } from "./Note";
+import  { noBemol, noDiese, type NoteDuration, Note } from "./Note";
 
-function getRandomInt(max: number)
+const possibleMeasures: NoteDuration[][] = [
+	["w"],
+	["h", "h"],
+	["h", "q", "q"],
+	["h", "q", "8", "8"],
+	["h", "8", "8", "8", "8"],
+	["q", "q", "q", "q"],
+	["q", "q", "q", "8", "8"],
+	["q", "q", "8", "8", "8", "8"],
+	["q", "8", "8", "8", "8", "8", "8"],
+	["8", "8", "8", "8", "8", "8", "8", "8"],
+]
+
+function getRandomInt(max: number): number
 {
-	return Math.floor(Math.random() * max);
+	return Math.floor(crypto.getRandomValues(new Uint8Array(1))[0] / 256. * max);
 }
 
-export function randomNotePicker(notes: Note[]): Note
+function shuffleArray<T>(array: T[]): T[]
 {
-	const note = notes[getRandomInt(notes.length)];
+	for (let i = array.length - 1; i > 0; i--)
+		{
+		const j = getRandomInt(i + 1);
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
 
-	const modifier = getRandomInt(11);
-	if (modifier <= 6)
+export function randomNotePicker(notes: Note[], generateModifiers = true): Note
+{
+	const note = notes[getRandomInt(notes.length)].clone();
+
+	if (!generateModifiers)
 		return note;
 
-	if (modifier <= 8 || noDiese.has(note.fname))
+	const modifier = getRandomInt(21);
+	if (modifier <= 16)
+		return note;
+
+	if (modifier <= 18 || noDiese.has(note.fname))
 		note.mod = "b";
-	if (modifier > 8 || noBemol.has(note.fname))
+	if (modifier > 18 || noBemol.has(note.fname))
 		note.mod = "#";
 
 	return note;
+}
+
+export function randomMeasurePicker(authorizedDurations: Set<NoteDuration>): NoteDuration[]
+{
+	const authorizedMeasures = possibleMeasures.filter((measures) => {
+		for (const m of measures)
+		{
+			if (!authorizedDurations.has(m))
+				return false;
+		}
+		return true;
+	});
+
+	// pick a measure
+	const measure = [...authorizedMeasures[getRandomInt(authorizedMeasures.length)]];
+	return shuffleArray(measure);
 }

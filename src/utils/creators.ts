@@ -1,38 +1,50 @@
 import { BarlineType, type Factory, type StaveNote, type System, type Voice } from "vexflow";
 import type { Note } from "./Note";
 
-function splitArray<T>(arr: T[], chunkSize: number) {
-	return Array.from(
-		{ length: Math.ceil(arr.length / chunkSize) },
-		(_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize)
-	);
-}
-
 export function createNotes(factory: Factory, notes: Note[], showName = false) : StaveNote[]
 {
 	return notes.map((note) => note.toVexFlox(factory).addModifier(factory.Annotation({ text: showName ? note.fname : "" })));
 }
 
-export function createVoices(factory: Factory, notes: StaveNote[]) : Voice[]
+export function createBeams(factory: Factory, staveNotes: StaveNote[][])
+{
+	for (const notes of staveNotes)
+	{
+		let toBeam: StaveNote[] = [];
+		for (const n of notes)
+		{
+			if (n.getDuration() === "8")
+				toBeam.push(n);
+			else
+			{
+				if (toBeam.length > 1)
+					factory.Beam({notes: toBeam, options: {autoStem: true}});
+				toBeam = [];
+			}
+		}
+		if (toBeam.length > 1)
+			factory.Beam({notes: toBeam, options: {autoStem: true}});
+	}
+}
+
+export function createVoices(factory: Factory, notes: StaveNote[][]) : Voice[]
 {
 	const voices: Voice[] = [];
-	const splittedNotes = splitArray(notes, 4);
 
-	for (const subnotes of splittedNotes)
+	for (const subnotes of notes)
 		voices.push(factory.Voice().addTickables(subnotes));
 	return voices;
 }
 
-export function createSystems(factory: Factory, voices: Voice[], width = 200, clef = "treble") : System[]
+export function createSystems(factory: Factory, voices: Voice[], width = 200, yOffset = 30, clef = "treble") : System[]
 {
 	const systems: System[] = [];
 	let x = 0;
 
 	for (const v of voices)
 	{
-		const s = factory.System({ x: x, width: width });
+		const s = factory.System({ x: x, y: yOffset, width: width });
 		x += width;
-		width -= 60;
 		s.addStave({ voices: [v] });
 		systems.push(s);
 	}
@@ -46,4 +58,21 @@ export function createSystems(factory: Factory, voices: Voice[], width = 200, cl
 	}
 
 	return systems;
+}
+
+export function createPartition(factory: Factory, notes: Note[][], showName = false, width = 200, yOffset = 30, clef = "treble")
+{
+	const staveNotes = notes.map((n) => createNotes(factory, n, showName));
+	createBeams(factory, staveNotes);
+
+	return createSystems(
+		factory,
+		createVoices(
+			factory,
+			staveNotes
+		),
+		width,
+		yOffset,
+		clef
+	);
 }
