@@ -1,7 +1,7 @@
 import AllKeysForString from "@components/AllKeysForString";
 import { laStringNotes, miStringNotes, reStringNotes, solStringNotes } from "@utils/strings";
 
-export default function Home()
+export default function Cordes()
 {
 	return (
 		<main>

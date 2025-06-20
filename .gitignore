@@ -12,6 +12,7 @@
 
 # production
 /build
+/public/README.html
 
 # debug
 npm-debug.log*
