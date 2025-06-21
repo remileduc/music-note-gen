@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Factory } from "vexflow";
 import { createPartition } from "@utils/creators";
-import { Note, type NoteDuration } from "@utils/Note";
+import { Note } from "@utils/Note";
 import { randomMeasurePicker, randomNotePicker } from "@utils/randomNotePicker";
-import { laStringNotes, miStringNotes, reStringNotes, solStringNotes } from "@utils/strings";
+import { SettingsContext, type GeneratorSettings } from "./GeneratorSettings";
 import styles from "./AllKeysForString.module.css"
 
-const selectedNotes = miStringNotes.concat(laStringNotes, reStringNotes, solStringNotes).map(
-	([name, octave]) => new Note(name, octave)
-);
-
-const selectedDurations = new Set<NoteDuration>(["w", "h", "q", "8"]);
-
-const showNames = true;
-
-const addModifiers = true;
-
-function generatePartition(factory: Factory, systemNumbers = 4)
+function generatePartition(factory: Factory, settings: GeneratorSettings, systemNumbers = 4)
 {
 	const notes: Note[][] = [];
 
@@ -26,11 +16,11 @@ function generatePartition(factory: Factory, systemNumbers = 4)
 	{
 		const subnotes: Note[] = [];
 		// pick a measure
-		const measure = randomMeasurePicker(selectedDurations);
+		const measure = randomMeasurePicker(settings.selectedDurations);
 		// generate notes
 		for (const duration of measure)
 		{
-			const note = randomNotePicker(selectedNotes, addModifiers);
+			const note = randomNotePicker(settings.selectedNotes, settings.addModifiers);
 			note.duration = duration;
 			subnotes.push(note);
 		}
@@ -38,21 +28,23 @@ function generatePartition(factory: Factory, systemNumbers = 4)
 		notes.push(subnotes);
 	}
 
-	createPartition(factory, notes, showNames, 350, 100);
+	createPartition(factory, notes, settings.showNames, 350, 100, settings.clef);
 }
 
 export default function GeneratedPartition()
 {
+	const settings = useContext(SettingsContext);
+
 	useEffect(() => {
 		document.getElementById("partition")?.replaceChildren();
 		const factory = new Factory({
 			renderer: { elementId: "partition", width: 1400, height: 300 },
 		});
 
-		generatePartition(factory);
+		generatePartition(factory, settings.settings);
 
 		factory.draw();
-	}, []);
+	}, [settings.settings]);
 
 	return (
 		<div className={styles.allkeysforstring}>
