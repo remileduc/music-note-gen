@@ -17,7 +17,7 @@ export default function Footer()
 					width={16}
 					height={16}
 				/>
-				Created by remileduc
+				Créé par remileduc
 			</a>
 			<a
 				href="https://opensource.org/license/mit"
@@ -31,7 +31,7 @@ export default function Footer()
 					width={16}
 					height={16}
 				/>
-				Under the MIT License
+				Sous license MIT
 			</a>
 			<a
 				href="https://github.com/remileduc/music-note-gen"
@@ -45,7 +45,7 @@ export default function Footer()
 					width={16}
 					height={16}
 				/>
-				See the code
+				Voir le code source
 			</a>
 		</footer>
 	);
