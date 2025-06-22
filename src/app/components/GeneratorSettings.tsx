@@ -6,7 +6,7 @@ import { laStringNotes, miStringNotes, reStringNotes, solStringNotes } from "@ut
 
 export interface GeneratorSettings {
 	selectedNotes: Note[],
-	selectedDurations: Set<NoteDuration>,
+	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
 	clef: "treble" | "bass"
@@ -19,15 +19,16 @@ export const easySettings: GeneratorSettings = {
 		new Note("la", 4),
 		new Note("mi", 5),
 	],
-	selectedDurations: new Set(["w", "h"]),
+	selectedDurations: ["w", "h"],
 	showNames: true,
 	addModifiers: false,
 	clef: "treble"
 };
 
 export const hardSettings: GeneratorSettings = {
-	selectedNotes: miStringNotes.concat(laStringNotes, reStringNotes, solStringNotes).map(([name, octave]) => new Note(name, octave)),
-	selectedDurations: new Set(["w", "h", "q", "8"]),
+	selectedNotes: miStringNotes.slice(0, 4).concat(laStringNotes.slice(0, 4), reStringNotes.slice(0, 4), solStringNotes.slice(0, 4))
+		.map(([name, octave]) => new Note(name, octave)),
+	selectedDurations: ["w", "h", "q", "8"],
 	showNames: false,
 	addModifiers: true,
 	clef: "bass"

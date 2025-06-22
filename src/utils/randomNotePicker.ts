@@ -47,12 +47,14 @@ export function randomNotePicker(notes: Note[], generateModifiers = true): Note
 	return note;
 }
 
-export function randomMeasurePicker(authorizedDurations: Set<NoteDuration>): NoteDuration[]
+export function randomMeasurePicker(authorizedDurations: NoteDuration[]): NoteDuration[]
 {
+	const autorizedSet = new Set(authorizedDurations);
+
 	const authorizedMeasures = possibleMeasures.filter((measures) => {
 		for (const m of measures)
 		{
-			if (!authorizedDurations.has(m))
+			if (!autorizedSet.has(m))
 				return false;
 		}
 		return true;

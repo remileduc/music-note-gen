@@ -1,0 +1,41 @@
+.settingseditor {
+	margin-bottom: 30px;
+	padding: 10px;
+	background-color: var(--background);
+	box-shadow: var(--shadow) 0px 10px 36px 0px;
+}
+
+details.settingseditor[open] summary {
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.settingseditor form {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.settingseditor .groupbox {
+	display: flex;
+	flex-direction: column;
+}
+
+.settingseditor .inputbox {
+	margin: 5px;
+}
+
+.settingseditor .inputbox>:nth-child(2) {
+	margin-left: 0.5rem;
+}
+
+.settingseditor .multiplebox {
+	display: flex;
+	flex-direction: column;
+}
+
+.settingseditor select#selectedNotes option {
+	margin-left: 5px;
+}
