@@ -13,6 +13,7 @@
 # production
 /build
 /public/README.html
+/public/LICENSE
 
 # debug
 npm-debug.log*
