@@ -1,4 +1,4 @@
-import  { noBemol, noDiese, type NoteDuration, Note } from "./Note";
+import  { noBemol, noDiese, type NoteDuration, type Note } from "./Note";
 
 const possibleMeasures: NoteDuration[][] = [
 	["w"],

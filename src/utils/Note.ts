@@ -40,7 +40,7 @@ export class Note
 		return new Note(this.fname, this.octave, this.mod, this.duration);
 	}
 
-	toVexFlox(factory: Factory) : StaveNote
+	toVexFlow(factory: Factory) : StaveNote
 	{
 		return factory.StaveNote({
 			keys: [this.ename + "/" + this.octave.toString()],

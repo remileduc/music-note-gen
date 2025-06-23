@@ -3,7 +3,7 @@ import type { Note } from "./Note";
 
 export function createNotes(factory: Factory, notes: Note[], showName = false) : StaveNote[]
 {
-	return notes.map((note) => note.toVexFlox(factory).addModifier(factory.Annotation({ text: showName ? note.fname : "" })));
+	return notes.map((note) => note.toVexFlow(factory).addModifier(factory.Annotation({ text: showName ? note.fname : "" })));
 }
 
 export function createBeams(factory: Factory, staveNotes: StaveNote[][])
