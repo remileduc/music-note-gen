@@ -1,0 +1,37 @@
+name: ⚙️ CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  call-build-lint:
+    name: ⚒️ Build - 🧹 Lint
+    uses: ./.github/workflows/_build-lint.yaml
+
+  call-tests:
+    name: 📝 Tests
+    uses: ./.github/workflows/_tests.yaml
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
+  call-publish:
+    name: 🌐 Publish Next.js site to Pages
+    needs: [call-build-lint, call-tests]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/_publish.yaml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
