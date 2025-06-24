@@ -11,20 +11,14 @@ permissions:
 
 jobs:
   build:
-    name: Documentation
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Install
         uses: remileduc/music-note-gen/.github/actions/package-install@main
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: next
+      - name: Setup Environment
+        run: echo "NEXT_PUBLIC_BASEPATH=/music-note-gen" > .env
 
       - name: Build
         uses: remileduc/music-note-gen/.github/actions/package-build@main

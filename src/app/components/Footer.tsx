@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { rsrcPath } from "@utils/global";
 import styles from "./Footer.module.css";
 
 export default function Footer()
@@ -12,7 +13,7 @@ export default function Footer()
 			>
 				<Image
 					aria-hidden
-					src="/remileduc.png"
+					src={ rsrcPath("/remileduc.png") }
 					alt="remileduc"
 					width={16}
 					height={16}
@@ -26,7 +27,7 @@ export default function Footer()
 				>
 				<Image
 					aria-hidden
-					src="/Open_Source_Initiative.svg"
+					src={ rsrcPath("/Open_Source_Initiative.svg") }
 					alt="Open Source Initiative icon"
 					width={16}
 					height={16}
@@ -40,7 +41,7 @@ export default function Footer()
 				>
 				<Image
 					aria-hidden
-					src="/github.svg"
+					src={ rsrcPath("/github.svg") }
 					alt="Github logo"
 					width={16}
 					height={16}
