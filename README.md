@@ -11,7 +11,7 @@ Ce projet consiste à mettre à disposition un générateur de notes de musique 
 Accès au générateur
 -------------------
 
-Le générateur est disponible à cette adresse : <>
+Le générateur est disponible à cette adresse : <https://remileduc.github.io/music-note-gen/>
 Le site est automatiquement généré lorsque le code de ce dépôt est mis à jour.
 
 Instruments de musiques
