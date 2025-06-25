@@ -11,6 +11,7 @@ import styles from "./AllKeysForString.module.css"
 function generatePartition(factory: Factory, settings: GeneratorSettings, systemNumbers = 4)
 {
 	const notes: Note[][] = [];
+	const selectedNotes = settings.selectedNotes.map(([note, octave]) => new Note(note, octave));
 
 	for (let i = 0 ; i < systemNumbers; i++)
 	{
@@ -20,7 +21,7 @@ function generatePartition(factory: Factory, settings: GeneratorSettings, system
 		// generate notes
 		for (const duration of measure)
 		{
-			const note = randomNotePicker(settings.selectedNotes, settings.addModifiers);
+			const note = randomNotePicker(selectedNotes, settings.addModifiers);
 			note.duration = duration;
 			subnotes.push(note);
 		}

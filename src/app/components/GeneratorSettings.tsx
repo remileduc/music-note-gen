@@ -1,11 +1,11 @@
 "use client";
 
-import { createContext, useState, type Dispatch, type SetStateAction } from "react";
-import { Note, type NoteDuration } from "@utils/Note";
-import { laStringNotes, miStringNotes, reStringNotes, solStringNotes } from "@utils/strings";
+import { createContext, useEffect, useState } from "react";
+import type { NoteDuration } from "@utils/Note";
+import { laStringNotes, miStringNotes, reStringNotes, solStringNotes, type StringNotes } from "@utils/strings";
 
 export interface GeneratorSettings {
-	selectedNotes: Note[],
+	selectedNotes: StringNotes,
 	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
@@ -14,10 +14,10 @@ export interface GeneratorSettings {
 
 export const easySettings: GeneratorSettings = {
 	selectedNotes: [
-		new Note("sol", 3),
-		new Note("re", 4),
-		new Note("la", 4),
-		new Note("mi", 5),
+		["sol", 3],
+		["re", 4],
+		["la", 4],
+		["mi", 5],
 	],
 	selectedDurations: ["w", "h"],
 	showNames: true,
@@ -26,22 +26,41 @@ export const easySettings: GeneratorSettings = {
 };
 
 export const hardSettings: GeneratorSettings = {
-	selectedNotes: miStringNotes.slice(0, 4).concat(laStringNotes.slice(0, 4), reStringNotes.slice(0, 4), solStringNotes.slice(0, 4))
-		.map(([name, octave]) => new Note(name, octave)),
+	selectedNotes: miStringNotes.slice(0, 4).concat(laStringNotes.slice(0, 4), reStringNotes.slice(0, 4), solStringNotes.slice(0, 4)),
 	selectedDurations: ["w", "h", "q", "8"],
 	showNames: false,
 	addModifiers: true,
 	clef: "bass"
 };
 
-export const SettingsContext = createContext<{settings: GeneratorSettings, setSettings: null | Dispatch<SetStateAction<GeneratorSettings>>}>({settings: easySettings, setSettings: null});
+export const SettingsContext = createContext<{settings: GeneratorSettings, setSettings: (value: GeneratorSettings) => void}>({
+	settings: easySettings,
+	setSettings: () => null
+});
+
+export function storeSettingsInStorage(settings: GeneratorSettings)
+{
+	localStorage.setItem("settings", JSON.stringify(settings));
+}
+
+export function retrieveSettingsInStorage(defaultValue = easySettings): GeneratorSettings
+{
+	const settings = localStorage.getItem("settings");
+	if (!settings)
+		return defaultValue;
+	return JSON.parse(settings) as GeneratorSettings;
+}
 
 export default function GeneratorSettingsProvider({ children }: {children: React.ReactNode})
 {
 	const [settings, setSettings] = useState(easySettings);
 
+	useEffect(() => {
+		setSettings(retrieveSettingsInStorage(easySettings));
+	}, []);
+
 	return (
-		<SettingsContext value={{settings: settings, setSettings: setSettings}}>
+		<SettingsContext value={{settings: settings, setSettings: (value) => { storeSettingsInStorage(value); setSettings(value); }}}>
 			{children}
 		</SettingsContext>
 	);

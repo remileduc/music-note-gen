@@ -1,7 +1,6 @@
 "use client";
 
 import { type ChangeEvent, useContext } from "react";
-import { type FrenchNoteName, Note } from "@utils/Note";
 import { laStringNotes, miStringNotes, reStringNotes, solStringNotes, type StringNotes } from "@utils/strings";
 import { SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css"
@@ -25,7 +24,7 @@ export default function SettingsEditor()
 
 	function changeHandler(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>)
 	{
-		settings.setSettings?.({
+		settings.setSettings({
 			...settings.settings,
 			[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
 		});
@@ -34,7 +33,7 @@ export default function SettingsEditor()
 	function changeHandlerDurations(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const values = Array.from(event.target.selectedOptions).map((option) => option.value);
-		settings.setSettings?.({
+		settings.setSettings({
 			...settings.settings,
 			[event.target.name]: values
 		});
@@ -42,11 +41,8 @@ export default function SettingsEditor()
 
 	function changeHandlerNotes(event: ChangeEvent<HTMLSelectElement>)
 	{
-		const values = Array.from(event.target.selectedOptions).map((option) => {
-			const [name, octave] = option.value.split("/");
-			return new Note(name as FrenchNoteName, Number(octave));
-		});
-		settings.setSettings?.({
+		const values = Array.from(event.target.selectedOptions).map((option) => option.value.split("/"));
+		settings.setSettings({
 			...settings.settings,
 			[event.target.name]: values
 		});
@@ -105,7 +101,7 @@ export default function SettingsEditor()
 						<select
 							id="selectedNotes"
 							name="selectedNotes"
-							value={settings.settings.selectedNotes.map((note) => `${note.fname}/${note.octave.toString()}`)}
+							value={settings.settings.selectedNotes.map(([note, octave]) => `${note}/${octave.toString()}`)}
 							onChange={changeHandlerNotes}
 							multiple
 						>
