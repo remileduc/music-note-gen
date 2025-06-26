@@ -1,8 +1,8 @@
 "use client";
 
-import { type ChangeEvent, useContext } from "react";
+import { type ChangeEvent, useContext, useEffect, useState } from "react";
 import { laStringNotes, miStringNotes, reStringNotes, solStringNotes, type StringNotes } from "@utils/strings";
-import { SettingsContext } from "./GeneratorSettings";
+import { easySettings, hardSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css"
 
 function StringOptGroup({title, notes}: {title: string, notes: StringNotes})
@@ -21,6 +21,7 @@ function StringOptGroup({title, notes}: {title: string, notes: StringNotes})
 export default function SettingsEditor()
 {
 	const settings = useContext(SettingsContext);
+	const [preset, setPreset] = useState<"easy" | "hard" | "custom">("easy");
 
 	function changeHandler(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>)
 	{
@@ -48,9 +49,45 @@ export default function SettingsEditor()
 		});
 	}
 
+	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
+	{
+		const value = event.target.value;
+
+		if (value === "custom")
+			return;
+		if (value === "easy" && !settingsComparison(settings.settings, easySettings))
+			settings.setSettings(easySettings);
+		else if (value === "hard" && !settingsComparison(settings.settings, hardSettings))
+			settings.setSettings(hardSettings);
+	}
+
+	useEffect(() => {
+		if (settingsComparison(settings.settings, easySettings) && preset !== "easy")
+			setPreset("easy");
+		else if (settingsComparison(settings.settings, hardSettings) && preset !== "hard")
+			setPreset("hard");
+		else if (preset !== "custom")
+			setPreset("custom");
+	}, [settings.settings]); // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
 		<details className={styles.settingseditor}>
-			<summary>Configuration</summary>
+			<summary>
+				<span className={styles.inputbox}>
+					<span className={styles.noselection}>Configuration</span>
+					<select
+						id="preset"
+						name="preset"
+						value={preset}
+						onChange={changeHandlerPreset}
+					>
+						<option value="easy">Facile</option>
+						<option value="hard">Difficile</option>
+						<option value="custom" disabled>Personnalisé</option>
+					</select>
+				</span>
+			</summary>
+
 			<form action="">
 				<div className={styles.groupbox}>
 					{/* showNames */}

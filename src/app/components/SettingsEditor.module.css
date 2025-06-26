@@ -39,3 +39,7 @@ details.settingseditor[open] summary {
 .settingseditor select#selectedNotes option {
 	margin-left: 5px;
 }
+
+.settingseditor .noselection {
+	user-select: none;
+}

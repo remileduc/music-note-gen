@@ -4,6 +4,14 @@ import { createContext, useEffect, useState } from "react";
 import type { NoteDuration } from "@utils/Note";
 import { laStringNotes, miStringNotes, reStringNotes, solStringNotes, type StringNotes } from "@utils/strings";
 
+function compareSets<T>(a: T[], b: T[]): boolean
+{
+	const seta = new Set(a);
+	const setb = new Set(b);
+
+	return seta.difference(setb).size === 0;
+}
+
 export interface GeneratorSettings {
 	selectedNotes: StringNotes,
 	selectedDurations: NoteDuration[],
@@ -37,6 +45,23 @@ export const SettingsContext = createContext<{settings: GeneratorSettings, setSe
 	settings: easySettings,
 	setSettings: () => null
 });
+
+export function settingsComparison(a: GeneratorSettings, b: GeneratorSettings): boolean
+{
+	if (a === b)
+		return true;
+
+	function stringNotesToStrings(notes: StringNotes): string[]
+	{
+		return notes.map(([name, octave]) => `${name}:${octave.toString()}`)
+	}
+
+	return (a.showNames === b.showNames)
+		&& (a.addModifiers === b.addModifiers)
+		&& (a.clef === b.clef)
+		&& (compareSets(stringNotesToStrings(a.selectedNotes), stringNotesToStrings(b.selectedNotes)))
+		&& (compareSets(a.selectedDurations, b.selectedDurations));
+}
 
 export function storeSettingsInStorage(settings: GeneratorSettings)
 {
