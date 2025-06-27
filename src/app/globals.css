@@ -3,6 +3,13 @@
 	--mainbackground: #e6f0ff;
 	--foreground: #602353;
 	--shadow: rgba(0, 0, 0, 0.15);
+	--big-margin: 30px;
+}
+
+@media (max-aspect-ratio: 1/1) /* width <= height (portrait) */ {
+	:root {
+		--big-margin: 10px;
+	}
 }
 
 html,
@@ -20,13 +27,13 @@ body {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	gap: 30px;
 }
 
 .page {
 	align-items: center;
 	justify-items: center;
 	font-family: var(--font-geist-sans);
+	width: 100%;
 }
 
 @media (max-aspect-ratio: 1/1) /* width <= height (portrait) */ {
@@ -35,8 +42,7 @@ body {
 	}
 
 	.page {
-		padding: 32px;
-		padding-bottom: 80px;
+		padding: var(--big-margin);
 	}
 }
 

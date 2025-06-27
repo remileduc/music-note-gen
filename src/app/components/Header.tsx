@@ -7,8 +7,8 @@ const fontChopin = localFont({ src: "../../../public/ChopinScript.ttf" });
 export default function Header()
 {
 	return (
-		<div className={styles.header}>
+		<header className={styles.header}>
 			<h1 className={fontChopin.className}><Link href="/">Générateur de Notes de Musique</Link></h1>
-		</div>
+		</header>
 	);
 }

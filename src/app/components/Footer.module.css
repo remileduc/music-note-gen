@@ -1,21 +1,14 @@
 .footer {
-	margin-bottom: 15px;
+	margin-bottom: var(--big-margin);
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
-	gap: 50px;
 	opacity: 0.75;
 }
 
 .footer a {
 	display: flex;
 	align-items: center;
-	gap: 8px;
-}
-
-@media (max-width: 600px) {
-	.footer {
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-	}
+	gap: 5px;
+	margin: var(--big-margin);
 }

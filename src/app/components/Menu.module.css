@@ -2,8 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 30px;
-	padding: 30px;;
+	margin: var(--big-margin);
+	padding: var(--big-margin);;
 	gap: 15px;
 	font-size: larger;
 	background-color: var(--background);
@@ -13,7 +13,7 @@
 .menu a {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 5px;
 }
 
 .menu a span {
@@ -24,5 +24,8 @@
 @media (max-aspect-ratio: 1/1) /* width <= height (portrait) */ {
 	.menu {
 		flex-direction: row;
+		width: calc(100% - 2*var(--big-margin));
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }

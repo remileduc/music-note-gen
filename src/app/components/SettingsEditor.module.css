@@ -1,8 +1,9 @@
 .settingseditor {
-	margin-bottom: 30px;
+	margin-bottom: var(--big-margin);
 	padding: 10px;
 	background-color: var(--background);
 	box-shadow: var(--shadow) 0px 10px 36px 0px;
+	user-select: none;
 }
 
 details.settingseditor[open] summary {
@@ -15,7 +16,7 @@ details.settingseditor[open] summary {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: var(--big-margin);
 }
 
 .settingseditor summary .inputbox {
@@ -37,15 +38,11 @@ details.settingseditor[open] summary {
 	margin: 5px;
 }
 
-.settingseditor .inputbox>:nth-child(2) {
+.settingseditor .inputbox>:nth-child(2) /* distance label <-> input */ {
 	margin-left: 0.5rem;
 }
 
 .settingseditor .multiplebox {
 	display: flex;
 	flex-direction: column;
-}
-
-.settingseditor .noselection {
-	user-select: none;
 }

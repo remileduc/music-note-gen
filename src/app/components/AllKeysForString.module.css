@@ -1,10 +1,10 @@
 .allkeysforstring {
-	margin-bottom: 30px;
+	margin-bottom: var(--big-margin);
 	padding: 10px;
 	background-color: var(--background);
 	box-shadow: var(--shadow) 0px 10px 36px 0px;
 }
 
 .allkeysforstring div[id^="partition"] {
-	margin-left: 50px;
+	margin-left: var(--big-margin);
 }
