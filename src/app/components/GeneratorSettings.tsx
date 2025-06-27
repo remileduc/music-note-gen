@@ -9,7 +9,7 @@ function compareSets<T>(a: T[], b: T[]): boolean
 	const seta = new Set(a);
 	const setb = new Set(b);
 
-	return seta.difference(setb).size === 0;
+	return seta.symmetricDifference(setb).size === 0;
 }
 
 export interface GeneratorSettings {

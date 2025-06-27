@@ -18,6 +18,16 @@ details.settingseditor[open] summary {
 	gap: 20px;
 }
 
+.settingseditor summary .inputbox {
+	display: inline-flex;
+	width: calc(100% - 30px);
+	justify-content: space-between;
+}
+
+.settingseditor select#selectedNotes option {
+	margin-left: 5px;
+}
+
 .settingseditor .groupbox {
 	display: flex;
 	flex-direction: column;
@@ -34,10 +44,6 @@ details.settingseditor[open] summary {
 .settingseditor .multiplebox {
 	display: flex;
 	flex-direction: column;
-}
-
-.settingseditor select#selectedNotes option {
-	margin-left: 5px;
 }
 
 .settingseditor .noselection {

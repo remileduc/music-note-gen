@@ -62,19 +62,20 @@ export default function SettingsEditor()
 	}
 
 	useEffect(() => {
-		if (settingsComparison(settings.settings, easySettings) && preset !== "easy")
+		if (settingsComparison(settings.settings, easySettings))
 			setPreset("easy");
-		else if (settingsComparison(settings.settings, hardSettings) && preset !== "hard")
+		else if (settingsComparison(settings.settings, hardSettings))
 			setPreset("hard");
-		else if (preset !== "custom")
+		else
 			setPreset("custom");
-	}, [settings.settings]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [settings.settings]);
 
 	return (
 		<details className={styles.settingseditor}>
 			<summary>
 				<span className={styles.inputbox}>
 					<span className={styles.noselection}>Configuration</span>
+
 					<select
 						id="preset"
 						name="preset"
@@ -85,6 +86,8 @@ export default function SettingsEditor()
 						<option value="hard">Difficile</option>
 						<option value="custom" disabled>Personnalisé</option>
 					</select>
+
+					<button onClick={() => { settings.setSettings({...settings.settings}); }}>Regénérer</button>
 				</span>
 			</summary>
 
