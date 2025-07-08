@@ -1,9 +1,11 @@
-import { BarlineType, type Factory, type StaveNote, type System, type Voice } from "vexflow";
+import { BarlineType, type Tickable, type Factory, type StaveNote, type System, type Voice } from "vexflow";
 import type { Note } from "./Note";
 
 export function createNotes(factory: Factory, notes: Note[], showName = false) : StaveNote[]
 {
-	return notes.map((note) => note.toVexFlow(factory).addModifier(factory.Annotation({ text: showName ? note.fname : "" })));
+	return notes.map((note) => note.toVexFlow(factory)
+		.addModifier(factory.Annotation({ text: note.fname }))
+		.addClass(showName ? "" : "selected"));
 }
 
 export function createBeams(factory: Factory, staveNotes: StaveNote[][])
@@ -75,4 +77,24 @@ export function createPartition(factory: Factory, notes: Note[][], showName = fa
 		yOffset,
 		clef
 	);
+}
+
+export function toggleNoteName(note: Tickable)
+{
+	note.getSVGElement()?.classList.toggle("selected");
+}
+
+export function addNotesInteractivity(notes: Tickable[], callback: (note: Tickable) => void)
+{
+	for (const note of notes)
+	{
+		const svg = note.getSVGElement();
+		if (!svg)
+		{
+			console.log("Error: no SVG! Draw before calling this function");
+			continue;
+		}
+
+		svg.addEventListener("click", () => { callback(note) });
+	}
 }
