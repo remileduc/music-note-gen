@@ -4,12 +4,17 @@ export default function About()
 {
 	return (
 		<main>
-			<object
-				data={ rsrcPath("/README.html") }
-				width="900"
-				height="750"
+			<iframe
+				src={ rsrcPath("/README.html") }
+				width="100%"
+				height="1000px"
+				allow=""
+				loading="lazy"
+				referrerPolicy="no-referrer"
+				sandbox=""
+				style={{border: "none"}}
 			>
-			</object>
+			</iframe>
 		</main>
 	);
 }
