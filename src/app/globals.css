@@ -47,6 +47,11 @@ body {
 	.content {
 		flex-direction: column;
 	}
+
+	.page {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 a {

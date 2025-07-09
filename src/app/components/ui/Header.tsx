@@ -2,7 +2,7 @@ import Link from "next/link";
 import localFont from "next/font/local"
 import styles from "./Header.module.css"
 
-const fontChopin = localFont({ src: "../../../public/ChopinScript.ttf" });
+const fontChopin = localFont({ src: "./ChopinScript.ttf" });
 
 export default function Header()
 {
