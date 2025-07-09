@@ -12,7 +12,7 @@ describe("cerators.ts", () => {
 
 	describe("createNotes", () => {
 		const result = creators.createNotes(new MockFactory() as any, notes);
-		it("should transfor Notes into StaveNotes", () => {
+		it("should transform Notes into StaveNotes", () => {
 			expect(result.length).toBe(notes.length);
 			expect(result[0].getKeys()[0]).toBe("c/4");
 			expect(result[1].getKeys()[0]).toBe("d/5");
