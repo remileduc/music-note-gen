@@ -17,7 +17,8 @@ export interface GeneratorSettings {
 	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
-	clef: "treble" | "bass"
+	clef: "treble" | "bass",
+	initialized: boolean
 };
 
 export const easySettings: GeneratorSettings = {
@@ -30,7 +31,8 @@ export const easySettings: GeneratorSettings = {
 	selectedDurations: ["w", "h"],
 	showNames: true,
 	addModifiers: false,
-	clef: "treble"
+	clef: "treble",
+	initialized: false
 };
 
 export const hardSettings: GeneratorSettings = {
@@ -38,7 +40,8 @@ export const hardSettings: GeneratorSettings = {
 	selectedDurations: ["w", "h", "q", "8"],
 	showNames: false,
 	addModifiers: true,
-	clef: "bass"
+	clef: "bass",
+	initialized: false
 };
 
 export const SettingsContext = createContext<{settings: GeneratorSettings, setSettings: (value: GeneratorSettings) => void}>({
@@ -63,12 +66,13 @@ export function settingsComparison(a: GeneratorSettings, b: GeneratorSettings): 
 		&& (compareSets(a.selectedDurations, b.selectedDurations));
 }
 
-export function storeSettingsInStorage(settings: GeneratorSettings)
+function storeSettingsInStorage(settings: GeneratorSettings)
 {
-	localStorage.setItem("settings", JSON.stringify(settings));
+	const {initialized: _, ...filteredSettings} = settings; // eslint-disable-line @typescript-eslint/no-unused-vars
+	localStorage.setItem("settings", JSON.stringify(filteredSettings));
 }
 
-export function retrieveSettingsInStorage(defaultValue = easySettings): GeneratorSettings
+function retrieveSettingsInStorage(defaultValue = easySettings): GeneratorSettings
 {
 	const settings = localStorage.getItem("settings");
 	if (!settings)
@@ -81,7 +85,7 @@ export default function GeneratorSettingsProvider({ children }: {children: React
 	const [settings, setSettings] = useState(easySettings);
 
 	useEffect(() => {
-		setSettings(retrieveSettingsInStorage(easySettings));
+		setSettings({...retrieveSettingsInStorage(easySettings), initialized: true});
 	}, []);
 
 	return (
