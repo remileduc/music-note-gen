@@ -39,12 +39,15 @@ export default function GeneratedPartition()
 	const partition = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
+		if (!partition.current || !settings.settings.initialized)
+			return;
+
 		document.getElementById("partition")?.replaceChildren();
 		const factory = new Factory({
 			renderer: {
 				elementId: "partition",
-				width: partition.current?.clientWidth ?? 0,
-				height: getSVGHeight(SYSTEM_NUMBER, partition.current?.clientWidth ?? 1, SYSTEM_WIDTH, SYSTEM_HEIGHT)
+				width: partition.current.clientWidth,
+				height: getSVGHeight(SYSTEM_NUMBER, partition.current.clientWidth, SYSTEM_WIDTH, SYSTEM_HEIGHT)
 			}
 		});
 
