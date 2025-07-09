@@ -89,7 +89,13 @@ export default function GeneratorSettingsProvider({ children }: {children: React
 	}, []);
 
 	return (
-		<SettingsContext value={{settings: settings, setSettings: (value) => { storeSettingsInStorage(value); setSettings(value); }}}>
+		<SettingsContext value={{
+			settings: settings,
+			setSettings: (value) => {
+				storeSettingsInStorage(value);
+				setSettings({...value, initialized: true});
+			}
+		}}>
 			{children}
 		</SettingsContext>
 	);
