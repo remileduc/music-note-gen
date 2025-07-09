@@ -1,4 +1,4 @@
-import { BarlineType, type Tickable, type Factory, type StaveNote, type System, type Voice } from "vexflow";
+import { BarlineType, type Tickable, type Factory, type StaveNote, type System, type Voice, type SVGContext } from "vexflow";
 import type { Note } from "./Note";
 
 export function createNotes(factory: Factory, notes: Note[], showName = false) : StaveNote[]
@@ -38,8 +38,9 @@ export function createVoices(factory: Factory, notes: StaveNote[][]) : Voice[]
 	return voices;
 }
 
-export function createSystems(factory: Factory, voices: Voice[], width = 200, yOffset = 30, clef = "treble") : System[]
+export function createSystems(factory: Factory, voices: Voice[], width = 200, height = 200, yOffset = 30, clef = "treble") : System[]
 {
+	const size = (factory.getContext() as SVGContext).width;
 	const systems: System[] = [];
 	let x = 0;
 
@@ -47,6 +48,11 @@ export function createSystems(factory: Factory, voices: Voice[], width = 200, yO
 	{
 		const s = factory.System({ x: x, y: yOffset, width: width });
 		x += width;
+		if ((x + width) > size)
+		{
+			x = 0;
+			yOffset += height;
+		}
 		s.addStave({ voices: [v] });
 		systems.push(s);
 	}
@@ -62,7 +68,7 @@ export function createSystems(factory: Factory, voices: Voice[], width = 200, yO
 	return systems;
 }
 
-export function createPartition(factory: Factory, notes: Note[][], showName = false, width = 200, yOffset = 30, clef = "treble")
+export function createPartition(factory: Factory, notes: Note[][], showName = false, width = 200, height = 200, yOffset = 30, clef = "treble")
 {
 	const staveNotes = notes.map((n) => createNotes(factory, n, showName));
 	createBeams(factory, staveNotes);
@@ -74,6 +80,7 @@ export function createPartition(factory: Factory, notes: Note[][], showName = fa
 			staveNotes
 		),
 		width,
+		height,
 		yOffset,
 		clef
 	);

@@ -26,7 +26,7 @@ export default function AllKeysForString({title, stringNotes}: {title: string, s
 
 		const notes = splitArray(stringNotes.map(([note, octave]) => new Note(note, octave)), 4);
 
-		createPartition(factory, notes, true, 350);
+		createPartition(factory, notes, true, 350, 160);
 
 		factory.draw();
 	}, [partitionID, stringNotes]);

@@ -1,8 +1,9 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Factory, type Tickable, type System } from "vexflow";
 import { addNotesInteractivity, createPartition, toggleNoteName } from "@utils/creators";
+import { getSVGHeight, SYSTEM_HEIGHT, SYSTEM_NUMBER, SYSTEM_WIDTH } from "@utils/global";
 import { Note } from "@utils/Note";
 import { randomMeasurePicker, randomNotePicker } from "@utils/randomNotePicker";
 import { SettingsContext, type GeneratorSettings } from "./GeneratorSettings";
@@ -29,20 +30,25 @@ function generatePartition(factory: Factory, settings: GeneratorSettings, system
 		notes.push(subnotes);
 	}
 
-	return createPartition(factory, notes, settings.showNames, 350, 50, settings.clef);
+	return createPartition(factory, notes, settings.showNames, SYSTEM_WIDTH, SYSTEM_HEIGHT, 50, settings.clef);
 }
 
 export default function GeneratedPartition()
 {
 	const settings = useContext(SettingsContext);
+	const partition = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
 		document.getElementById("partition")?.replaceChildren();
 		const factory = new Factory({
-			renderer: { elementId: "partition", width: 1400, height: 200 },
+			renderer: {
+				elementId: "partition",
+				width: partition.current?.clientWidth ?? 0,
+				height: getSVGHeight(SYSTEM_NUMBER, partition.current?.clientWidth ?? 1, SYSTEM_WIDTH, SYSTEM_HEIGHT)
+			}
 		});
 
-		const systems = generatePartition(factory, settings.settings);
+		const systems = generatePartition(factory, settings.settings, SYSTEM_NUMBER);
 
 		factory.draw();
 
@@ -68,7 +74,7 @@ export default function GeneratedPartition()
 	return (
 		<div className={styles.allkeysforstring}>
 			<h2>Notes de musique générées</h2>
-			<div id="partition" />
+			<div id="partition" ref={partition} />
 		</div>
 	);
 }
