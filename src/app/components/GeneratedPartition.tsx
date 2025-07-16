@@ -14,20 +14,23 @@ function generatePartition(factory: Factory, settings: GeneratorSettings, system
 	const notes: Note[][] = [];
 	const selectedNotes = settings.selectedNotes.map(([note, octave]) => new Note(note, octave));
 
-	for (let i = 0 ; i < systemNumbers; i++)
+	if (selectedNotes.length !== 0 && settings.selectedDurations.length !== 0)
 	{
-		const subnotes: Note[] = [];
-		// pick a measure
-		const measure = randomMeasurePicker(settings.selectedDurations);
-		// generate notes
-		for (const duration of measure)
+		for (let i = 0 ; i < systemNumbers; i++)
 		{
-			const note = randomNotePicker(selectedNotes, settings.addModifiers);
-			note.duration = duration;
-			subnotes.push(note);
+			const subnotes: Note[] = [];
+			// pick a measure
+			const measure = randomMeasurePicker(settings.selectedDurations);
+			// generate notes
+			for (const duration of measure)
+			{
+				const note = randomNotePicker(selectedNotes, settings.addModifiers);
+				note.duration = duration;
+				subnotes.push(note);
+			}
+			// append measure
+			notes.push(subnotes);
 		}
-		// append measure
-		notes.push(subnotes);
 	}
 
 	return createPartition(factory, notes, settings.showNames, SYSTEM_WIDTH, SYSTEM_HEIGHT, 50, settings.clef);

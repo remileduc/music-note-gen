@@ -18,7 +18,7 @@ function splitArray<T>(arr: T[], chunkSize: number) {
 export default function AllKeysForString({title, stringNotes}: {title: string, stringNotes: StringNotes})
 {
 	const partition = useRef<null | HTMLDivElement>(null);
-	const partitionID = "partition" + title;
+	const partitionID = "partition" + title.replaceAll(" ", "");
 
 	useEffect(() => {
 		if (!partition.current)

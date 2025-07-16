@@ -2,6 +2,8 @@ import type { FrenchNoteName } from "./Note"
 
 export type StringNotes = [FrenchNoteName, number][];
 
+type InstrumentNotes = Record<string, StringNotes>;
+
 export const solStringNotes: StringNotes = [
 	["sol", 3],
 	["la", 3],
@@ -45,3 +47,10 @@ export const miStringNotes: StringNotes = [
 	["re", 6],
 	["mi", 6]
 ];
+
+export const violin: InstrumentNotes = {
+	"Corde Mi": miStringNotes,
+	"Corde La": laStringNotes,
+	"Corde Re": reStringNotes,
+	"Corde Sol": solStringNotes
+}
