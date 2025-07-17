@@ -10,6 +10,10 @@
 	box-shadow: var(--shadow) 1.95px 1.95px 2.6px;
 }
 
+.menu li {
+	list-style: none;
+}
+
 .menu a {
 	display: flex;
 	align-items: center;

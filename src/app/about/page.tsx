@@ -7,7 +7,7 @@ export default function About()
 			<iframe
 				src={ rsrcPath("/README.html") }
 				width="100%"
-				height="1000px"
+				height="1000"
 				allow=""
 				loading="lazy"
 				referrerPolicy="no-referrer"
