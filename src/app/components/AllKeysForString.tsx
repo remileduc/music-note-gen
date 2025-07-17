@@ -6,7 +6,7 @@ import { createPartition } from "@utils/creators";
 import { getSVGHeight, SYSTEM_WIDTH } from "@utils/global";
 import { Note } from "@utils/Note";
 import type { StringNotes } from "@utils/strings";
-import styles from "./AllKeysForString.module.css"
+import styles from "./AllKeysForString.module.css";
 
 function splitArray<T>(arr: T[], chunkSize: number) {
 	return Array.from(
@@ -15,7 +15,7 @@ function splitArray<T>(arr: T[], chunkSize: number) {
 	);
 }
 
-export default function AllKeysForString({title, stringNotes}: {title: string, stringNotes: StringNotes})
+export default function AllKeysForString({title, stringNotes, clef = "treble"}: {title: string, stringNotes: StringNotes, clef: string})
 {
 	const partition = useRef<null | HTMLDivElement>(null);
 	const partitionID = "partition" + title.replaceAll(" ", "");
@@ -35,10 +35,10 @@ export default function AllKeysForString({title, stringNotes}: {title: string, s
 
 		const notes = splitArray(stringNotes.map(([note, octave]) => new Note(note, octave)), 4);
 
-		createPartition(factory, notes, true, SYSTEM_WIDTH, 160);
+		createPartition(factory, notes, true, clef, SYSTEM_WIDTH, 160);
 
 		factory.draw();
-	}, [partitionID, stringNotes]);
+	}, [partitionID, stringNotes, clef]);
 
 	return (
 		<div className={styles.allkeysforstring}>

@@ -1,4 +1,4 @@
-import type { FrenchNoteName } from "./Note"
+import type { FrenchNoteName } from "./Note";
 
 export type StringNotes = [FrenchNoteName, number][];
 
@@ -53,4 +53,8 @@ export const violin: InstrumentNotes = {
 	"Corde La": laStringNotes,
 	"Corde Re": reStringNotes,
 	"Corde Sol": solStringNotes
-}
+};
+
+export const allInstruments: Record<string, InstrumentNotes> = {
+	"violon": violin
+};

@@ -2,9 +2,10 @@
 
 import { type ChangeEvent, useContext, useEffect, useState } from "react";
 import type { FrenchNoteName, NoteDuration } from "@utils/Note";
-import { violin, type StringNotes } from "@utils/strings";
+import { allInstruments, type StringNotes } from "@utils/strings";
+import { InstrumentContext } from "./GeneratorInstrument";
 import { type GeneratorSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
-import styles from "./SettingsEditor.module.css"
+import styles from "./SettingsEditor.module.css";
 
 function getSelectNotes(selected = true) : StringNotes
 {
@@ -32,7 +33,6 @@ function generateEasySettings() : GeneratorSettings
 		selectedDurations: ["w", "h"],
 		showNames: true,
 		addModifiers: false,
-		clef: "treble",
 		initialized: false
 	};
 
@@ -57,7 +57,6 @@ function generateHardSettings() : GeneratorSettings
 		selectedDurations: ["w", "h", "q", "8"],
 		showNames: false,
 		addModifiers: true,
-		clef: "treble",
 		initialized: false
 	};
 }
@@ -65,14 +64,15 @@ function generateHardSettings() : GeneratorSettings
 export default function SettingsEditor()
 {
 	const settings = useContext(SettingsContext);
+	const instrument = useContext(InstrumentContext);
 	const [preset, setPreset] = useState<"easy" | "hard" | "custom">("easy");
-	const tooltip = "Utiliser la touche CONTROL pour sélectionner plusieurs valeurs"
+	const tooltip = "Utiliser la touche CONTROL pour sélectionner plusieurs valeurs";
 
-	function changeHandler(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>)
+	function changeHandler(event: ChangeEvent<HTMLInputElement>)
 	{
 		settings.setSettings({
 			...settings.settings,
-			[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
+			[event.target.name]: event.target.checked
 		});
 	}
 
@@ -150,15 +150,6 @@ export default function SettingsEditor()
 						<input type="checkbox" id="addModifiers" name="addModifiers" checked={settings.settings.addModifiers} onChange={changeHandler} />
 						<label htmlFor="addModifiers">Ajouter des altérations (bémol, dièse)</label>
 					</div>
-
-					{/* clef */}
-					<div className={styles.inputbox}>
-						<label htmlFor="clef">Clef</label>
-						<select id="clef" name="clef" value={settings.settings.clef} onChange={changeHandler}>
-							<option value="treble">Clef de Sol</option>
-							<option value="bass">Clef de Fa</option>
-						</select>
-					</div>
 				</div>
 
 				{/* durations */}
@@ -179,7 +170,7 @@ export default function SettingsEditor()
 				</div>
 
 				{/* notes */}
-				{Object.entries(violin).map(([stringName, stringNotes]) => {
+				{Object.entries(allInstruments[instrument.instrument.instrument]).map(([stringName, stringNotes]) => {
 					const id = "selectedNotes" + stringName.replaceAll(" ", "");
 					return (
 						<div className={styles.multiplebox} key={stringName} title={tooltip}>

@@ -12,12 +12,25 @@ function compareSets<T>(a: T[], b: T[]): boolean
 	return seta.symmetricDifference(setb).size === 0;
 }
 
+function storeSettingsInStorage(settings: GeneratorSettings)
+{
+	const {initialized: _, ...filteredSettings} = settings; // eslint-disable-line @typescript-eslint/no-unused-vars
+	localStorage.setItem("settings", JSON.stringify(filteredSettings));
+}
+
+function retrieveSettingsInStorage(defaultValue = initSettings): GeneratorSettings
+{
+	const settings = localStorage.getItem("settings");
+	if (!settings)
+		return defaultValue;
+	return JSON.parse(settings) as GeneratorSettings;
+}
+
 export interface GeneratorSettings {
 	selectedNotes: StringNotes,
 	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
-	clef: "treble" | "bass",
 	initialized: boolean
 };
 
@@ -31,7 +44,6 @@ const initSettings: GeneratorSettings = {
 	selectedDurations: ["w", "h"],
 	showNames: true,
 	addModifiers: false,
-	clef: "treble",
 	initialized: false
 };
 
@@ -52,23 +64,8 @@ export function settingsComparison(a: GeneratorSettings, b: GeneratorSettings): 
 
 	return (a.showNames === b.showNames)
 		&& (a.addModifiers === b.addModifiers)
-		&& (a.clef === b.clef)
 		&& (compareSets(stringNotesToStrings(a.selectedNotes), stringNotesToStrings(b.selectedNotes)))
 		&& (compareSets(a.selectedDurations, b.selectedDurations));
-}
-
-function storeSettingsInStorage(settings: GeneratorSettings)
-{
-	const {initialized: _, ...filteredSettings} = settings; // eslint-disable-line @typescript-eslint/no-unused-vars
-	localStorage.setItem("settings", JSON.stringify(filteredSettings));
-}
-
-function retrieveSettingsInStorage(defaultValue = initSettings): GeneratorSettings
-{
-	const settings = localStorage.getItem("settings");
-	if (!settings)
-		return defaultValue;
-	return JSON.parse(settings) as GeneratorSettings;
 }
 
 export default function GeneratorSettingsProvider({ children }: {children: React.ReactNode})
