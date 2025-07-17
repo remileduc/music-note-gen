@@ -40,11 +40,12 @@ export class Note
 		return new Note(this.fname, this.octave, this.mod, this.duration);
 	}
 
-	toVexFlow(factory: Factory) : StaveNote
+	toVexFlow(factory: Factory, clef = "treble") : StaveNote
 	{
 		return factory.StaveNote({
 			keys: [this.ename + "/" + this.octave.toString()],
-			duration: this.duration
+			duration: this.duration,
+			clef: clef
 		}).addModifier(factory.Accidental({ type: this.mod }));
 	}
 
