@@ -1,10 +1,66 @@
 "use client";
 
 import { type ChangeEvent, useContext, useEffect, useState } from "react";
-import type { NoteDuration } from "@utils/Note";
+import type { FrenchNoteName, NoteDuration } from "@utils/Note";
 import { violin, type StringNotes } from "@utils/strings";
-import { easySettings, hardSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
+import { type GeneratorSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css"
+
+function getSelectNotes(selected = true) : StringNotes
+{
+	const selects = document.querySelectorAll("[id^=selectedNotes]");
+	let values: StringNotes = [];
+	for (const s of selects)
+	{
+		if (s.tagName.toLowerCase() === "select")
+			values = values.concat(
+				Array.from((s as HTMLSelectElement)[selected ? "selectedOptions" : "options"])
+					.map((option) => {
+						const [note, octave] = option.value.split("/");
+						return [note, parseInt(octave, 10)];
+					}
+				) as StringNotes
+			);
+	}
+	return values;
+}
+
+function generateEasySettings() : GeneratorSettings
+{
+	const settings: GeneratorSettings = {
+		selectedNotes: [] as StringNotes,
+		selectedDurations: ["w", "h"],
+		showNames: true,
+		addModifiers: false,
+		clef: "treble",
+		initialized: false
+	};
+
+	const selects = document.querySelectorAll("[id^=selectedNotes]");
+	for (const s of selects)
+	{
+		if (s.tagName.toLowerCase() === "select" && (s as HTMLSelectElement).options.length > 0)
+		{
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const [note, octave] = (s as HTMLSelectElement).options.item(0)!.value.split("/");
+			settings.selectedNotes.push([note as FrenchNoteName, parseInt(octave, 10)]);
+		}
+	}
+
+	return settings;
+}
+
+function generateHardSettings() : GeneratorSettings
+{
+	return {
+		selectedNotes: getSelectNotes(false),
+		selectedDurations: ["w", "h", "q", "8"],
+		showNames: false,
+		addModifiers: true,
+		clef: "treble",
+		initialized: false
+	};
+}
 
 export default function SettingsEditor()
 {
@@ -31,23 +87,17 @@ export default function SettingsEditor()
 
 	function changeHandlerNotes()
 	{
-		const selects = document.querySelectorAll("[id^=selectedNotes]");
-		let values: StringNotes = [];
-		for (const s of selects)
-		{
-			if (s.tagName.toLowerCase() === "select")
-				values = values.concat(Array.from((s as HTMLSelectElement).selectedOptions).map((option) => option.value.split("/")) as StringNotes);
-		}
-
 		settings.setSettings({
 			...settings.settings,
-			"selectedNotes": values
+			"selectedNotes": getSelectNotes()
 		});
 	}
 
 	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const value = event.target.value;
+		const easySettings = generateEasySettings();
+		const hardSettings = generateHardSettings();
 
 		if (value === "custom")
 			return;
@@ -58,9 +108,9 @@ export default function SettingsEditor()
 	}
 
 	useEffect(() => {
-		if (settingsComparison(settings.settings, easySettings))
+		if (settingsComparison(settings.settings, generateEasySettings()))
 			setPreset("easy");
-		else if (settingsComparison(settings.settings, hardSettings))
+		else if (settingsComparison(settings.settings, generateHardSettings()))
 			setPreset("hard");
 		else
 			setPreset("custom");
