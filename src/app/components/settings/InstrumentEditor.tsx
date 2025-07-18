@@ -1,6 +1,7 @@
 "use client";
 
 import { type ChangeEvent, useContext } from "react";
+import { clefsEN, engToFrClefs } from "@utils/Note";
 import { allInstruments } from "@utils/strings";
 import { InstrumentContext } from "./GeneratorInstrument";
 import styles from "./InstrumentEditor.module.css";
@@ -33,8 +34,9 @@ export default function InstrumentEditor()
 			<div className={styles.inputbox}>
 				<label htmlFor="clef">Clef</label>
 				<select id="clef" name="clef" value={instrument.instrument.clef} onChange={changeHandler}>
-					<option value="treble">Clef de Sol</option>
-					<option value="bass">Clef de Fa</option>
+					{clefsEN.map((clef) =>
+						<option key={clef} value={clef}>Clef de {engToFrClefs.get(clef)}</option>
+					)}
 				</select>
 			</div>
 		</form>

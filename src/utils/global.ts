@@ -1,6 +1,5 @@
 export const basePath = process.env.NEXT_PUBLIC_BASEPATH ?? "";
 
-export const SYSTEM_NUMBER = 4;
 export const SYSTEM_WIDTH = 350;
 export const SYSTEM_HEIGHT = 200;
 

@@ -30,6 +30,7 @@ export interface GeneratorSettings {
 	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
+	numberSystems: number,
 	initialized: boolean
 };
 
@@ -43,6 +44,7 @@ const initSettings: GeneratorSettings = {
 	selectedDurations: ["w", "h"],
 	showNames: true,
 	addModifiers: false,
+	numberSystems: 4,
 	initialized: false
 };
 

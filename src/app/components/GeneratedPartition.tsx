@@ -3,7 +3,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { Factory, type Tickable, type System } from "vexflow";
 import { addNotesInteractivity, createPartition, toggleNoteName } from "@utils/creators";
-import { getSVGHeight, SYSTEM_HEIGHT, SYSTEM_NUMBER, SYSTEM_WIDTH } from "@utils/global";
+import { getSVGHeight, SYSTEM_HEIGHT, SYSTEM_WIDTH } from "@utils/global";
 import { Note } from "@utils/Note";
 import { randomMeasurePicker, randomNotePicker } from "@utils/randomNotePicker";
 import { SettingsContext, type GeneratorSettings } from "./settings/GeneratorSettings";
@@ -52,11 +52,11 @@ export default function GeneratedPartition()
 			renderer: {
 				elementId: "partition",
 				width: partition.current.clientWidth,
-				height: getSVGHeight(SYSTEM_NUMBER, partition.current.clientWidth, SYSTEM_WIDTH, SYSTEM_HEIGHT)
+				height: getSVGHeight(settings.settings.numberSystems, partition.current.clientWidth, SYSTEM_WIDTH, SYSTEM_HEIGHT)
 			}
 		});
 
-		const systems = generatePartition(factory, settings.settings, instrument.instrument.clef, SYSTEM_NUMBER);
+		const systems = generatePartition(factory, settings.settings, instrument.instrument.clef, settings.settings.numberSystems);
 
 		factory.draw();
 
