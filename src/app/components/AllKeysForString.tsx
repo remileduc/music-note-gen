@@ -4,8 +4,7 @@ import{ useEffect, useRef } from "react";
 import{ Factory } from "vexflow";
 import { createPartition } from "@utils/creators";
 import { getSVGHeight, SYSTEM_WIDTH } from "@utils/global";
-import { Note } from "@utils/Note";
-import type { StringNotes } from "@utils/strings";
+import { Note, type SimpleNote } from "@utils/Note";
 import styles from "./AllKeysForString.module.css";
 
 function splitArray<T>(arr: T[], chunkSize: number) {
@@ -15,7 +14,7 @@ function splitArray<T>(arr: T[], chunkSize: number) {
 	);
 }
 
-export default function AllKeysForString({title, stringNotes, clef = "treble"}: {title: string, stringNotes: StringNotes, clef: string})
+export default function AllKeysForString({title, stringNotes, clef = "treble"}: {title: string, stringNotes: SimpleNote[], clef: string})
 {
 	const partition = useRef<null | HTMLDivElement>(null);
 	const partitionID = "partition" + title.replaceAll(" ", "");
@@ -33,7 +32,7 @@ export default function AllKeysForString({title, stringNotes, clef = "treble"}: 
 			}
 		});
 
-		const notes = splitArray(stringNotes.map(([note, octave]) => new Note(note, octave)), 4);
+		const notes = splitArray(stringNotes.map((note) => new Note(note)), 4);
 
 		createPartition(factory, notes, true, clef, SYSTEM_WIDTH, 160);
 

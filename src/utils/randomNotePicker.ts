@@ -41,17 +41,17 @@ export function randomNotePicker(notes: Note[], generateModifiers = true): Note
 {
 	const note = notes[getRandomInt(notes.length)].clone();
 
-	if (!generateModifiers)
+	if (!generateModifiers || note.note.mod)
 		return note;
 
 	const modifier = getRandomInt(21);
 	if (modifier <= 16)
 		return note;
 
-	if (modifier <= 18 || noDiese.has(note.fname))
-		note.mod = "b";
-	if (modifier > 18 || noBemol.has(note.fname))
-		note.mod = "#";
+	if (modifier <= 18 || noDiese.has(note.note.fname))
+		note.note.mod = "b";
+	if (modifier > 18 || noBemol.has(note.note.fname))
+		note.note.mod = "#";
 
 	return note;
 }

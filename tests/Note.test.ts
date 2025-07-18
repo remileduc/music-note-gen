@@ -4,39 +4,39 @@ import { MockFactory } from "./utils";
 
 describe("Note", () => {
 	describe("default constructor", () => {
-		const note = new Note("do");
+		const note = new Note();
 
 		it("should use default constructor properties", () => {
-			expect(note.fname).toBe("do");
+			expect(note.note.fname).toBe("do");
 			expect(note.ename).toBe("c");
-			expect(note.duration).toBe("q");
-			expect(note.mod).toBe("");
-			expect(note.octave).toBe(4);
+			expect(note.note.duration).toBe("q");
+			expect(note.note.mod).toBe("");
+			expect(note.note.octave).toBe(4);
 		});
 	});
 
 	describe("parameterized constructor", () => {
-		const note1 = new Note("fa", 3, "b", "8");
+		const note1 = new Note({fname: "fa", octave: 3, mod: "b", duration: "8"});
 		it("should be initialized correctly", () => {
-			expect(note1.fname).toBe("fa");
+			expect(note1.note.fname).toBe("fa");
 			expect(note1.ename).toBe("f");
-			expect(note1.duration).toBe("8");
-			expect(note1.mod).toBe("b");
-			expect(note1.octave).toBe(3);
+			expect(note1.note.duration).toBe("8");
+			expect(note1.note.mod).toBe("b");
+			expect(note1.note.octave).toBe(3);
 		});
 
-		const note2 = new Note("mi", 5, "#", "w");
+		const note2 = new Note({fname: "mi", octave: 5, mod: "#", duration: "w"});
 		it("should be initialized correctly", () => {
-			expect(note2.fname).toBe("mi");
+			expect(note2.note.fname).toBe("mi");
 			expect(note2.ename).toBe("e");
-			expect(note2.duration).toBe("w");
-			expect(note2.mod).toBe("#");
-			expect(note2.octave).toBe(5);
+			expect(note2.note.duration).toBe("w");
+			expect(note2.note.mod).toBe("#");
+			expect(note2.note.octave).toBe(5);
 		});
 	});
 
 	describe("clone", () => {
-		const note = new Note("sol", 3, "b");
+		const note = new Note({fname: "sol", octave: 3, mod: "b", duration: "8"});
 		const clone = note.clone();
 
 		it("should not be the same object", () => expect(clone).not.toBe(note));
@@ -44,13 +44,17 @@ describe("Note", () => {
 	});
 
 	describe("toString", () => {
-		const note = new Note("re", 3, "b", "8");
+		const note1 = new Note({fname: "re", octave: 3, mod: "b", duration: "8"});
+		const note2 = new Note({fname: "re", octave: 3, mod: "", duration: "8"});
 
-		it("should print correct string", () => expect(note.toString()).toBe("re (3)"));
+		it("should print correct string", () => {
+			expect(note1.toString()).toBe("re b (3)");
+			expect(note2.toString()).toBe("re (3)");
+		});
 	});
 
 	describe("toVexflow", () => {
-		const note = new Note("re", 3, "b", "h");
+		const note = new Note({fname: "re", octave: 3, mod: "b", duration: "h"});
 
 		// create factory
 		const factory = new MockFactory();

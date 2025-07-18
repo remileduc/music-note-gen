@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import type { NoteDuration } from "@utils/Note";
-import type { StringNotes } from "@utils/strings";
+import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
 
 function compareSets<T>(a: T[], b: T[]): boolean
 {
@@ -27,7 +26,7 @@ function retrieveSettingsInStorage(defaultValue = initSettings): GeneratorSettin
 }
 
 export interface GeneratorSettings {
-	selectedNotes: StringNotes,
+	selectedNotes: SimpleNote[],
 	selectedDurations: NoteDuration[],
 	showNames: boolean,
 	addModifiers: boolean,
@@ -36,10 +35,10 @@ export interface GeneratorSettings {
 
 const initSettings: GeneratorSettings = {
 	selectedNotes: [
-		["sol", 3],
-		["re", 4],
-		["la", 4],
-		["mi", 5],
+		{ fname: "sol", mod: "", duration: "q", octave: 3 },
+		{ fname: "re", mod: "", duration: "q", octave: 4 },
+		{ fname: "la", mod: "", duration: "q", octave: 4 },
+		{ fname: "mi", mod: "", duration: "q", octave: 5 },
 	],
 	selectedDurations: ["w", "h"],
 	showNames: true,
@@ -57,14 +56,14 @@ export function settingsComparison(a: GeneratorSettings, b: GeneratorSettings): 
 	if (a === b)
 		return true;
 
-	function stringNotesToStrings(notes: StringNotes): string[]
+	function simpleNotesToStrings(notes: SimpleNote[]): string[]
 	{
-		return notes.map(([name, octave]) => `${name}:${octave.toString()}`)
+		return notes.map(noteToString)
 	}
 
 	return (a.showNames === b.showNames)
 		&& (a.addModifiers === b.addModifiers)
-		&& (compareSets(stringNotesToStrings(a.selectedNotes), stringNotesToStrings(b.selectedNotes)))
+		&& (compareSets(simpleNotesToStrings(a.selectedNotes), simpleNotesToStrings(b.selectedNotes)))
 		&& (compareSets(a.selectedDurations, b.selectedDurations));
 }
 
