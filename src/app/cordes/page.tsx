@@ -1,17 +1,37 @@
+"use client";
+
+import { useContext } from "react";
 import AllKeysForString from "@components/AllKeysForString";
-import { laStringNotes, miStringNotes, reStringNotes, solStringNotes } from "@utils/strings";
+import GeneratorInstrumentProvider, { InstrumentContext } from "@components/settings/GeneratorInstrument";
+import InstrumentEditor from "@components/settings/InstrumentEditor";
+import { allInstruments } from "@utils/strings";
+
+function CordesContent()
+{
+	const instrument = useContext(InstrumentContext);
+
+	return (
+		<>
+			{Object.entries(allInstruments[instrument.instrument.instrument]).map(([stringName, stringNotes]) =>
+				<AllKeysForString
+					key={stringName}
+					title={stringName}
+					stringNotes={stringNotes}
+					clef={instrument.instrument.clef}
+				/>
+			)}
+		</>
+	);
+}
 
 export default function Cordes()
 {
 	return (
 		<main>
-			<AllKeysForString title="Corde Sol" stringNotes={solStringNotes} />
-
-			<AllKeysForString title="Corde Re" stringNotes={reStringNotes} />
-
-			<AllKeysForString title="Corde La" stringNotes={laStringNotes} />
-
-			<AllKeysForString title="Corde Mi" stringNotes={miStringNotes} />
+			<GeneratorInstrumentProvider>
+				<InstrumentEditor />
+				<CordesContent />
+			</GeneratorInstrumentProvider>
 		</main>
 	);
 }

@@ -11,7 +11,7 @@ const possibleMeasures: NoteDuration[][] = [
 	["q", "q", "8", "8", "8", "8"],
 	["q", "8", "8", "8", "8", "8", "8"],
 	["8", "8", "8", "8", "8", "8", "8", "8"],
-]
+];
 
 function getRandomInt(max: number): number
 {
@@ -21,7 +21,7 @@ function getRandomInt(max: number): number
 function shuffleArray<T>(array: T[]): T[]
 {
 	for (let i = array.length - 1; i > 0; i--)
-		{
+	{
 		const j = getRandomInt(i + 1);
 		[array[i], array[j]] = [array[j], array[i]];
 	}

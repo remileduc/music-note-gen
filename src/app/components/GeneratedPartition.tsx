@@ -6,40 +6,45 @@ import { addNotesInteractivity, createPartition, toggleNoteName } from "@utils/c
 import { getSVGHeight, SYSTEM_HEIGHT, SYSTEM_NUMBER, SYSTEM_WIDTH } from "@utils/global";
 import { Note } from "@utils/Note";
 import { randomMeasurePicker, randomNotePicker } from "@utils/randomNotePicker";
-import { SettingsContext, type GeneratorSettings } from "./GeneratorSettings";
-import styles from "./AllKeysForString.module.css"
+import { SettingsContext, type GeneratorSettings } from "./settings/GeneratorSettings";
+import { InstrumentContext } from "./settings/GeneratorInstrument";
+import styles from "./AllKeysForString.module.css";
 
-function generatePartition(factory: Factory, settings: GeneratorSettings, systemNumbers = 4) : System[]
+function generatePartition(factory: Factory, settings: GeneratorSettings, clef: string, systemNumbers = 4) : System[]
 {
 	const notes: Note[][] = [];
 	const selectedNotes = settings.selectedNotes.map(([note, octave]) => new Note(note, octave));
 
-	for (let i = 0 ; i < systemNumbers; i++)
+	if (selectedNotes.length !== 0 && settings.selectedDurations.length !== 0)
 	{
-		const subnotes: Note[] = [];
-		// pick a measure
-		const measure = randomMeasurePicker(settings.selectedDurations);
-		// generate notes
-		for (const duration of measure)
+		for (let i = 0 ; i < systemNumbers; i++)
 		{
-			const note = randomNotePicker(selectedNotes, settings.addModifiers);
-			note.duration = duration;
-			subnotes.push(note);
+			const subnotes: Note[] = [];
+			// pick a measure
+			const measure = randomMeasurePicker(settings.selectedDurations);
+			// generate notes
+			for (const duration of measure)
+			{
+				const note = randomNotePicker(selectedNotes, settings.addModifiers);
+				note.duration = duration;
+				subnotes.push(note);
+			}
+			// append measure
+			notes.push(subnotes);
 		}
-		// append measure
-		notes.push(subnotes);
 	}
 
-	return createPartition(factory, notes, settings.showNames, SYSTEM_WIDTH, SYSTEM_HEIGHT, 50, settings.clef);
+	return createPartition(factory, notes, settings.showNames, clef, SYSTEM_WIDTH, SYSTEM_HEIGHT, 50);
 }
 
 export default function GeneratedPartition()
 {
 	const settings = useContext(SettingsContext);
+	const instrument = useContext(InstrumentContext);
 	const partition = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!partition.current || !settings.settings.initialized)
+		if (!partition.current || !settings.settings.initialized || !instrument.instrument.initialized)
 			return;
 
 		document.getElementById("partition")?.replaceChildren();
@@ -51,7 +56,7 @@ export default function GeneratedPartition()
 			}
 		});
 
-		const systems = generatePartition(factory, settings.settings, SYSTEM_NUMBER);
+		const systems = generatePartition(factory, settings.settings, instrument.instrument.clef, SYSTEM_NUMBER);
 
 		factory.draw();
 
@@ -72,7 +77,7 @@ export default function GeneratedPartition()
 			}
 		}
 		addNotesInteractivity(notes, toggleNoteName);
-	}, [settings.settings]);
+	}, [settings.settings, instrument.instrument.clef, instrument.instrument.initialized]);
 
 	return (
 		<div className={styles.allkeysforstring}>

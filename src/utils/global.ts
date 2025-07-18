@@ -11,5 +11,5 @@ export function rsrcPath(path: string)
 
 export function getSVGHeight(systemNumber: number, clientWidth: number, systemWidth: number, systemHeight: number) : number
 {
-	return systemHeight * Math.ceil(systemNumber / Math.max(1, Math.floor(clientWidth / systemWidth)))
+	return systemHeight * Math.ceil(systemNumber / Math.max(1, Math.floor(clientWidth / systemWidth)));
 }

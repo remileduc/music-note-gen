@@ -71,7 +71,7 @@ export function createSystems(factory: Factory, voices: Voice[], width = 200, he
 	return systems;
 }
 
-export function createPartition(factory: Factory, notes: Note[][], showName = false, width = 200, height = 200, yOffset = 30, clef = "treble")
+export function createPartition(factory: Factory, notes: Note[][], showName = false, clef = "treble", width = 200, height = 200, yOffset = 30)
 {
 	const staveNotes = notes.map((n) => createNotes(factory, n, showName, clef));
 	createBeams(factory, staveNotes);

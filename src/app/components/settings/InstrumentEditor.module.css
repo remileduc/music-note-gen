@@ -1,0 +1,11 @@
+form.instrumenteditor {
+	margin: var(--big-margin);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--big-margin);
+}
+
+.instrumenteditor .inputbox>:nth-child(2) /* distance label <-> input */ {
+	margin-left: 0.5rem;
+}
