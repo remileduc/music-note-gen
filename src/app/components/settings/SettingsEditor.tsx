@@ -37,6 +37,7 @@ function generateEasySettings() : GeneratorSettings
 		selectedDurations: ["w", "h"],
 		showNames: true,
 		addModifiers: false,
+		numberSystems: 4,
 		initialized: false
 	};
 
@@ -61,6 +62,7 @@ function generateHardSettings() : GeneratorSettings
 		selectedDurations: ["w", "h", "q", "8"],
 		showNames: false,
 		addModifiers: true,
+		numberSystems: 8,
 		initialized: false
 	};
 }
@@ -76,7 +78,7 @@ export default function SettingsEditor()
 	{
 		settings.setSettings({
 			...settings.settings,
-			[event.target.name]: event.target.checked
+			[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
 		});
 	}
 
@@ -153,6 +155,12 @@ export default function SettingsEditor()
 					<div className={styles.inputbox}>
 						<input type="checkbox" id="addModifiers" name="addModifiers" checked={settings.settings.addModifiers} onChange={changeHandler} />
 						<label htmlFor="addModifiers">Ajouter des altérations (bémol, dièse)</label>
+					</div>
+
+					{/* number of systems */}
+					<div className={styles.inputbox}>
+						<label htmlFor="numberSystems">Nombre de mesures à générer</label>
+						<input type="number" id="numberSystems" name="numberSystems" min="1" max="24" value={settings.settings.numberSystems} onChange={changeHandler} />
 					</div>
 				</div>
 
