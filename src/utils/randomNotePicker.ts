@@ -15,7 +15,16 @@ const possibleMeasures: NoteDuration[][] = [
 
 function getRandomInt(max: number): number
 {
-	return Math.floor(crypto.getRandomValues(new Uint8Array(1))[0] / 256. * max);
+	const maxValid = Math.floor(255 / max) * max;
+	let random = new Uint8Array(1);
+
+	do
+	{
+		// for tests reasons (?) random needs to be re-assigned even though it is updated in place
+		random = crypto.getRandomValues(random);
+	} while (random[0] >= maxValid);
+
+	return random[0] % max;
 }
 
 function shuffleArray<T>(array: T[]): T[]
