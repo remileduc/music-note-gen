@@ -6,8 +6,8 @@ import { MockFactory } from "./utils";
 
 describe("cerators.ts", () => {
 	const notes = [
-		new Note("do", 4, "", "q"),
-		new Note("re", 5, "", "h"),
+		new Note({fname: "do", octave: 4, mod: "", duration: "q"}),
+		new Note({fname: "re", octave: 5, mod: "", duration: "h"}),
 	];
 
 	describe("createNotes", () => {

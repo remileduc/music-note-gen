@@ -13,7 +13,7 @@ import styles from "./AllKeysForString.module.css";
 function generatePartition(factory: Factory, settings: GeneratorSettings, clef: string, systemNumbers = 4) : System[]
 {
 	const notes: Note[][] = [];
-	const selectedNotes = settings.selectedNotes.map(([note, octave]) => new Note(note, octave));
+	const selectedNotes = settings.selectedNotes.map((note) => new Note(note));
 
 	if (selectedNotes.length !== 0 && settings.selectedDurations.length !== 0)
 	{
@@ -26,7 +26,7 @@ function generatePartition(factory: Factory, settings: GeneratorSettings, clef: 
 			for (const duration of measure)
 			{
 				const note = randomNotePicker(selectedNotes, settings.addModifiers);
-				note.duration = duration;
+				note.note.duration = duration;
 				subnotes.push(note);
 			}
 			// append measure

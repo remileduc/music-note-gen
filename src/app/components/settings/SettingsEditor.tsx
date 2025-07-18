@@ -1,26 +1,30 @@
 "use client";
 
 import { type ChangeEvent, useContext, useEffect, useState } from "react";
-import type { FrenchNoteName, NoteDuration } from "@utils/Note";
-import { allInstruments, type StringNotes } from "@utils/strings";
+import { noteToString, type FrenchNoteName, type NoteDuration, type NoteModifier, type SimpleNote } from "@utils/Note";
+import { allInstruments } from "@utils/strings";
 import { InstrumentContext } from "./GeneratorInstrument";
 import { type GeneratorSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css";
 
-function getSelectNotes(selected = true) : StringNotes
+function simpleNoteToID(note: SimpleNote)
+{
+	return `${note.fname}/${note.octave.toString()}/${note.mod}`;
+}
+
+function getSelectNotes(selected = true) : SimpleNote[]
 {
 	const selects = document.querySelectorAll("[id^=selectedNotes]");
-	let values: StringNotes = [];
+	let values: SimpleNote[] = [];
 	for (const s of selects)
 	{
 		if (s.tagName.toLowerCase() === "select")
 			values = values.concat(
 				Array.from((s as HTMLSelectElement)[selected ? "selectedOptions" : "options"])
 					.map((option) => {
-						const [note, octave] = option.value.split("/");
-						return [note, parseInt(octave, 10)];
-					}
-				) as StringNotes
+						const [note, octave, mod] = option.value.split("/");
+						return { fname: note, octave: parseInt(octave, 10), mod: mod, duration: "q" } as SimpleNote;
+					})
 			);
 	}
 	return values;
@@ -29,7 +33,7 @@ function getSelectNotes(selected = true) : StringNotes
 function generateEasySettings() : GeneratorSettings
 {
 	const settings: GeneratorSettings = {
-		selectedNotes: [] as StringNotes,
+		selectedNotes: [] as SimpleNote[],
 		selectedDurations: ["w", "h"],
 		showNames: true,
 		addModifiers: false,
@@ -42,8 +46,8 @@ function generateEasySettings() : GeneratorSettings
 		if (s.tagName.toLowerCase() === "select" && (s as HTMLSelectElement).options.length > 0)
 		{
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const [note, octave] = (s as HTMLSelectElement).options.item(0)!.value.split("/");
-			settings.selectedNotes.push([note as FrenchNoteName, parseInt(octave, 10)]);
+			const [note, octave, mod] = (s as HTMLSelectElement).options.item(0)!.value.split("/");
+			settings.selectedNotes.push({ fname: note as FrenchNoteName, octave: parseInt(octave, 10), mod: mod as NoteModifier, duration: "q" });
 		}
 	}
 
@@ -178,13 +182,13 @@ export default function SettingsEditor()
 							<select
 								id={id}
 								name={id}
-								value={settings.settings.selectedNotes.map(([note, octave]) => `${note}/${octave.toString()}`)}
+								value={settings.settings.selectedNotes.map(simpleNoteToID)}
 								onChange={changeHandlerNotes}
 								multiple
 							>
-								{stringNotes.slice(0, Math.min(4, stringNotes.length)).map(([name, octave]) => (
-									<option key={`${name}/${octave.toString()}`} value={`${name}/${octave.toString()}`}>
-										{`${name} (${octave.toString()})`}
+								{stringNotes.slice(0, Math.min(4, stringNotes.length)).map((note) => (
+									<option key={simpleNoteToID(note)} value={simpleNoteToID(note)}>
+										{noteToString(note)}
 									</option>
 								))}
 							</select>
