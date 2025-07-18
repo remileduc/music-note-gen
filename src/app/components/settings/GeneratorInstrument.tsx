@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
+import type { NoteClef } from "@utils/Note";
 
 export interface GeneratorInstrument {
 	instrument: string,
-	clef: "treble" | "bass",
+	clef: NoteClef,
 	initialized: boolean
 };
 
