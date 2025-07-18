@@ -3,7 +3,7 @@ import type { Factory, StaveNote } from "vexflow";
 export type FrenchNoteName = "do" | "re" | "mi" | "fa" | "sol" | "la" | "si";
 export type EnglishNoteName = "c" | "d" | "e" | "f" | "g" | "a" | "b";
 export type NoteModifier = "#" | "b" | "";
-export type NoteDuration = "w" | "h" | "q" | "8";
+export type NoteDuration = "w" | "h" | "q" | "8" | "qr";
 
 export const noBemol = new Set<FrenchNoteName>(["do", "fa"]);
 export const noDiese = new Set<FrenchNoteName>(["mi", "si"]);
@@ -27,6 +27,8 @@ export interface SimpleNote {
 
 export function noteToString(note: SimpleNote)
 {
+	if (note.duration === "qr")
+		return "";
 	return note.fname + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
 }
 

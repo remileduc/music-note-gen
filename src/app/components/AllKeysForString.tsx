@@ -33,6 +33,12 @@ export default function AllKeysForString({title, stringNotes, clef = "treble"}: 
 		});
 
 		const notes = splitArray(stringNotes.map((note) => new Note(note)), 4);
+		if (notes.length > 0 && notes[notes.length - 1].length < 4)
+		{
+			const ns = notes[notes.length - 1];
+			for (let i = ns.length; i < 4; i++)
+				ns.push(new Note({fname: notes[0][0].note.fname, octave: notes[0][0].note.octave, mod: "", duration: "qr"}));
+		}
 
 		createPartition(factory, notes, true, clef, SYSTEM_WIDTH, 160);
 
