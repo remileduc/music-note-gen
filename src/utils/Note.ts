@@ -56,7 +56,7 @@ export interface SimpleNote {
 
 export function noteToString(note: SimpleNote)
 {
-	if (note.duration === "qr")
+	if (note.duration?.startsWith("q"))
 		return "";
 	return note.name + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
 }
@@ -72,11 +72,11 @@ export class Note implements SimpleNote
 
 	constructor(note: SimpleNote = { name: "do", mod: "", octave: 4, duration: "q" })
 	{
-		this.name = note.name;
+		this.name = frToEngNoteName.has(note.name) ? note.name : "do";
 		this.mod = note.mod;
 		this.octave = note.octave;
 		this.duration = note.duration ?? "q";
-		this.nameEN = frToEngNoteName.get(this.name) ?? "c";
+		this.nameEN = frToEngNoteName.get(note.name) ?? "c";
 	}
 
 	toSimpleNote(): SimpleNote

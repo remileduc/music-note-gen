@@ -8,7 +8,7 @@ const doStringNotes: SimpleNote[] = [
 	{ name: "mi", mod: "", octave: 3 },
 	{ name: "fa", mod: "", octave: 3 },
 	{ name: "sol", mod: "", octave: 3 }
-];
+] as const;
 
 const solStringNotes: SimpleNote[] = [
 	{ name: "sol", mod: "", octave: 3 },
@@ -16,7 +16,7 @@ const solStringNotes: SimpleNote[] = [
 	{ name: "si", mod: "", octave: 3 },
 	{ name: "do", mod: "", octave: 4 },
 	{ name: "ré", mod: "", octave: 4 }
-];
+] as const;
 
 const reStringNotes: SimpleNote[] = [
 	{ name: "ré", mod: "", octave: 4 },
@@ -24,7 +24,7 @@ const reStringNotes: SimpleNote[] = [
 	{ name: "fa", mod: "#", octave: 4 },
 	{ name: "sol", mod: "", octave: 4 },
 	{ name: "la", mod: "", octave: 4 }
-];
+] as const;
 
 const laStringNotes: SimpleNote[] = [
 	{ name: "la", mod: "", octave: 4 },
@@ -32,7 +32,7 @@ const laStringNotes: SimpleNote[] = [
 	{ name: "do", mod: "#", octave: 5 },
 	{ name: "ré", mod: "", octave: 5 },
 	{ name: "mi", mod: "", octave: 5 }
-];
+] as const;
 
 const miStringNotes: SimpleNote[] = [
 	{ name: "mi", mod: "", octave: 5 },
@@ -40,7 +40,7 @@ const miStringNotes: SimpleNote[] = [
 	{ name: "sol", mod: "#", octave: 5 },
 	{ name: "la", mod: "", octave: 5 },
 	{ name: "si", mod: "", octave: 5 }
-];
+] as const;
 
 // violin family
 
@@ -49,14 +49,14 @@ export const violin: InstrumentNotes = {
 	"Corde La": laStringNotes,
 	"Corde Ré": reStringNotes,
 	"Corde Sol": solStringNotes
-};
+} as const;
 
 export const viola: InstrumentNotes = {
 	"Corde La": laStringNotes,
 	"Corde Ré": reStringNotes,
 	"Corde Sol": solStringNotes,
 	"Corde Do": doStringNotes
-};
+} as const;
 
 export const cello: InstrumentNotes = {
 	"Corde La": [
@@ -83,7 +83,7 @@ export const cello: InstrumentNotes = {
 		{ name: "mi", mod: "", octave: 2 },
 		{ name: "fa", mod: "", octave: 2 }
 	]
-};
+} as const;
 
 export const doubleBass: InstrumentNotes = {
 	"Corde Sol": [
@@ -110,7 +110,7 @@ export const doubleBass: InstrumentNotes = {
 		{ name: "fa", mod: "#", octave: 2 },
 		{ name: "sol", mod: "", octave: 2 }
 	]
-};
+} as const;
 
 // guitar family
 
@@ -144,7 +144,7 @@ export const guitar: InstrumentNotes = {
 		{ name: "fa", mod: "", octave: 3 },
 		{ name: "sol", mod: "", octave: 3 }
 	]
-};
+} as const;
 
 export const bassGuitar: InstrumentNotes = {
 	"Corde Sol": [
@@ -167,7 +167,7 @@ export const bassGuitar: InstrumentNotes = {
 		{ name: "fa", mod: "", octave: 2 },
 		{ name: "sol", mod: "", octave: 2 }
 	]
-};
+} as const;
 
 // all
 
@@ -178,16 +178,16 @@ export const allInstruments: Record<string, InstrumentNotes> = {
 	"contrebasse": doubleBass,
 	"guitare": guitar,
 	"basse": bassGuitar
-};
+} as const;
 
 export const violins = [
 	"violon",
 	"alto",
 	"violoncelle",
 	"contrebasse"
-];
+] as const;
 
 export const guitars = [
 	"guitare",
 	"basse"
-];
+] as const;

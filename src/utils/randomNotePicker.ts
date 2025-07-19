@@ -11,7 +11,7 @@ const possibleMeasures: NoteDuration[][] = [
 	["q", "q", "8", "8", "8", "8"],
 	["q", "8", "8", "8", "8", "8", "8"],
 	["8", "8", "8", "8", "8", "8", "8", "8"],
-];
+] as const;
 
 function getRandomInt(max: number): number
 {
