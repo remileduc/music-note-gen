@@ -2,12 +2,14 @@
 
 import { type ChangeEvent, useContext } from "react";
 import { clefsEN, engToFrClefs } from "@utils/Note";
-import { allInstruments } from "@utils/strings";
+import { guitars, violins } from "@utils/strings";
 import { InstrumentContext } from "./GeneratorInstrument";
+import { generateEasySettings, SettingsContext } from "./GeneratorSettings";
 import styles from "./InstrumentEditor.module.css";
 
 export default function InstrumentEditor()
 {
+	const settings = useContext(SettingsContext);
 	const instrument = useContext(InstrumentContext);
 
 	function changeHandler(event: ChangeEvent<HTMLSelectElement>)
@@ -18,15 +20,28 @@ export default function InstrumentEditor()
 		});
 	}
 
+	function changeHandlerInstrument(event: ChangeEvent<HTMLSelectElement>)
+	{
+		changeHandler(event);
+		settings.setSettings(generateEasySettings(event.target.value));
+	}
+
 	return (
 		<form className={styles.instrumenteditor}>
 			{/* instrument */}
 			<div className={styles.inputbox}>
 				<label htmlFor="instrument">Instrument</label>
-				<select id="instrument" name="instrument" value={instrument.instrument.instrument} onChange={changeHandler}>
-					{Object.keys(allInstruments).map((inst) =>
-						<option key={inst} value={inst}>{inst}</option>
-					)}
+				<select id="instrument" name="instrument" value={instrument.instrument.instrument} onChange={changeHandlerInstrument}>
+					<optgroup label="Cordes frottées">
+						{violins.map((inst) =>
+							<option key={inst} value={inst}>{inst}</option>
+						)}
+					</optgroup>
+					<optgroup label="Cordes pincées">
+						{guitars.map((inst) =>
+							<option key={inst} value={inst}>{inst}</option>
+						)}
+					</optgroup>
 				</select>
 			</div>
 

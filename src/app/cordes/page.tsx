@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import AllKeysForString from "@components/AllKeysForString";
 import GeneratorInstrumentProvider, { InstrumentContext } from "@components/settings/GeneratorInstrument";
+import GeneratorSettingsProvider from "@components/settings/GeneratorSettings";
 import InstrumentEditor from "@components/settings/InstrumentEditor";
 import { allInstruments } from "@utils/strings";
 
@@ -28,10 +29,12 @@ export default function Cordes()
 {
 	return (
 		<main>
-			<GeneratorInstrumentProvider>
-				<InstrumentEditor />
-				<CordesContent />
-			</GeneratorInstrumentProvider>
+			<GeneratorSettingsProvider>
+				<GeneratorInstrumentProvider>
+					<InstrumentEditor />
+					<CordesContent />
+				</GeneratorInstrumentProvider>
+			</GeneratorSettingsProvider>
 		</main>
 	);
 }

@@ -8,13 +8,13 @@ export default function Home()
 {
 	return (
 		<main>
-			<GeneratorInstrumentProvider>
-				<InstrumentEditor />
-				<GeneratorSettingsProvider>
+			<GeneratorSettingsProvider>
+				<GeneratorInstrumentProvider>
+					<InstrumentEditor />
 					<SettingsEditor />
 					<GeneratedPartition />
-				</GeneratorSettingsProvider>
-			</GeneratorInstrumentProvider>
+				</GeneratorInstrumentProvider>
+			</GeneratorSettingsProvider>
 		</main>
 	);
 }

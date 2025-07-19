@@ -1,10 +1,10 @@
 "use client";
 
 import { type ChangeEvent, useContext, useEffect, useState } from "react";
-import { noteToString, type FrenchNoteName, type NoteDuration, type NoteModifier, type SimpleNote } from "@utils/Note";
+import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
 import { allInstruments } from "@utils/strings";
 import { InstrumentContext } from "./GeneratorInstrument";
-import { type GeneratorSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
+import { generateEasySettings, generateHardSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css";
 
 function simpleNoteToID(note: SimpleNote)
@@ -28,43 +28,6 @@ function getSelectNotes(selected = true) : SimpleNote[]
 			);
 	}
 	return values;
-}
-
-function generateEasySettings() : GeneratorSettings
-{
-	const settings: GeneratorSettings = {
-		selectedNotes: [] as SimpleNote[],
-		selectedDurations: ["w", "h"],
-		showNames: true,
-		addModifiers: false,
-		numberSystems: 4,
-		initialized: false
-	};
-
-	const selects = document.querySelectorAll("[id^=selectedNotes]");
-	for (const s of selects)
-	{
-		if (s.tagName.toLowerCase() === "select" && (s as HTMLSelectElement).options.length > 0)
-		{
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const [note, octave, mod] = (s as HTMLSelectElement).options.item(0)!.value.split("/");
-			settings.selectedNotes.push({ fname: note as FrenchNoteName, octave: parseInt(octave, 10), mod: mod as NoteModifier, duration: "q" });
-		}
-	}
-
-	return settings;
-}
-
-function generateHardSettings() : GeneratorSettings
-{
-	return {
-		selectedNotes: getSelectNotes(false),
-		selectedDurations: ["w", "h", "q", "8"],
-		showNames: false,
-		addModifiers: true,
-		numberSystems: 8,
-		initialized: false
-	};
 }
 
 export default function SettingsEditor()
@@ -102,8 +65,8 @@ export default function SettingsEditor()
 	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const value = event.target.value;
-		const easySettings = generateEasySettings();
-		const hardSettings = generateHardSettings();
+		const easySettings = generateEasySettings(instrument.instrument.instrument);
+		const hardSettings = generateHardSettings(instrument.instrument.instrument);
 
 		if (value === "custom")
 			return;
@@ -114,13 +77,13 @@ export default function SettingsEditor()
 	}
 
 	useEffect(() => {
-		if (settingsComparison(settings.settings, generateEasySettings()))
+		if (settingsComparison(settings.settings, generateEasySettings(instrument.instrument.instrument)))
 			setPreset("easy");
-		else if (settingsComparison(settings.settings, generateHardSettings()))
+		else if (settingsComparison(settings.settings, generateHardSettings(instrument.instrument.instrument)))
 			setPreset("hard");
 		else
 			setPreset("custom");
-	}, [settings.settings]);
+	}, [settings.settings, instrument.instrument.instrument]);
 
 	return (
 		<details className={styles.settingseditor}>
