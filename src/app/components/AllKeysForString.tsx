@@ -37,7 +37,7 @@ export default function AllKeysForString({title, stringNotes, clef = "treble"}: 
 		{
 			const ns = notes[notes.length - 1];
 			for (let i = ns.length; i < 4; i++)
-				ns.push(new Note({name: notes[0][0].note.name, octave: notes[0][0].note.octave, mod: "", duration: "qr"}));
+				ns.push(new Note({name: notes[0][0].name, octave: notes[0][0].octave, mod: "", duration: "qr"}));
 		}
 
 		createPartition(factory, notes, true, clef, SYSTEM_WIDTH, 160);

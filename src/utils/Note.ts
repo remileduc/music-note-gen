@@ -50,8 +50,8 @@ const frToEngNoteName = new Map<FrenchNoteName, EnglishNoteName>([
 export interface SimpleNote {
 	name: FrenchNoteName,
 	mod: NoteModifier,
-	duration: NoteDuration,
 	octave: number
+	duration?: NoteDuration,
 }
 
 export function noteToString(note: SimpleNote)
@@ -61,38 +61,45 @@ export function noteToString(note: SimpleNote)
 	return note.name + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
 }
 
-export class Note
+export class Note implements SimpleNote
 {
-	note: SimpleNote = {
-		name: "do",
-		mod: "",
-		duration: "q",
-		octave: 4
-	};
-	nameEN: EnglishNoteName = "c";
+	name: FrenchNoteName = "do";
+	mod: NoteModifier = "";
+	octave = 4;
+	duration: NoteDuration = "q";
 
-	constructor(note: SimpleNote = { name: "do", mod: "", duration: "q", octave: 4 })
+	readonly nameEN: EnglishNoteName = "c";
+
+	constructor(note: SimpleNote = { name: "do", mod: "", octave: 4, duration: "q" })
 	{
-		this.note = {...note};
-		this.nameEN = frToEngNoteName.get(this.note.name) ?? "c";
+		this.name = note.name;
+		this.mod = note.mod;
+		this.octave = note.octave;
+		this.duration = note.duration ?? "q";
+		this.nameEN = frToEngNoteName.get(this.name) ?? "c";
+	}
+
+	toSimpleNote(): SimpleNote
+	{
+		return { name: this.name, mod: this.mod, octave: this.octave, duration: this.duration };
 	}
 
 	clone()
 	{
-		return new Note(this.note);
+		return new Note(this.toSimpleNote());
 	}
 
 	toVexFlow(factory: Factory, clef = "treble") : StaveNote
 	{
 		return factory.StaveNote({
-			keys: [this.nameEN + "/" + this.note.octave.toString()],
-			duration: this.note.duration,
+			keys: [this.nameEN + "/" + this.octave.toString()],
+			duration: this.duration,
 			clef: clef
-		}).addModifier(factory.Accidental({ type: this.note.mod }));
+		}).addModifier(factory.Accidental({ type: this.mod }));
 	}
 
 	toString()
 	{
-		return noteToString(this.note);
+		return noteToString(this.toSimpleNote());
 	}
 }

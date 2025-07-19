@@ -7,31 +7,31 @@ describe("Note", () => {
 		const note = new Note();
 
 		it("should use default constructor properties", () => {
-			expect(note.note.name).toBe("do");
+			expect(note.name).toBe("do");
 			expect(note.nameEN).toBe("c");
-			expect(note.note.duration).toBe("q");
-			expect(note.note.mod).toBe("");
-			expect(note.note.octave).toBe(4);
+			expect(note.duration).toBe("q");
+			expect(note.mod).toBe("");
+			expect(note.octave).toBe(4);
 		});
 	});
 
 	describe("parameterized constructor", () => {
 		const note1 = new Note({name: "fa", octave: 3, mod: "b", duration: "8"});
 		it("should be initialized correctly", () => {
-			expect(note1.note.name).toBe("fa");
+			expect(note1.name).toBe("fa");
 			expect(note1.nameEN).toBe("f");
-			expect(note1.note.duration).toBe("8");
-			expect(note1.note.mod).toBe("b");
-			expect(note1.note.octave).toBe(3);
+			expect(note1.duration).toBe("8");
+			expect(note1.mod).toBe("b");
+			expect(note1.octave).toBe(3);
 		});
 
 		const note2 = new Note({name: "mi", octave: 5, mod: "#", duration: "w"});
 		it("should be initialized correctly", () => {
-			expect(note2.note.name).toBe("mi");
+			expect(note2.name).toBe("mi");
 			expect(note2.nameEN).toBe("e");
-			expect(note2.note.duration).toBe("w");
-			expect(note2.note.mod).toBe("#");
-			expect(note2.note.octave).toBe(5);
+			expect(note2.duration).toBe("w");
+			expect(note2.mod).toBe("#");
+			expect(note2.octave).toBe(5);
 		});
 	});
 
