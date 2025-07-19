@@ -47,7 +47,7 @@ const initSettings: GeneratorSettings = {
 	addModifiers: false,
 	numberSystems: 4,
 	initialized: false
-};
+} as const;
 
 export const SettingsContext = createContext<{settings: GeneratorSettings, setSettings: (value: GeneratorSettings) => void}>({
 	settings: initSettings,

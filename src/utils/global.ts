@@ -1,7 +1,7 @@
-export const basePath = process.env.NEXT_PUBLIC_BASEPATH ?? "";
+export const basePath = process.env.NEXT_PUBLIC_BASEPATH ?? "" as const;
 
-export const SYSTEM_WIDTH = 350;
-export const SYSTEM_HEIGHT = 200;
+export const SYSTEM_WIDTH = 350 as const;
+export const SYSTEM_HEIGHT = 200 as const;
 
 export function rsrcPath(path: string)
 {

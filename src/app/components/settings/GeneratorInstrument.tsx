@@ -13,7 +13,7 @@ const initInstrument: GeneratorInstrument = {
 	name: "violon",
 	clef: "treble",
 	initialized: false
-};
+} as const;
 
 export const InstrumentContext = createContext<{instrument: GeneratorInstrument, setInstrument: (value: GeneratorInstrument) => void}>({
 	instrument: initInstrument,
