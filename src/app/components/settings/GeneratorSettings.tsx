@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
+import { validateSettingsJson } from "@utils/jsonTypeValidator";
 import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
 import { allInstruments } from "@utils/strings";
 
@@ -20,10 +21,17 @@ function storeSettingsInStorage(settings: GeneratorSettings)
 
 function retrieveSettingsInStorage(defaultValue = initSettings): GeneratorSettings
 {
-	const settings = localStorage.getItem("settings");
-	if (!settings)
+	const value = localStorage.getItem("settings");
+	if (!value)
 		return defaultValue;
-	return JSON.parse(settings) as GeneratorSettings;
+
+	const settings = JSON.parse(value) as GeneratorSettings;
+	if (!validateSettingsJson(settings))
+	{
+		localStorage.removeItem("settings");
+		return defaultValue;
+	}
+	return settings;
 }
 
 export interface GeneratorSettings {

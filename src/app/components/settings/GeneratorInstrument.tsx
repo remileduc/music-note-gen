@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
+import { validateInstrumentJson } from "@utils/jsonTypeValidator";
 import type { NoteClef } from "@utils/Note";
 
 export interface GeneratorInstrument {
@@ -28,10 +29,17 @@ function storeInstrumentInStorage(instrument: GeneratorInstrument)
 
 function retrieveInstrumentInStorage(defaultValue = initInstrument): GeneratorInstrument
 {
-	const instrument = localStorage.getItem("instrument");
-	if (!instrument)
+	const value = localStorage.getItem("instrument");
+	if (!value)
 		return defaultValue;
-	return JSON.parse(instrument) as GeneratorInstrument;
+
+	const instrument = JSON.parse(value) as GeneratorInstrument;
+	if (!validateInstrumentJson(instrument))
+	{
+		localStorage.removeItem("instrument");
+		return defaultValue;
+	}
+	return instrument;
 }
 
 export default function GeneratorInstrumentProvider({ children }: {children: React.ReactNode})
