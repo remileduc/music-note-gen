@@ -4,7 +4,7 @@ export type InstrumentNotes = Record<string, SimpleNote[]>;
 
 const doStringNotes: SimpleNote[] = [
 	{ name: "do", mod: "", octave: 3 },
-	{ name: "re", mod: "", octave: 3 },
+	{ name: "ré", mod: "", octave: 3 },
 	{ name: "mi", mod: "", octave: 3 },
 	{ name: "fa", mod: "", octave: 3 },
 	{ name: "sol", mod: "", octave: 3 }
@@ -15,11 +15,11 @@ const solStringNotes: SimpleNote[] = [
 	{ name: "la", mod: "", octave: 3 },
 	{ name: "si", mod: "", octave: 3 },
 	{ name: "do", mod: "", octave: 4 },
-	{ name: "re", mod: "", octave: 4 }
+	{ name: "ré", mod: "", octave: 4 }
 ];
 
 const reStringNotes: SimpleNote[] = [
-	{ name: "re", mod: "", octave: 4 },
+	{ name: "ré", mod: "", octave: 4 },
 	{ name: "mi", mod: "", octave: 4 },
 	{ name: "fa", mod: "#", octave: 4 },
 	{ name: "sol", mod: "", octave: 4 },
@@ -30,7 +30,7 @@ const laStringNotes: SimpleNote[] = [
 	{ name: "la", mod: "", octave: 4 },
 	{ name: "si", mod: "", octave: 4 },
 	{ name: "do", mod: "#", octave: 5 },
-	{ name: "re", mod: "", octave: 5 },
+	{ name: "ré", mod: "", octave: 5 },
 	{ name: "mi", mod: "", octave: 5 }
 ];
 
@@ -47,13 +47,13 @@ const miStringNotes: SimpleNote[] = [
 export const violin: InstrumentNotes = {
 	"Corde Mi": miStringNotes,
 	"Corde La": laStringNotes,
-	"Corde Re": reStringNotes,
+	"Corde Ré": reStringNotes,
 	"Corde Sol": solStringNotes
 };
 
 export const viola: InstrumentNotes = {
 	"Corde La": laStringNotes,
-	"Corde Re": reStringNotes,
+	"Corde Ré": reStringNotes,
 	"Corde Sol": solStringNotes,
 	"Corde Do": doStringNotes
 };
@@ -63,10 +63,10 @@ export const cello: InstrumentNotes = {
 		{ name: "la", mod: "", octave: 3 },
 		{ name: "si", mod: "", octave: 3 },
 		{ name: "do", mod: "", octave: 4 },
-		{ name: "re", mod: "", octave: 4 }
+		{ name: "ré", mod: "", octave: 4 }
 	],
-	"Corde Re": [
-		{ name: "re", mod: "", octave: 3 },
+	"Corde Ré": [
+		{ name: "ré", mod: "", octave: 3 },
 		{ name: "mi", mod: "", octave: 3 },
 		{ name: "fa", mod: "", octave: 3 },
 		{ name: "sol", mod: "", octave: 3 }
@@ -79,7 +79,7 @@ export const cello: InstrumentNotes = {
 	],
 	"Corde Do": [
 		{ name: "do", mod: "", octave: 2 },
-		{ name: "re", mod: "", octave: 2 },
+		{ name: "ré", mod: "", octave: 2 },
 		{ name: "mi", mod: "", octave: 2 },
 		{ name: "fa", mod: "", octave: 2 }
 	]
@@ -92,8 +92,8 @@ export const doubleBass: InstrumentNotes = {
 		{ name: "la", mod: "", octave: 3 },
 		{ name: "si", mod: "b", octave: 3 }
 	],
-	"Corde Re": [
-		{ name: "re", mod: "", octave: 3 },
+	"Corde Ré": [
+		{ name: "ré", mod: "", octave: 3 },
 		{ name: "mi", mod: "b", octave: 3 },
 		{ name: "mi", mod: "", octave: 3 },
 		{ name: "fa", mod: "", octave: 3 }
@@ -123,14 +123,14 @@ export const guitar: InstrumentNotes = {
 	"Corde Si": [
 		{ name: "si", mod: "", octave: 4 },
 		{ name: "do", mod: "", octave: 5 },
-		{ name: "re", mod: "", octave: 5 }
+		{ name: "ré", mod: "", octave: 5 }
 	],
 	"Corde Sol": [
 		{ name: "sol", mod: "", octave: 4 },
 		{ name: "la", mod: "", octave: 4 }
 	],
-	"Corde Re": [
-		{ name: "re", mod: "", octave: 4 },
+	"Corde Ré": [
+		{ name: "ré", mod: "", octave: 4 },
 		{ name: "mi", mod: "", octave: 4 },
 		{ name: "fa", mod: "", octave: 4 }
 	],
@@ -152,8 +152,8 @@ export const bassGuitar: InstrumentNotes = {
 		{ name: "la", mod: "", octave: 3 },
 		{ name: "si", mod: "", octave: 3 }
 	],
-	"Corde Re": [
-		{ name: "re", mod: "", octave: 3 },
+	"Corde Ré": [
+		{ name: "ré", mod: "", octave: 3 },
 		{ name: "mi", mod: "", octave: 3 },
 		{ name: "fa", mod: "", octave: 3 }
 	],

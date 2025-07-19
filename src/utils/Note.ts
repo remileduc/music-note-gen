@@ -1,6 +1,6 @@
 import type { Factory, StaveNote } from "vexflow";
 
-export type FrenchNoteName = "do" | "re" | "mi" | "fa" | "sol" | "la" | "si";
+export type FrenchNoteName = "do" | "ré" | "mi" | "fa" | "sol" | "la" | "si";
 export type EnglishNoteName = "c" | "d" | "e" | "f" | "g" | "a" | "b";
 export type NoteModifier = "#" | "b" | "";
 export type NoteDuration = "w" | "h" | "q" | "8" | "qr";
@@ -39,7 +39,7 @@ export const noDiese = new Set<FrenchNoteName>(["mi", "si"]);
 
 const frToEngNoteName = new Map<FrenchNoteName, EnglishNoteName>([
 	["do", "c"],
-	["re", "d"],
+	["ré", "d"],
 	["mi", "e"],
 	["fa", "f"],
 	["sol" ,"g"],

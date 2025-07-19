@@ -44,17 +44,17 @@ describe("Note", () => {
 	});
 
 	describe("toString", () => {
-		const note1 = new Note({name: "re", octave: 3, mod: "b", duration: "8"});
-		const note2 = new Note({name: "re", octave: 3, mod: "", duration: "8"});
+		const note1 = new Note({name: "ré", octave: 3, mod: "b", duration: "8"});
+		const note2 = new Note({name: "ré", octave: 3, mod: "", duration: "8"});
 
 		it("should print correct string", () => {
-			expect(note1.toString()).toBe("re b (3)");
-			expect(note2.toString()).toBe("re (3)");
+			expect(note1.toString()).toBe("ré b (3)");
+			expect(note2.toString()).toBe("ré (3)");
 		});
 	});
 
 	describe("toVexflow", () => {
-		const note = new Note({name: "re", octave: 3, mod: "b", duration: "h"});
+		const note = new Note({name: "ré", octave: 3, mod: "b", duration: "h"});
 
 		// create factory
 		const factory = new MockFactory();

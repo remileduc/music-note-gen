@@ -38,7 +38,7 @@ export interface GeneratorSettings {
 const initSettings: GeneratorSettings = {
 	selectedNotes: [
 		{ name: "sol", mod: "", duration: "q", octave: 3 },
-		{ name: "re", mod: "", duration: "q", octave: 4 },
+		{ name: "ré", mod: "", duration: "q", octave: 4 },
 		{ name: "la", mod: "", duration: "q", octave: 4 },
 		{ name: "mi", mod: "", duration: "q", octave: 5 },
 	],

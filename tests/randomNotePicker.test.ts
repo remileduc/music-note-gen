@@ -25,7 +25,7 @@ describe("randomNotePicker.ts", () => {
 	describe("randomNotePicker", () => {
 		const notes = [
 			new Note({name: "do", octave: 4, mod: "", duration: "q"}),
-			new Note({name: "re", octave: 5, mod: "", duration: "h"}),
+			new Note({name: "ré", octave: 5, mod: "", duration: "h"}),
 		];
 
 		it("clones notes and do not generate modifiers", () => {
@@ -46,17 +46,17 @@ describe("randomNotePicker.ts", () => {
 				?.mockImplementationOnce(() => Uint8Array.from([1]))
 				?.mockImplementationOnce(() => Uint8Array.from([16]));
 			const res = randomNotePicker(notes, true);
-			expect(res.name).toBe("re");
+			expect(res.name).toBe("ré");
 			expect(res.mod).toBe("");
 		});
 
 		it("does not add modifier if one already exists", () => {
-			const n = new Note({name: "re", octave: 4, mod: "#", duration: "q"});
+			const n = new Note({name: "ré", octave: 4, mod: "#", duration: "q"});
 			spy
 				?.mockImplementationOnce(() => Uint8Array.from([1]))
 				?.mockImplementationOnce(() => Uint8Array.from([17]));
 			const res = randomNotePicker([n], true);
-			expect(res.name).toBe("re");
+			expect(res.name).toBe("ré");
 			expect(res.mod).toBe("#");
 		});
 
@@ -65,7 +65,7 @@ describe("randomNotePicker.ts", () => {
 				?.mockImplementationOnce(() => Uint8Array.from([1]))
 				?.mockImplementationOnce(() => Uint8Array.from([17]));
 			const res = randomNotePicker(notes, true);
-			expect(res.name).toBe("re");
+			expect(res.name).toBe("ré");
 			expect(res.mod).toBe("b");
 		});
 
