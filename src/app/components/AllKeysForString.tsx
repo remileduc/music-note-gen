@@ -24,15 +24,17 @@ export default function AllKeysForString({title, stringNotes, clef = "treble"}: 
 			return;
 
 		document.getElementById(partitionID)?.replaceChildren();
+
+		const notes = splitArray(stringNotes.map((note) => new Note(note)), 4);
+
 		const factory = new Factory({
 			renderer: {
 				elementId: partitionID,
 				width: partition.current.clientWidth,
-				height: getSVGHeight(2, partition.current.clientWidth, SYSTEM_WIDTH, 160)
+				height: getSVGHeight(notes.length, partition.current.clientWidth, SYSTEM_WIDTH, 160)
 			}
 		});
 
-		const notes = splitArray(stringNotes.map((note) => new Note(note)), 4);
 		if (notes.length > 0 && notes[notes.length - 1].length < 4)
 		{
 			const ns = notes[notes.length - 1];
