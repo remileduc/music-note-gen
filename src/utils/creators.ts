@@ -4,7 +4,7 @@ import type { Note } from "./Note";
 export function createNotes(factory: Factory, notes: Note[], showName = false, clef = "treble") : StaveNote[]
 {
 	return notes.map((note) => note.toVexFlow(factory, clef)
-		.addModifier(factory.Annotation({ text: note.note.duration === "qr" ? "" : note.note.fname }))
+		.addModifier(factory.Annotation({ text: note.note.duration === "qr" ? "" : note.note.name }))
 		.addClass((showName && note.note.duration !== "qr") ? "" : "selected"));
 }
 

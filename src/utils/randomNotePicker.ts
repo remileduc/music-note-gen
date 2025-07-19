@@ -48,9 +48,9 @@ export function randomNotePicker(notes: Note[], generateModifiers = true): Note
 	if (modifier <= 16)
 		return note;
 
-	if (modifier <= 18 || noDiese.has(note.note.fname))
+	if (modifier <= 18 || noDiese.has(note.note.name))
 		note.note.mod = "b";
-	if (modifier > 18 || noBemol.has(note.note.fname))
+	if (modifier > 18 || noBemol.has(note.note.name))
 		note.note.mod = "#";
 
 	return note;

@@ -48,7 +48,7 @@ const frToEngNoteName = new Map<FrenchNoteName, EnglishNoteName>([
 ]);
 
 export interface SimpleNote {
-	fname: FrenchNoteName,
+	name: FrenchNoteName,
 	mod: NoteModifier,
 	duration: NoteDuration,
 	octave: number
@@ -58,23 +58,23 @@ export function noteToString(note: SimpleNote)
 {
 	if (note.duration === "qr")
 		return "";
-	return note.fname + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
+	return note.name + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
 }
 
 export class Note
 {
 	note: SimpleNote = {
-		fname: "do",
+		name: "do",
 		mod: "",
 		duration: "q",
 		octave: 4
 	};
-	ename: EnglishNoteName = "c";
+	nameEN: EnglishNoteName = "c";
 
-	constructor(note: SimpleNote = { fname: "do", mod: "", duration: "q", octave: 4 })
+	constructor(note: SimpleNote = { name: "do", mod: "", duration: "q", octave: 4 })
 	{
 		this.note = {...note};
-		this.ename = frToEngNoteName.get(this.note.fname) ?? "c";
+		this.nameEN = frToEngNoteName.get(this.note.name) ?? "c";
 	}
 
 	clone()
@@ -85,7 +85,7 @@ export class Note
 	toVexFlow(factory: Factory, clef = "treble") : StaveNote
 	{
 		return factory.StaveNote({
-			keys: [this.ename + "/" + this.note.octave.toString()],
+			keys: [this.nameEN + "/" + this.note.octave.toString()],
 			duration: this.note.duration,
 			clef: clef
 		}).addModifier(factory.Accidental({ type: this.note.mod }));

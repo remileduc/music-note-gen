@@ -3,43 +3,43 @@ import type { SimpleNote } from "./Note";
 export type InstrumentNotes = Record<string, SimpleNote[]>;
 
 const doStringNotes: SimpleNote[] = [
-	{ fname: "do", mod: "", duration: "q", octave: 3 },
-	{ fname: "re", mod: "", duration: "q", octave: 3 },
-	{ fname: "mi", mod: "", duration: "q", octave: 3 },
-	{ fname: "fa", mod: "", duration: "q", octave: 3 },
-	{ fname: "sol", mod: "", duration: "q", octave: 3 }
+	{ name: "do", mod: "", duration: "q", octave: 3 },
+	{ name: "re", mod: "", duration: "q", octave: 3 },
+	{ name: "mi", mod: "", duration: "q", octave: 3 },
+	{ name: "fa", mod: "", duration: "q", octave: 3 },
+	{ name: "sol", mod: "", duration: "q", octave: 3 }
 ];
 
 const solStringNotes: SimpleNote[] = [
-	{ fname: "sol", mod: "", duration: "q", octave: 3 },
-	{ fname: "la", mod: "", duration: "q", octave: 3 },
-	{ fname: "si", mod: "", duration: "q", octave: 3 },
-	{ fname: "do", mod: "", duration: "q", octave: 4 },
-	{ fname: "re", mod: "", duration: "q", octave: 4 }
+	{ name: "sol", mod: "", duration: "q", octave: 3 },
+	{ name: "la", mod: "", duration: "q", octave: 3 },
+	{ name: "si", mod: "", duration: "q", octave: 3 },
+	{ name: "do", mod: "", duration: "q", octave: 4 },
+	{ name: "re", mod: "", duration: "q", octave: 4 }
 ];
 
 const reStringNotes: SimpleNote[] = [
-	{ fname: "re", mod: "", duration: "q", octave: 4 },
-	{ fname: "mi", mod: "", duration: "q", octave: 4 },
-	{ fname: "fa", mod: "#", duration: "q", octave: 4 },
-	{ fname: "sol", mod: "", duration: "q", octave: 4 },
-	{ fname: "la", mod: "", duration: "q", octave: 4 }
+	{ name: "re", mod: "", duration: "q", octave: 4 },
+	{ name: "mi", mod: "", duration: "q", octave: 4 },
+	{ name: "fa", mod: "#", duration: "q", octave: 4 },
+	{ name: "sol", mod: "", duration: "q", octave: 4 },
+	{ name: "la", mod: "", duration: "q", octave: 4 }
 ];
 
 const laStringNotes: SimpleNote[] = [
-	{ fname: "la", mod: "", duration: "q", octave: 4 },
-	{ fname: "si", mod: "", duration: "q", octave: 4 },
-	{ fname: "do", mod: "#", duration: "q", octave: 5 },
-	{ fname: "re", mod: "", duration: "q", octave: 5 },
-	{ fname: "mi", mod: "", duration: "q", octave: 5 }
+	{ name: "la", mod: "", duration: "q", octave: 4 },
+	{ name: "si", mod: "", duration: "q", octave: 4 },
+	{ name: "do", mod: "#", duration: "q", octave: 5 },
+	{ name: "re", mod: "", duration: "q", octave: 5 },
+	{ name: "mi", mod: "", duration: "q", octave: 5 }
 ];
 
 const miStringNotes: SimpleNote[] = [
-	{ fname: "mi", mod: "", duration: "q", octave: 5 },
-	{ fname: "fa", mod: "#", duration: "q", octave: 5 },
-	{ fname: "sol", mod: "#", duration: "q", octave: 5 },
-	{ fname: "la", mod: "", duration: "q", octave: 5 },
-	{ fname: "si", mod: "", duration: "q", octave: 5 }
+	{ name: "mi", mod: "", duration: "q", octave: 5 },
+	{ name: "fa", mod: "#", duration: "q", octave: 5 },
+	{ name: "sol", mod: "#", duration: "q", octave: 5 },
+	{ name: "la", mod: "", duration: "q", octave: 5 },
+	{ name: "si", mod: "", duration: "q", octave: 5 }
 ];
 
 // violin family
@@ -60,55 +60,55 @@ export const viola: InstrumentNotes = {
 
 export const cello: InstrumentNotes = {
 	"Corde La": [
-		{ fname: "la", mod: "", duration: "q", octave: 3 },
-		{ fname: "si", mod: "", duration: "q", octave: 3 },
-		{ fname: "do", mod: "", duration: "q", octave: 4 },
-		{ fname: "re", mod: "", duration: "q", octave: 4 }
+		{ name: "la", mod: "", duration: "q", octave: 3 },
+		{ name: "si", mod: "", duration: "q", octave: 3 },
+		{ name: "do", mod: "", duration: "q", octave: 4 },
+		{ name: "re", mod: "", duration: "q", octave: 4 }
 	],
 	"Corde Re": [
-		{ fname: "re", mod: "", duration: "q", octave: 3 },
-		{ fname: "mi", mod: "", duration: "q", octave: 3 },
-		{ fname: "fa", mod: "", duration: "q", octave: 3 },
-		{ fname: "sol", mod: "", duration: "q", octave: 3 }
+		{ name: "re", mod: "", duration: "q", octave: 3 },
+		{ name: "mi", mod: "", duration: "q", octave: 3 },
+		{ name: "fa", mod: "", duration: "q", octave: 3 },
+		{ name: "sol", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde Sol": [
-		{ fname: "sol", mod: "", duration: "q", octave: 2 },
-		{ fname: "la", mod: "", duration: "q", octave: 2 },
-		{ fname: "si", mod: "", duration: "q", octave: 2 },
-		{ fname: "do", mod: "", duration: "q", octave: 3 }
+		{ name: "sol", mod: "", duration: "q", octave: 2 },
+		{ name: "la", mod: "", duration: "q", octave: 2 },
+		{ name: "si", mod: "", duration: "q", octave: 2 },
+		{ name: "do", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde Do": [
-		{ fname: "do", mod: "", duration: "q", octave: 2 },
-		{ fname: "re", mod: "", duration: "q", octave: 2 },
-		{ fname: "mi", mod: "", duration: "q", octave: 2 },
-		{ fname: "fa", mod: "", duration: "q", octave: 2 }
+		{ name: "do", mod: "", duration: "q", octave: 2 },
+		{ name: "re", mod: "", duration: "q", octave: 2 },
+		{ name: "mi", mod: "", duration: "q", octave: 2 },
+		{ name: "fa", mod: "", duration: "q", octave: 2 }
 	]
 };
 
 export const doubleBass: InstrumentNotes = {
 	"Corde Sol": [
-		{ fname: "sol", mod: "", duration: "q", octave: 3 },
-		{ fname: "sol", mod: "#", duration: "q", octave: 3 },
-		{ fname: "la", mod: "", duration: "q", octave: 3 },
-		{ fname: "si", mod: "b", duration: "q", octave: 3 }
+		{ name: "sol", mod: "", duration: "q", octave: 3 },
+		{ name: "sol", mod: "#", duration: "q", octave: 3 },
+		{ name: "la", mod: "", duration: "q", octave: 3 },
+		{ name: "si", mod: "b", duration: "q", octave: 3 }
 	],
 	"Corde Re": [
-		{ fname: "re", mod: "", duration: "q", octave: 3 },
-		{ fname: "mi", mod: "b", duration: "q", octave: 3 },
-		{ fname: "mi", mod: "", duration: "q", octave: 3 },
-		{ fname: "fa", mod: "", duration: "q", octave: 3 }
+		{ name: "re", mod: "", duration: "q", octave: 3 },
+		{ name: "mi", mod: "b", duration: "q", octave: 3 },
+		{ name: "mi", mod: "", duration: "q", octave: 3 },
+		{ name: "fa", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde La": [
-		{ fname: "la", mod: "", duration: "q", octave: 2 },
-		{ fname: "si", mod: "b", duration: "q", octave: 2 },
-		{ fname: "si", mod: "", duration: "q", octave: 2 },
-		{ fname: "do", mod: "", duration: "q", octave: 3 }
+		{ name: "la", mod: "", duration: "q", octave: 2 },
+		{ name: "si", mod: "b", duration: "q", octave: 2 },
+		{ name: "si", mod: "", duration: "q", octave: 2 },
+		{ name: "do", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde Mi": [
-		{ fname: "mi", mod: "", duration: "q", octave: 2 },
-		{ fname: "fa", mod: "", duration: "q", octave: 2 },
-		{ fname: "fa", mod: "#", duration: "q", octave: 2 },
-		{ fname: "sol", mod: "", duration: "q", octave: 2 }
+		{ name: "mi", mod: "", duration: "q", octave: 2 },
+		{ name: "fa", mod: "", duration: "q", octave: 2 },
+		{ name: "fa", mod: "#", duration: "q", octave: 2 },
+		{ name: "sol", mod: "", duration: "q", octave: 2 }
 	]
 };
 
@@ -116,56 +116,56 @@ export const doubleBass: InstrumentNotes = {
 
 export const guitar: InstrumentNotes = {
 	"Corde Mi (aiguë)": [
-		{ fname: "mi", mod: "", duration: "q", octave: 5 },
-		{ fname: "fa", mod: "", duration: "q", octave: 5 },
-		{ fname: "sol", mod: "", duration: "q", octave: 5 }
+		{ name: "mi", mod: "", duration: "q", octave: 5 },
+		{ name: "fa", mod: "", duration: "q", octave: 5 },
+		{ name: "sol", mod: "", duration: "q", octave: 5 }
 	],
 	"Corde Si": [
-		{ fname: "si", mod: "", duration: "q", octave: 4 },
-		{ fname: "do", mod: "", duration: "q", octave: 5 },
-		{ fname: "re", mod: "", duration: "q", octave: 5 }
+		{ name: "si", mod: "", duration: "q", octave: 4 },
+		{ name: "do", mod: "", duration: "q", octave: 5 },
+		{ name: "re", mod: "", duration: "q", octave: 5 }
 	],
 	"Corde Sol": [
-		{ fname: "sol", mod: "", duration: "q", octave: 4 },
-		{ fname: "la", mod: "", duration: "q", octave: 4 }
+		{ name: "sol", mod: "", duration: "q", octave: 4 },
+		{ name: "la", mod: "", duration: "q", octave: 4 }
 	],
 	"Corde Re": [
-		{ fname: "re", mod: "", duration: "q", octave: 4 },
-		{ fname: "mi", mod: "", duration: "q", octave: 4 },
-		{ fname: "fa", mod: "", duration: "q", octave: 4 }
+		{ name: "re", mod: "", duration: "q", octave: 4 },
+		{ name: "mi", mod: "", duration: "q", octave: 4 },
+		{ name: "fa", mod: "", duration: "q", octave: 4 }
 	],
 	"Corde La": [
-		{ fname: "la", mod: "", duration: "q", octave: 3 },
-		{ fname: "si", mod: "", duration: "q", octave: 3 },
-		{ fname: "do", mod: "", duration: "q", octave: 4 }
+		{ name: "la", mod: "", duration: "q", octave: 3 },
+		{ name: "si", mod: "", duration: "q", octave: 3 },
+		{ name: "do", mod: "", duration: "q", octave: 4 }
 	],
 	"Corde Mi (grave)": [
-		{ fname: "mi", mod: "", duration: "q", octave: 3 },
-		{ fname: "fa", mod: "", duration: "q", octave: 3 },
-		{ fname: "sol", mod: "", duration: "q", octave: 3 }
+		{ name: "mi", mod: "", duration: "q", octave: 3 },
+		{ name: "fa", mod: "", duration: "q", octave: 3 },
+		{ name: "sol", mod: "", duration: "q", octave: 3 }
 	]
 };
 
 export const bassGuitar: InstrumentNotes = {
 	"Corde Sol": [
-		{ fname: "sol", mod: "", duration: "q", octave: 3 },
-		{ fname: "la", mod: "", duration: "q", octave: 3 },
-		{ fname: "si", mod: "", duration: "q", octave: 3 }
+		{ name: "sol", mod: "", duration: "q", octave: 3 },
+		{ name: "la", mod: "", duration: "q", octave: 3 },
+		{ name: "si", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde Re": [
-		{ fname: "re", mod: "", duration: "q", octave: 3 },
-		{ fname: "mi", mod: "", duration: "q", octave: 3 },
-		{ fname: "fa", mod: "", duration: "q", octave: 3 }
+		{ name: "re", mod: "", duration: "q", octave: 3 },
+		{ name: "mi", mod: "", duration: "q", octave: 3 },
+		{ name: "fa", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde La": [
-		{ fname: "la", mod: "", duration: "q", octave: 2 },
-		{ fname: "si", mod: "", duration: "q", octave: 2 },
-		{ fname: "do", mod: "", duration: "q", octave: 3 }
+		{ name: "la", mod: "", duration: "q", octave: 2 },
+		{ name: "si", mod: "", duration: "q", octave: 2 },
+		{ name: "do", mod: "", duration: "q", octave: 3 }
 	],
 	"Corde Mi": [
-		{ fname: "mi", mod: "", duration: "q", octave: 2 },
-		{ fname: "fa", mod: "", duration: "q", octave: 2 },
-		{ fname: "sol", mod: "", duration: "q", octave: 2 }
+		{ name: "mi", mod: "", duration: "q", octave: 2 },
+		{ name: "fa", mod: "", duration: "q", octave: 2 },
+		{ name: "sol", mod: "", duration: "q", octave: 2 }
 	]
 };
 

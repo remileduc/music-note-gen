@@ -4,13 +4,13 @@ import { createContext, useEffect, useState } from "react";
 import type { NoteClef } from "@utils/Note";
 
 export interface GeneratorInstrument {
-	instrument: string,
+	name: string,
 	clef: NoteClef,
 	initialized: boolean
 };
 
 const initInstrument: GeneratorInstrument = {
-	instrument: "violon",
+	name: "violon",
 	clef: "treble",
 	initialized: false
 };
