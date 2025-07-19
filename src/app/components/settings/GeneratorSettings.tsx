@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
+import { allInstruments } from "@utils/strings";
 
 function compareSets<T>(a: T[], b: T[]): boolean
 {
@@ -67,6 +68,40 @@ export function settingsComparison(a: GeneratorSettings, b: GeneratorSettings): 
 		&& (a.addModifiers === b.addModifiers)
 		&& (compareSets(simpleNotesToStrings(a.selectedNotes), simpleNotesToStrings(b.selectedNotes)))
 		&& (compareSets(a.selectedDurations, b.selectedDurations));
+}
+
+export function generateEasySettings(instrument: string) : GeneratorSettings
+{
+	const easySettings: GeneratorSettings = {
+		selectedNotes: [] as SimpleNote[],
+		selectedDurations: ["w", "h"],
+		showNames: true,
+		addModifiers: false,
+		numberSystems: 4,
+		initialized: false
+	};
+
+	for (const corde of Object.values(allInstruments[instrument]))
+		easySettings.selectedNotes.push(corde[0]);
+
+	return easySettings;
+}
+
+export function generateHardSettings(instrument: string) : GeneratorSettings
+{
+	const hardSettings: GeneratorSettings = {
+		selectedNotes: [] as SimpleNote[],
+		selectedDurations: ["w", "h", "q", "8"],
+		showNames: false,
+		addModifiers: true,
+		numberSystems: 8,
+		initialized: false
+	};
+
+	for (const corde of Object.values(allInstruments[instrument]))
+		hardSettings.selectedNotes = hardSettings.selectedNotes.concat(corde);
+
+	return hardSettings;
 }
 
 export default function GeneratorSettingsProvider({ children }: {children: React.ReactNode})
