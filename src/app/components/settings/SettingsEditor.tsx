@@ -120,7 +120,7 @@ export default function SettingsEditor()
 			setPreset("hard");
 		else
 			setPreset("custom");
-	}, [settings.settings]);
+	}, [settings.settings, instrument.instrument.instrument]);
 
 	return (
 		<details className={styles.settingseditor}>
