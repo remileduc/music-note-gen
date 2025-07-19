@@ -26,7 +26,7 @@ function generatePartition(factory: Factory, settings: GeneratorSettings, clef: 
 			for (const duration of measure)
 			{
 				const note = randomNotePicker(selectedNotes, settings.addModifiers);
-				note.note.duration = duration;
+				note.duration = duration;
 				subnotes.push(note);
 			}
 			// append measure

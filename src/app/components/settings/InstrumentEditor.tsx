@@ -9,13 +9,13 @@ import styles from "./InstrumentEditor.module.css";
 
 export default function InstrumentEditor()
 {
-	const settings = useContext(SettingsContext);
-	const instrument = useContext(InstrumentContext);
+	const settingsCtxt = useContext(SettingsContext);
+	const instrCtxt = useContext(InstrumentContext);
 
 	function changeHandler(event: ChangeEvent<HTMLSelectElement>)
 	{
-		instrument.setInstrument({
-			...instrument.instrument,
+		instrCtxt.setInstrument({
+			...instrCtxt.instrument,
 			[event.target.name]: event.target.value
 		});
 	}
@@ -23,15 +23,15 @@ export default function InstrumentEditor()
 	function changeHandlerInstrument(event: ChangeEvent<HTMLSelectElement>)
 	{
 		changeHandler(event);
-		settings.setSettings(generateEasySettings(event.target.value));
+		settingsCtxt.setSettings(generateEasySettings(event.target.value));
 	}
 
 	return (
 		<form className={styles.instrumenteditor}>
 			{/* instrument */}
 			<div className={styles.inputbox}>
-				<label htmlFor="instrument">Instrument</label>
-				<select id="instrument" name="instrument" value={instrument.instrument.instrument} onChange={changeHandlerInstrument}>
+				<label htmlFor="name">Instrument</label>
+				<select id="name" name="name" value={instrCtxt.instrument.name} onChange={changeHandlerInstrument}>
 					<optgroup label="Cordes frottées">
 						{violins.map((inst) =>
 							<option key={inst} value={inst}>{inst}</option>
@@ -48,7 +48,7 @@ export default function InstrumentEditor()
 			{/* clef */}
 			<div className={styles.inputbox}>
 				<label htmlFor="clef">Clef</label>
-				<select id="clef" name="clef" value={instrument.instrument.clef} onChange={changeHandler}>
+				<select id="clef" name="clef" value={instrCtxt.instrument.clef} onChange={changeHandler}>
 					{clefsEN.map((clef) =>
 						<option key={clef} value={clef}>Clef de {engToFrClefs.get(clef)}</option>
 					)}

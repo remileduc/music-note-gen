@@ -9,16 +9,16 @@ import { allInstruments } from "@utils/strings";
 
 function CordesContent()
 {
-	const instrument = useContext(InstrumentContext);
+	const instrCtxt = useContext(InstrumentContext);
 
 	return (
 		<>
-			{Object.entries(allInstruments[instrument.instrument.instrument]).map(([stringName, stringNotes]) =>
+			{Object.entries(allInstruments[instrCtxt.instrument.name]).map(([stringName, stringNotes]) =>
 				<AllKeysForString
 					key={stringName}
 					title={stringName}
 					stringNotes={stringNotes}
-					clef={instrument.instrument.clef}
+					clef={instrCtxt.instrument.clef}
 				/>
 			)}
 		</>

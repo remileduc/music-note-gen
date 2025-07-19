@@ -9,7 +9,7 @@ import styles from "./SettingsEditor.module.css";
 
 function simpleNoteToID(note: SimpleNote)
 {
-	return `${note.fname}/${note.octave.toString()}/${note.mod}`;
+	return `${note.name}/${note.octave.toString()}/${note.mod}`;
 }
 
 function getSelectNotes(selected = true) : SimpleNote[]
@@ -23,7 +23,7 @@ function getSelectNotes(selected = true) : SimpleNote[]
 				Array.from((s as HTMLSelectElement)[selected ? "selectedOptions" : "options"])
 					.map((option) => {
 						const [note, octave, mod] = option.value.split("/");
-						return { fname: note, octave: parseInt(octave, 10), mod: mod, duration: "q" } as SimpleNote;
+						return { name: note, octave: parseInt(octave, 10), mod: mod, duration: "q" } as SimpleNote;
 					})
 			);
 	}
@@ -32,15 +32,15 @@ function getSelectNotes(selected = true) : SimpleNote[]
 
 export default function SettingsEditor()
 {
-	const settings = useContext(SettingsContext);
-	const instrument = useContext(InstrumentContext);
+	const settingsCtxt = useContext(SettingsContext);
+	const instrCtxt = useContext(InstrumentContext);
 	const [preset, setPreset] = useState<"easy" | "hard" | "custom">("easy");
 	const tooltip = "Utiliser la touche CONTROL pour sélectionner plusieurs valeurs";
 
 	function changeHandler(event: ChangeEvent<HTMLInputElement>)
 	{
-		settings.setSettings({
-			...settings.settings,
+		settingsCtxt.setSettings({
+			...settingsCtxt.settings,
 			[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
 		});
 	}
@@ -48,16 +48,16 @@ export default function SettingsEditor()
 	function changeHandlerDurations(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const values = Array.from(event.target.selectedOptions).map((option) => option.value);
-		settings.setSettings({
-			...settings.settings,
+		settingsCtxt.setSettings({
+			...settingsCtxt.settings,
 			"selectedDurations": values as NoteDuration[]
 		});
 	}
 
 	function changeHandlerNotes()
 	{
-		settings.setSettings({
-			...settings.settings,
+		settingsCtxt.setSettings({
+			...settingsCtxt.settings,
 			"selectedNotes": getSelectNotes()
 		});
 	}
@@ -65,25 +65,25 @@ export default function SettingsEditor()
 	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const value = event.target.value;
-		const easySettings = generateEasySettings(instrument.instrument.instrument);
-		const hardSettings = generateHardSettings(instrument.instrument.instrument);
+		const easySettings = generateEasySettings(instrCtxt.instrument.name);
+		const hardSettings = generateHardSettings(instrCtxt.instrument.name);
 
 		if (value === "custom")
 			return;
-		if (value === "easy" && !settingsComparison(settings.settings, easySettings))
-			settings.setSettings(easySettings);
-		else if (value === "hard" && !settingsComparison(settings.settings, hardSettings))
-			settings.setSettings(hardSettings);
+		if (value === "easy" && !settingsComparison(settingsCtxt.settings, easySettings))
+			settingsCtxt.setSettings(easySettings);
+		else if (value === "hard" && !settingsComparison(settingsCtxt.settings, hardSettings))
+			settingsCtxt.setSettings(hardSettings);
 	}
 
 	useEffect(() => {
-		if (settingsComparison(settings.settings, generateEasySettings(instrument.instrument.instrument)))
+		if (settingsComparison(settingsCtxt.settings, generateEasySettings(instrCtxt.instrument.name)))
 			setPreset("easy");
-		else if (settingsComparison(settings.settings, generateHardSettings(instrument.instrument.instrument)))
+		else if (settingsComparison(settingsCtxt.settings, generateHardSettings(instrCtxt.instrument.name)))
 			setPreset("hard");
 		else
 			setPreset("custom");
-	}, [settings.settings, instrument.instrument.instrument]);
+	}, [settingsCtxt.settings, instrCtxt.instrument.name]);
 
 	return (
 		<details className={styles.settingseditor}>
@@ -102,7 +102,7 @@ export default function SettingsEditor()
 						<option value="custom" disabled>Personnalisé</option>
 					</select>
 
-					<button onClick={() => { settings.setSettings({...settings.settings}); }}>Regénérer</button>
+					<button onClick={() => { settingsCtxt.setSettings({...settingsCtxt.settings}); }}>Regénérer</button>
 				</span>
 			</summary>
 
@@ -110,20 +110,20 @@ export default function SettingsEditor()
 				<div className={styles.groupbox}>
 					{/* showNames */}
 					<div className={styles.inputbox}>
-						<input type="checkbox" id="showNames" name="showNames" checked={settings.settings.showNames} onChange={changeHandler} />
+						<input type="checkbox" id="showNames" name="showNames" checked={settingsCtxt.settings.showNames} onChange={changeHandler} />
 						<label htmlFor="showNames">Afficher le nom des notes</label>
 					</div>
 
 					{/* addModifiers */}
 					<div className={styles.inputbox}>
-						<input type="checkbox" id="addModifiers" name="addModifiers" checked={settings.settings.addModifiers} onChange={changeHandler} />
+						<input type="checkbox" id="addModifiers" name="addModifiers" checked={settingsCtxt.settings.addModifiers} onChange={changeHandler} />
 						<label htmlFor="addModifiers">Ajouter des altérations (bémol, dièse)</label>
 					</div>
 
 					{/* number of systems */}
 					<div className={styles.inputbox}>
 						<label htmlFor="numberSystems">Nombre de mesures à générer</label>
-						<input type="number" id="numberSystems" name="numberSystems" min="1" max="24" value={settings.settings.numberSystems} onChange={changeHandler} />
+						<input type="number" id="numberSystems" name="numberSystems" min="1" max="24" value={settingsCtxt.settings.numberSystems} onChange={changeHandler} />
 					</div>
 				</div>
 
@@ -133,7 +133,7 @@ export default function SettingsEditor()
 					<select
 						id="selectedDurations"
 						name="selectedDurations"
-						value={settings.settings.selectedDurations}
+						value={settingsCtxt.settings.selectedDurations}
 						onChange={changeHandlerDurations}
 						multiple
 					>
@@ -145,7 +145,7 @@ export default function SettingsEditor()
 				</div>
 
 				{/* notes */}
-				{Object.entries(allInstruments[instrument.instrument.instrument]).map(([stringName, stringNotes]) => {
+				{Object.entries(allInstruments[instrCtxt.instrument.name]).map(([stringName, stringNotes]) => {
 					const id = "selectedNotes" + stringName.replaceAll(" ", "");
 					return (
 						<div className={styles.multiplebox} key={stringName} title={tooltip}>
@@ -153,7 +153,7 @@ export default function SettingsEditor()
 							<select
 								id={id}
 								name={id}
-								value={settings.settings.selectedNotes.map(simpleNoteToID)}
+								value={settingsCtxt.settings.selectedNotes.map(simpleNoteToID)}
 								onChange={changeHandlerNotes}
 								multiple
 							>
