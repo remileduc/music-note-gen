@@ -1,12 +1,14 @@
 Générateur de notes de musique
 ==============================
 
-Ce projet consiste à mettre à disposition un générateur de notes de musique pour entrainement débutant :
+Générateur de notes de musique pour entrainement pour débutants aux instruments à cordes :
 - apprendre à lire les notes sur une partition
 - apprendre le tempo et jouer en rythme
 - apprendre à jouer les notes d'une partition
 	- possibilité de sélectionner les notes qui seront générées
 	- génération aléatoire pour éviter les gestes mécaniques
+
+-----------------------------------------------
 
 Accès au générateur
 -------------------
@@ -14,14 +16,40 @@ Accès au générateur
 Le générateur est disponible à cette adresse : <https://remileduc.github.io/music-note-gen/>
 Le site est automatiquement généré lorsque le code de ce dépôt est mis à jour.
 
+-----------------------------------------------
+
 Instruments de musiques
 -----------------------
 
 Créé pour l'entraînement au violon, il est possible de choisir les notes par cordes pour les jouer, dans un premier temps en pizzicati puis à l'archet, pour travailler
 la position des doigts.
 
-À terme, et si c'est demandé, je compte ajouter le même principe pour les autres instruments de la famille du violon (les notes par cordes ne sont pas les mêmes), la
-guitare, et éventuellement d'autres instruments qui s'y prêterait.
+Liste des instruments actuellement pris en charge pour l'entraînement :
+- cordes frottées
+	- violon
+	- alto
+	- violoncelle
+	- contrebasse
+- cordes pincées
+	- guitare
+	- basse
+
+-----------------------------------------------
+
+Fonctionnalités
+---------------
+
+- Choix de l'instrument et de la clef dans laquelle générer la partition
+- Configuration rapide : mode facile ou difficile
+- Ou sélection manuelle :
+	- Afficher le nom des notes ou non
+		- Il est toujours possible de cliquer sur une note pour afficher son nom en cas de doute
+	- Génération d'altérations ou non
+	- Nombre de mesures à générer (sur portable 4 est le plus pratique, sur ordinateur 20 remplit l'écran)
+	- choix des durées à générer (rondes, blanches, noires, croches)
+	- choix des notes à générer, par corde de l'instrument (la première note est la corde à vide, la deuxième est en posant le premier doigt, ...)
+
+-----------------------------------------------
 
 Crédits
 -------

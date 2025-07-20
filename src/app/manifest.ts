@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest
 	return {
 		name: "Générateur de notes de musique",
 		short_name: "Musique Note Gen",
-		description: "Ce projet consiste à mettre à disposition un générateur de notes de musique pour entrainement débutant",
+		description: "Générateur de notes de musique pour entrainement pour débutants aux instruments à cordes.",
 		categories: [ "musique", "violon", "guitare", "débutant" ],
 		lang: "fr",
 		dir: "ltr",
