@@ -9,12 +9,30 @@ export default function manifest(): MetadataRoute.Manifest
 		name: "Générateur de notes de musique",
 		short_name: "Musique Note Gen",
 		description: "Ce projet consiste à mettre à disposition un générateur de notes de musique pour entrainement débutant",
+		categories: [ "musique", "violon", "guitare", "débutant" ],
 		lang: "fr",
+		dir: "ltr",
 		start_url: rsrcPath("/"),
 		display: "standalone",
 		orientation: "portrait-primary",
 		background_color: "#e6f0ff",
 		theme_color: "#602353",
+		shortcuts: [
+			{
+				name: "Générateur",
+				url: rsrcPath("/")
+			},
+			{
+				name: "Liste des cordes",
+				short_name: "Cordes",
+				url: rsrcPath("/cordes")
+			},
+			{
+				name: "Aide",
+				description: "Afficher le mode d'emploi",
+				url: rsrcPath("/about")
+			}
+		],
 		icons: [
 			{
 				src: rsrcPath("/violin.svg"),
@@ -32,5 +50,13 @@ export default function manifest(): MetadataRoute.Manifest
 				type: "image/png",
 			}
 		],
+		screenshots: [
+			{
+				src: rsrcPath("/opengraph-image.png"),
+				label: "Home",
+				type: "image/png",
+				sizes: "251x247"
+			}
+		]
 	};
 }

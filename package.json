@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run prebuild && next dev --turbopack",
+    "dev": "npm run prebuild && next dev --turbopack --experimental-https",
     "prebuild": "cp LICENSE public/ && marked --gfm --breaks -i README.md -o public/README.html",
     "build": "next build",
     "start": "next start",

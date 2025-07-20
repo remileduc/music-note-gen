@@ -13,6 +13,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
     steps:
       - name: 📥 Install
         uses: remileduc/music-note-gen/.github/actions/package-install@main

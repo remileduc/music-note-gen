@@ -1,29 +1,12 @@
-"use client";
-
-import { useContext } from "react";
-import AllKeysForString from "@components/AllKeysForString";
-import GeneratorInstrumentProvider, { InstrumentContext } from "@components/settings/GeneratorInstrument";
+import type { Metadata } from "next";
+import GeneratorInstrumentProvider from "@components/settings/GeneratorInstrument";
 import GeneratorSettingsProvider from "@components/settings/GeneratorSettings";
 import InstrumentEditor from "@components/settings/InstrumentEditor";
-import { allInstruments } from "@utils/strings";
+import CordesContent from "./CordesContent";
 
-function CordesContent()
-{
-	const instrCtxt = useContext(InstrumentContext);
-
-	return (
-		<>
-			{Object.entries(allInstruments[instrCtxt.instrument.name]).map(([stringName, stringNotes]) =>
-				<AllKeysForString
-					key={stringName}
-					title={stringName}
-					stringNotes={stringNotes}
-					clef={instrCtxt.instrument.clef}
-				/>
-			)}
-		</>
-	);
-}
+export const metadata: Metadata = {
+	title: "Cordes"
+};
 
 export default function Cordes()
 {

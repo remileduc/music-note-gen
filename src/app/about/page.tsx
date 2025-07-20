@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import { rsrcPath } from "@utils/global";
+
+export const metadata: Metadata = {
+	title: "Aide"
+};
 
 export default function About()
 {
