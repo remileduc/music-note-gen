@@ -58,7 +58,7 @@ L'intégralité du projet est sous licence [MIT](./LICENSE).
 
 L'affichage des partitions se fait grâce à librarie [VexFlow](https://github.com/0xfe/vexflow) (licence MIT).
 
-Le favicon du site a été créé par [Bruno Heridet](https://iconduck.com/designers/bruno-heridet) (licence CC-BY 3.0) : <https://iconduck.com/icons/26579/violin>.
+Le favicon du site a été créé par [Bruno Heridet](https://bruno.heridet.com/) (licence CC-BY 3.0) : <https://game-icons.net/1x1/zajkonur/violin.html>.
 
 La police du titre [Chopin Script Font](https://www.1001fonts.com/chopin-script-font.html) est sous une licence bizarre :
 [1001Fonts FFC](./public/1001fonts-chopin-script-eula.txt).
