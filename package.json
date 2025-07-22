@@ -6,14 +6,15 @@
     "dev": "npm run prebuild && next dev --turbopack --experimental-https",
     "prebuild": "cp LICENSE public/ && marked --gfm --breaks -i README.md -o public/README.html",
     "build": "next build",
-    "start": "next start",
+    "postbuild": "cp .next/app-build-manifest.json out/",
+    "start": "serve --no-clipboard --ssl-cert certificates/localhost.pem --ssl-key certificates/localhost-key.pem out/ || echo 'You need to run `npm run dev` at least once to create the certificates'",
     "lint": "next lint",
     "test": "jest",
     "test-ci": "jest --ci --reporters=default --reporters=jest-junit"
   },
   "dependencies": {
     "ajv": "^8.17.1",
-    "next": "^15.4.2",
+    "next": "^15.4.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vexflow": "^5.0.0"
@@ -21,15 +22,16 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.0.15",
+    "@types/node": "^24.1.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "eslint": "^9.31.0",
-    "eslint-config-next": "^15.4.2",
-    "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.4",
+    "eslint-config-next": "^15.4.3",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "jest-junit": "^16.0.0",
     "marked": "^16.1.1",
+    "serve": "^14.2.4",
     "ts-jest": "^29.4.0",
     "typescript": "^5.8.3"
   }
