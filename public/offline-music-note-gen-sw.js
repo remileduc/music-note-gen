@@ -1,6 +1,10 @@
 "use strict";
 
+// constants
+
 const CACHE_NAME = "offline-violon v1";
+
+const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
 
 const PUBLIC_RESOURCES = [
 	"./1001fonts-chopin-script-eula.txt",
@@ -18,6 +22,8 @@ const PUBLIC_RESOURCES = [
 	"./violin.512x512.png",
 	"./violin.svg"
 ];
+
+// utils functions
 
 function logMessage(message)
 {
@@ -40,7 +46,7 @@ async function getAllChuncks(appManifestFile)
 	if (!appManifest || !("pages" in appManifest))
 		return [];
 
-	let chuncks = new Set(["./README"]);
+	let chuncks = new Set(["./README", "./README.html"]);
 
 	for (const page of Object.keys(appManifest.pages))
 	{
@@ -50,7 +56,6 @@ async function getAllChuncks(appManifestFile)
 			if (pagename === "./_not-found")
 				pagename = "./404";
 			chuncks.add(pagename);
-			chuncks.add(pagename === "." ? "./index.html" : pagename + '.html');
 		}
 		for (const c of appManifest.pages[page])
 			chuncks.add("./_next/" + c);
@@ -58,6 +63,19 @@ async function getAllChuncks(appManifestFile)
 
 	return Array.from(chuncks);
 }
+
+function cleanResponse(response)
+{
+	if (!response.redirected)
+		return response;
+	return new Response(response.body, {
+		headers: response.headers,
+		status: response.status,
+		statusText: response.statusText
+	});
+}
+
+// cache management
 
 async function clearOldCaches()
 {
@@ -92,27 +110,36 @@ function putInCache(request, response)
 	}
 }
 
+// fetch
+
 async function fetchFromCacheFirst(request)
 {
 	const cache = await caches.open(CACHE_NAME);
 	const cachedRsrc = await cache.match(request);
 	if (cachedRsrc)
-		return cachedRsrc;
+		return cleanResponse(cachedRsrc);
 	// fix weird bug in nextjs
 	const url = new URL(request.url);
 	if (url.pathname.endsWith(".txt"))
 	{
-		url.pathname = url.pathname.replace(/\.txt$/, ".html");
+		url.pathname = url.pathname.replace(
+			url.pathname.endsWith("/index.txt") ? /\/index\.txt$/ : /\.txt$/,
+			""
+		);
+		if (url.pathname === BASE_PATH)
+			url.pathname += "/";
 		url.search = "";
 		const cachedRsrcTxt = await cache.match(url.toString());
 		if (cachedRsrcTxt)
-			return cachedRsrcTxt;
+			return cleanResponse(cachedRsrcTxt);
 	}
 
 	const fetchRsrc = await fetch(request.clone());
 	putInCache(request, fetchRsrc.clone());
 	return fetchRsrc;
 }
+
+// listeners
 
 self.addEventListener("install", async (event) => {
 	event.waitUntil((async () => {

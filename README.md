@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<title>README</title>
+</head>
+<body>
+
+
 Générateur de notes de musique
 ==============================
 
@@ -62,3 +70,6 @@ Le favicon du site a été créé par [Bruno Heridet](https://bruno.heridet.com/
 
 La police du titre [Chopin Script Font](https://www.1001fonts.com/chopin-script-font.html) est sous une licence bizarre :
 [1001Fonts FFC](./public/1001fonts-chopin-script-eula.txt).
+
+</body>
+</html>
