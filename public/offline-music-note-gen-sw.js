@@ -50,6 +50,7 @@ async function getAllChuncks(appManifestFile)
 			if (pagename === "./_not-found")
 				pagename = "./404";
 			chuncks.add(pagename);
+			chuncks.add(pagename === "." ? "./index.html" : pagename + '.html');
 		}
 		for (const c of appManifest.pages[page])
 			chuncks.add("./_next/" + c);
@@ -93,9 +94,20 @@ function putInCache(request, response)
 
 async function fetchFromCacheFirst(request)
 {
-	const cachedRsrc = await caches.open(CACHE_NAME).then((cache) => cache.match(request));
+	const cache = await caches.open(CACHE_NAME);
+	const cachedRsrc = await cache.match(request);
 	if (cachedRsrc)
 		return cachedRsrc;
+	// fix weird bug in nextjs
+	const url = new URL(request.url);
+	if (url.pathname.endsWith(".txt"))
+	{
+		url.pathname = url.pathname.replace(/\.txt$/, ".html");
+		url.search = "";
+		const cachedRsrcTxt = await cache.match(url.toString());
+		if (cachedRsrcTxt)
+			return cachedRsrcTxt;
+	}
 
 	const fetchRsrc = await fetch(request.clone());
 	putInCache(request, fetchRsrc.clone());
