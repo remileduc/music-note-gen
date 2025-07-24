@@ -11,15 +11,14 @@ export default function About()
 		<main>
 			<iframe
 				src={ rsrcPath("/README.html") }
-				width="100%"
-				height="1000"
+				height="1200"
 				allow=""
 				loading="lazy"
 				referrerPolicy="no-referrer"
-				sandbox=""
-				style={{border: "none"}}
-			>
-			</iframe>
+				sandbox="allow-same-origin"
+				title="README"
+				style={{border: "none", height: "1200px", width: "100%"}}
+			/>
 		</main>
 	);
 }

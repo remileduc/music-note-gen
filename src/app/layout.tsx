@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import Footer from "@app/components/ui/Footer";
-import Header from "@app/components/ui/Header";
-import Menu from "@app/components/ui/Menu";
+import Footer from "@components/ui/Footer";
+import Header from "@components/ui/Header";
+import Menu from "@components/ui/Menu";
+import ServiceWorkerRegister from "@components/ServiceWorkerRegister";
 import manifest from "./manifest"
 import "./globals.css";
 
@@ -36,6 +37,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	return (
 		<html lang="fr">
 			<body>
+				<ServiceWorkerRegister />
+
 				<Header />
 
 				<div className="content">

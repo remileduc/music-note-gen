@@ -10,7 +10,7 @@ export default function NotFound()
 			flexDirection: "column",
 			gap: "40px"
 		}}>
-			<h1>𝅘𝅥𝅲 Not Found 𝅘𝅥𝅲</h1>
+			<h1>𝅘𝅥𝅲 Fausse Note 𝅘𝅥𝅲</h1>
 			<p>Could not find requested page</p>
 			<Link href="/" style={{ textDecoration: "underline" }}>Return Home</Link>
 		</main>
