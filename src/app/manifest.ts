@@ -1,5 +1,6 @@
-import { rsrcPath } from "@utils/global";
 import type { MetadataRoute } from "next";
+import { rsrcPath } from "@utils/global";
+import jsonpackage from "../../package.json";
 
 export const dynamic = 'force-static';
 
@@ -8,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest
 	return {
 		name: "Générateur de notes de musique",
 		short_name: "Musique Note Gen",
-		description: "Générateur de notes de musique pour entrainement pour débutants aux instruments à cordes.",
-		categories: [ "musique", "violon", "guitare", "débutant" ],
+		description: jsonpackage.description,
+		categories: jsonpackage.keywords,
 		lang: "fr",
 		dir: "ltr",
 		start_url: rsrcPath("/"),
