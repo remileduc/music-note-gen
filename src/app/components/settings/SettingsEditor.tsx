@@ -23,7 +23,7 @@ function getSelectNotes(selected = true) : SimpleNote[]
 				Array.from((s as HTMLSelectElement)[selected ? "selectedOptions" : "options"])
 					.map((option) => {
 						const [note, octave, mod] = option.value.split("/");
-						return { name: note, octave: parseInt(octave, 10), mod: mod, duration: "q" } as SimpleNote;
+						return { name: note, octave: Number(octave), mod: mod, duration: "q" } as SimpleNote;
 					})
 			);
 	}
@@ -39,10 +39,19 @@ export default function SettingsEditor()
 
 	function changeHandler(event: ChangeEvent<HTMLInputElement>)
 	{
-		settingsCtxt.setSettings({
-			...settingsCtxt.settings,
-			[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
-		});
+		let attribute: keyof typeof event.target = "value";
+		switch (event.target.type)
+		{
+		case "checkbox":
+			attribute = "checked";
+			break;
+		case "number":
+			attribute = "valueAsNumber";
+			break;
+		default:
+			attribute = "value"
+		}
+		settingsCtxt.setSettings({ ...settingsCtxt.settings, [event.target.name]: event.target[attribute] });
 	}
 
 	function changeHandlerDurations(event: ChangeEvent<HTMLSelectElement>)
@@ -76,6 +85,12 @@ export default function SettingsEditor()
 			settingsCtxt.setSettings(hardSettings);
 	}
 
+	function generateHandler()
+	{
+		settingsCtxt.setSettings({ ...settingsCtxt.settings });
+		document.getElementById("partition")?.scrollIntoView({ behavior: "smooth", block: "start" });
+	}
+
 	useEffect(() => {
 		if (settingsComparison(settingsCtxt.settings, generateEasySettings(instrCtxt.instrument.name)))
 			setPreset("easy");
@@ -102,7 +117,7 @@ export default function SettingsEditor()
 						<option value="custom" disabled>Personnalisé</option>
 					</select>
 
-					<button onClick={() => { settingsCtxt.setSettings({...settingsCtxt.settings}); }}>Regénérer</button>
+					<button onClick={generateHandler}>Regénérer</button>
 				</span>
 			</summary>
 
@@ -123,7 +138,23 @@ export default function SettingsEditor()
 					{/* number of systems */}
 					<div className={styles.inputbox}>
 						<label htmlFor="numberSystems">Nombre de mesures à générer</label>
-						<input type="number" id="numberSystems" name="numberSystems" min="1" max="24" value={settingsCtxt.settings.numberSystems} onChange={changeHandler} />
+						<input
+							type="number"
+							id="numberSystems"
+							name="numberSystems"
+							min="1"
+							max="24"
+							value={settingsCtxt.settings.numberSystems}
+							onChange={changeHandler}
+							list="numberSystemsList"
+						/>
+						<datalist id="numberSystemsList">
+							<option>4</option>
+							<option>8</option>
+							<option>16</option>
+							<option>20</option>
+							<option>24</option>
+						</datalist>
 					</div>
 				</div>
 

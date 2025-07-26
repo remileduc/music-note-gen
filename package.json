@@ -2,6 +2,12 @@
   "name": "music-note-gen",
   "version": "0.1.0",
   "private": true,
+  "description": "Générateur de notes de musique pour entrainement pour débutants aux instruments à cordes.",
+  "keywords": [ "musique", "violon", "guitare", "débutant" ],
+  "homepage": "https://github.com/remileduc/music-note-gen",
+  "author": "remileduc (https://github.com/remileduc)",
+  "license": "MIT",
+  "repository": "github:remileduc/music-note-gen",
   "scripts": {
     "dev": "npm run prebuild && next dev --turbopack --experimental-https",
     "prebuild": "cp LICENSE public/ && marked --gfm --breaks -i README.md -o public/README.html",

@@ -7,7 +7,8 @@ import { allInstruments } from "./strings";
 const instrumentSchema = {
 	properties: {
 		name: { enum: Object.keys(allInstruments) },
-		clef: { enum: clefsEN }
+		clef: { enum: clefsEN },
+		tempo: { type: "uint8" }
 	},
 	optionalProperties: {
 		initialized: { type: "boolean" }

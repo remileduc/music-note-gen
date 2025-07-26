@@ -7,12 +7,14 @@ import type { NoteClef } from "@utils/Note";
 export interface GeneratorInstrument {
 	name: string,
 	clef: NoteClef,
+	tempo: number
 	initialized: boolean
 };
 
 const initInstrument: GeneratorInstrument = {
 	name: "violon",
 	clef: "treble",
+	tempo: 75,
 	initialized: false
 } as const;
 
