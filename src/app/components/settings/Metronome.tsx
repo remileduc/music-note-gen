@@ -10,6 +10,7 @@ class Timer
 	callback: () => void;
 	#tempo = 75;
 	#intervalID = -1;
+	#wakeLock: null | WakeLockSentinel = null;
 
 	constructor(bpm: number, callback: () => void)
 	{
@@ -40,13 +41,18 @@ class Timer
 	{
 		window.clearInterval(this.#intervalID);
 		this.#intervalID = -1;
+		void this.#wakeLock?.release(); // "void" to tell typescript we do not await the call on purpose
+		this.#wakeLock = null;
 		console.log("metronome stopped");
 	}
 
 	start()
 	{
-		this.#intervalID = window.setInterval(this.callback, 60000 / this.#tempo);
 		this.callback();
+		this.#intervalID = window.setInterval(this.callback, 60000 / this.#tempo);
+		navigator.wakeLock.request()
+			.then((wakeLock) => this.#wakeLock = wakeLock)
+			.catch((error: unknown) => { console.log(`ERROR: can't keep screen awake: '${error as Error}'`) });
 		console.log("metronome started");
 	}
 }
