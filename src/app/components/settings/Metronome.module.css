@@ -1,0 +1,19 @@
+.metronome {
+	display: flex;
+	flex-direction: row;
+	gap: var(--big-margin);
+}
+
+.metronome .inputbox>:nth-child(2) /* distance label <-> input */ {
+	margin-left: 0.5rem;
+}
+
+.metronome button.playing::before {
+	content: "🞎";
+	margin-right: 0.25rem;
+}
+
+.metronome button.stopped::before {
+	content: "▷";
+	margin-right: 0.25rem;
+}

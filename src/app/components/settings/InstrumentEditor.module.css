@@ -3,6 +3,12 @@ form.instrumenteditor {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.instrumenteditor .groupbox {
+	display: flex;
+	flex-direction: row;
 	gap: var(--big-margin);
 }
 

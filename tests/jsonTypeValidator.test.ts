@@ -10,6 +10,7 @@ describe("jsonTypeValidator.ts", () => {
 			const instrument: GeneratorInstrument = {
 				name: "violon",
 				clef: "treble",
+				tempo: 128,
 				initialized: false
 			};
 
@@ -19,7 +20,8 @@ describe("jsonTypeValidator.ts", () => {
 		it("should validate without initialized", () => {
 			const instrument = {
 				name: "basse",
-				clef: "alto"
+				clef: "alto",
+				tempo: 30
 			} as GeneratorInstrument;
 
 			expect(validateInstrumentJson(instrument)).toBe(true);
@@ -28,7 +30,8 @@ describe("jsonTypeValidator.ts", () => {
 		it("should not validate bad input", () => {
 			const instrument = {
 				name: "piano",
-				clef: "bass"
+				clef: "bass",
+				tempo: 30
 			} as GeneratorInstrument;
 
 			expect(validateInstrumentJson(instrument)).toBe(false);
@@ -37,7 +40,18 @@ describe("jsonTypeValidator.ts", () => {
 		it("should not validate bad input", () => {
 			const instrument = {
 				name: "contrebasse",
-				clef: "lol" as NoteClef
+				clef: "lol" as NoteClef,
+				tempo: 12
+			} as GeneratorInstrument;
+
+			expect(validateInstrumentJson(instrument)).toBe(false);
+		});
+
+		it("should not validate bad input", () => {
+			const instrument = {
+				name: "contrebasse",
+				clef: "bass",
+				tempo: 3000
 			} as GeneratorInstrument;
 
 			expect(validateInstrumentJson(instrument)).toBe(false);

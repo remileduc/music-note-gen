@@ -2,12 +2,13 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v1";
+const CACHE_NAME = "offline-violon v0.9.0";
 
 const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
 
 const PUBLIC_RESOURCES = [
 	"./1001fonts-chopin-script-eula.txt",
+	"./druminfected__metronome.mp3",
 	"./favicon.ico",
 	"./github.svg",
 	"./LICENSE",
