@@ -31,7 +31,8 @@ async function registerServiceWorker(name: string)
 export default function ServiceWorkerRegister()
 {
 	useEffect(() => {
-		if ("serviceWorker" in navigator)
+		console.log(process.env.NODE_ENV);
+		if (process.env.NODE_ENV !== "development" && "serviceWorker" in navigator)
 			void registerServiceWorker(rsrcPath("/offline-music-note-gen-sw.js")); // "void" to tell typescript we do not await the call on purpose
 	}, []);
 

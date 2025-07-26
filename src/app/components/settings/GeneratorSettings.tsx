@@ -107,7 +107,7 @@ export function generateHardSettings(instrument: string) : GeneratorSettings
 	};
 
 	for (const corde of Object.values(allInstruments[instrument]))
-		hardSettings.selectedNotes = hardSettings.selectedNotes.concat(corde);
+		hardSettings.selectedNotes = hardSettings.selectedNotes.concat(corde.slice(0, Math.min(4, corde.length)));
 
 	return hardSettings;
 }

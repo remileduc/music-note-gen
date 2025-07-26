@@ -23,7 +23,12 @@ export default function InstrumentEditor()
 	function changeHandlerInstrument(event: ChangeEvent<HTMLSelectElement>)
 	{
 		changeHandler(event);
-		settingsCtxt.setSettings(generateEasySettings(event.target.value));
+		settingsCtxt.setSettings({
+			...generateEasySettings(event.target.value),
+			showNames: settingsCtxt.settings.showNames,
+			addModifiers: settingsCtxt.settings.addModifiers,
+			numberSystems: settingsCtxt.settings.numberSystems
+		});
 	}
 
 	return (

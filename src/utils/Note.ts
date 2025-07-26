@@ -56,7 +56,7 @@ export interface SimpleNote {
 
 export function noteToString(note: SimpleNote)
 {
-	if (note.duration?.startsWith("q"))
+	if ((note.duration?.length ?? 0) > 1)
 		return "";
 	return note.name + (note.mod ? " " + note.mod : "") + " (" + note.octave.toString() + ")";
 }
