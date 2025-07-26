@@ -2,7 +2,7 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v0.9.0";
+const CACHE_NAME = "offline-violon v0.9.1";
 
 const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
 
