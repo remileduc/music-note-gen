@@ -8,8 +8,12 @@
 	margin-left: 0.5rem;
 }
 
+.metronome button.playing {
+	background-color: #dddddd;
+}
+
 .metronome button.playing::before {
-	content: "⏸";
+	content: "🞎";
 	margin-right: 0.25rem;
 }
 
