@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "description": "Générateur de notes de musique pour entrainement pour débutants aux instruments à cordes.",
-  "keywords": [ "musique", "violon", "guitare", "débutant" ],
+  "keywords": [
+    "musique",
+    "violon",
+    "guitare",
+    "débutant"
+  ],
   "homepage": "https://github.com/remileduc/music-note-gen",
   "author": "remileduc (https://github.com/remileduc)",
   "license": "MIT",
@@ -20,7 +25,7 @@
   },
   "dependencies": {
     "ajv": "^8.17.1",
-    "next": "^15.4.3",
+    "next": "^15.4.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vexflow": "^5.0.0"
@@ -31,8 +36,8 @@
     "@types/node": "^24.1.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "eslint": "^9.31.0",
-    "eslint-config-next": "^15.4.3",
+    "eslint": "^9.32.0",
+    "eslint-config-next": "^15.4.4",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "jest-junit": "^16.0.0",
