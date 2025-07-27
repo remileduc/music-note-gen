@@ -1,34 +1,44 @@
 "use client";
 
-import { type ChangeEvent, useContext, useRef, useState } from "react";
+import { type ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { rsrcPath } from "@utils/global";
 import { InstrumentContext } from "./GeneratorInstrument";
 import styles from "./Metronome.module.css"
 
-class Timer
+const INTERVAL = 100 as const;
+const LOOKAHEAD = 200 as const;
+
+class Metronome
 {
-	callback: () => void;
-	#tempo = 75;
+	interval: number;
+	#tempo: number;
 	#intervalID = -1;
+	#wakeLock: null | WakeLockSentinel = null;
+	#audioCtxt = new AudioContext();
+	#audioBuffer: null | AudioBuffer = null;
+	#nextNoteTime = 0;
 
-	constructor(bpm: number, callback: () => void)
+	constructor(interval: number, tempo: number)
 	{
-		this.#tempo = bpm;
-		this.callback = callback;
+		this.interval = interval;
+		this.#tempo = tempo;
+		void this.#audioCtxt.suspend();
 	}
 
-	set tempo(bpm: number)
-	{
-		this.#tempo = bpm;
-		if (this.running)
-		{
-			this.stop();
-			this.start();
-		}
-	}
+	// accessors
+
 	get tempo()
 	{
 		return this.#tempo;
+	}
+	set tempo(value: number)
+	{
+		if (isNaN(value) || value < 1)
+			value = 1;
+		this.#tempo = value;
+
+		if (this.running)
+			this.#nextNoteTime = this.#audioCtxt.currentTime + 60 / this.#tempo;
 	}
 
 	get running()
@@ -36,44 +46,116 @@ class Timer
 		return this.#intervalID > 0;
 	}
 
+	// resources management
+
+	async init(audioURL: string)
+	{
+		if (this.#audioBuffer)
+			return Promise.resolve();
+
+		try
+		{
+			const response = await fetch(rsrcPath(audioURL));
+			const buffer = await response.arrayBuffer();
+			this.#audioBuffer = await this.#audioCtxt.decodeAudioData(buffer);
+		}
+		catch (error)
+		{
+			console.log(`Error while initializing audio: '${error as Error}'`);
+		}
+	}
+
+	finalize()
+	{
+		this.stop();
+		// this.#audioCtxt.close();
+	}
+
+	// start / stop
+
 	stop()
 	{
 		window.clearInterval(this.#intervalID);
 		this.#intervalID = -1;
+
+		this.#nextNoteTime = 0;
+		void this.#audioCtxt.suspend(); // "void" to tell typescript we do not await the call on purpose
+
+		void this.#wakeLock?.release(); // "void" to tell typescript we do not await the call on purpose
+		this.#wakeLock = null;
+
 		console.log("metronome stopped");
 	}
 
-	start()
+	async start()
 	{
-		this.#intervalID = window.setInterval(this.callback, 60000 / this.#tempo);
-		this.callback();
+		await this.#audioCtxt.resume();
+		this.#nextNoteTime = this.#audioCtxt.currentTime;
+
+		this.#scheduler();
+
+		this.#intervalID = window.setInterval(this.#scheduler.bind(this), this.interval);
+
+		navigator.wakeLock.request()
+			.then((wakeLock) => this.#wakeLock = wakeLock)
+			.catch((error: unknown) => { console.log(`ERROR: can't keep screen awake: '${error as Error}'`) });
+
 		console.log("metronome started");
+	}
+
+	// scheduler
+
+	#playClick(time = 0)
+	{
+		if (!this.#audioBuffer)
+			return;
+
+		const audioSource = new AudioBufferSourceNode(this.#audioCtxt, { buffer: this.#audioBuffer });
+		audioSource.connect(this.#audioCtxt.destination);
+		audioSource.start(time);
+	}
+
+	#scheduler()
+	{
+		if (!this.#audioBuffer)
+			return;
+
+		while (this.#nextNoteTime < this.#audioCtxt.currentTime + (LOOKAHEAD / 1000))
+		{
+			this.#playClick(this.#nextNoteTime);
+			this.#nextNoteTime += 60 / this.#tempo;
+		}
 	}
 }
 
-export default function Metronome()
+export default function MetronomeUI()
 {
 	const instrCtxt = useContext(InstrumentContext);
 	const [isPlaying, setPlaying] = useState(false);
 	const tempoBtn = useRef<null | HTMLButtonElement>(null);
-	const audioElt = useRef<null | HTMLAudioElement>(null);
-	const timer = useRef<null | Timer>(null);
+	const metronome = useRef<null | Metronome>(null);
 
-	function clickHandler(event: React.MouseEvent<HTMLButtonElement>)
+	// handlers
+	async function clickHandler(event: React.MouseEvent<HTMLButtonElement>)
 	{
 		event.preventDefault();
 
-		timer.current ??= new Timer(instrCtxt.instrument.tempo, playClick);
+		if (!metronome.current)
+		{
+			metronome.current = new Metronome(INTERVAL, instrCtxt.instrument.tempo);
+			await metronome.current.init("/druminfected__metronome.mp3");
+		}
 
-		if (timer.current.running) // stop
+		if (metronome.current.running) // stop
 		{
 			setPlaying(false);
-			timer.current.stop();
+			metronome.current.stop();
 		}
-		else
+		else // start
 		{
 			setPlaying(true);
-			timer.current.start();
+			metronome.current.tempo = instrCtxt.instrument.tempo;
+			void metronome.current.start(); // "void" to tell typescript we do not await the call on purpose
 		}
 	}
 
@@ -85,18 +167,14 @@ export default function Metronome()
 			...instrCtxt.instrument,
 			[event.target.name]: event.target.valueAsNumber
 		});
-		if (timer.current)
-			timer.current.tempo = event.target.valueAsNumber;
+		if (metronome.current)
+			metronome.current.tempo = (event.target.valueAsNumber);
 	}
 
-	function playClick()
-	{
-		if (!audioElt.current)
-			return;
-
-		void audioElt.current.play(); // "void" to tell typescript we do not await the call on purpose
-		audioElt.current.currentTime = 0;
-	}
+	// init
+	useEffect(() => {
+		return () => { metronome.current?.finalize(); };
+	}, []);
 
 	return (
 		<div className={styles.metronome}>
@@ -104,13 +182,10 @@ export default function Metronome()
 				ref={tempoBtn}
 				type="button"
 				className={isPlaying ? styles.playing : styles.stopped}
-				onClick={clickHandler}
+				onClick={(event) => { void clickHandler(event); }}
 			>
 				Métronome
 			</button>
-			<audio ref={audioElt} id="tempoAudioFile">
-				<source src={rsrcPath("/druminfected__metronome.mp3")} type="audio/mpeg" />
-			</audio>
 
 			<div className={styles.inputbox}>
 				<label htmlFor="tempo">Tempo</label>

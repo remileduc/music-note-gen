@@ -6,6 +6,8 @@ import ServiceWorkerRegister from "@components/ServiceWorkerRegister";
 import manifest from "./manifest"
 import "./globals.css";
 
+// metadata
+
 const manif = manifest();
 
 export const metadata: Metadata = {
@@ -29,8 +31,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: manif.theme_color
+	themeColor: manif.theme_color
 }
+
+// layout
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>)
 {

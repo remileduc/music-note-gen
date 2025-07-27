@@ -4,6 +4,7 @@ form.instrumenteditor {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	gap: var(--big-margin);
 }
 
 .instrumenteditor .groupbox {
