@@ -8,16 +8,12 @@
 	margin-left: 0.5rem;
 }
 
+.metronome button {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
 .metronome button.playing {
 	background-color: #dddddd;
-}
-
-.metronome button.playing::before {
-	content: "🞎";
-	margin-right: 0.25rem;
-}
-
-.metronome button.stopped::before {
-	content: "▷";
-	margin-right: 0.25rem;
 }
