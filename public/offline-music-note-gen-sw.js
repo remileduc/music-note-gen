@@ -2,7 +2,7 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v0.9.1";
+const CACHE_NAME = "offline-violon v0.9.2";
 
 const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
 
@@ -15,9 +15,11 @@ const PUBLIC_RESOURCES = [
 	"./manifest.webmanifest",
 	"./Open_Source_Initiative.svg",
 	"./opengraph-image.png",
+	"./play.svg",
 	"./remileduc.png",
 	"./Screenshot-phone.jpg",
 	"./Screenshot-wide.jpg",
+	"./stop.svg",
 	"./violin.96x96.png",
 	"./violin.256x256.png",
 	"./violin.512x512.png",
@@ -47,7 +49,7 @@ async function getAllChuncks(appManifestFile)
 	if (!appManifest || !("pages" in appManifest))
 		return [];
 
-	let chuncks = new Set(["./README", "./README.html"]);
+	let chuncks = new Set(["./README", "./README.html", "./_next/static/media/f6dd45888a0be04b-s.p.ttf"]);
 
 	for (const page of Object.keys(appManifest.pages))
 	{

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { type ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { rsrcPath } from "@utils/global";
 import { InstrumentContext } from "./GeneratorInstrument";
@@ -184,6 +185,13 @@ export default function MetronomeUI()
 				className={isPlaying ? styles.playing : styles.stopped}
 				onClick={(event) => { void clickHandler(event); }}
 			>
+				<Image
+					aria-hidden
+					src={ isPlaying ? rsrcPath("/stop.svg") : rsrcPath("/play.svg") }
+					alt=""
+					width={isPlaying ? 14 : 16}
+					height={isPlaying ? 14 : 16}
+				/>
 				Métronome
 			</button>
 
