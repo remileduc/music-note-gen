@@ -1,0 +1,23 @@
+.swPopup {
+	position: fixed;
+	bottom: 10px;
+	left: 50%;
+	transform: translate(-50%);
+
+	color: var(--background);
+	background-color: rgba(0, 0, 0, 0.3);
+	padding: 10px;
+
+	border: none;
+
+	user-select: none;
+	font-variant: small-caps;
+}
+
+.swPopup:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.swPopup:active {
+	background-color: rgba(0, 0, 0, 0.6);
+}

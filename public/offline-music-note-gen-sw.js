@@ -2,7 +2,7 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v0.9.2";
+const CACHE_NAME = "offline-violon v0.9.4";
 
 const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
 
@@ -164,4 +164,9 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
 	event.respondWith(fetchFromCacheFirst(event.request));
+});
+
+self.addEventListener("message", (event) => {
+	if (event.data === "SKIP_WAITING")
+		self.skipWaiting();
 });
