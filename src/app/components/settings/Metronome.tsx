@@ -12,17 +12,20 @@ const LOOKAHEAD = 200 as const;
 class Metronome
 {
 	interval: number;
+	systemTime: number;
 	#tempo: number;
 	#intervalID = -1;
 	#wakeLock: null | WakeLockSentinel = null;
 	#audioCtxt = new AudioContext();
 	#audioBuffer: null | AudioBuffer = null;
 	#nextNoteTime = 0;
+	#noteIdx = 0;
 
-	constructor(interval: number, tempo: number)
+	constructor(interval: number, tempo: number, systemTime = 4)
 	{
 		this.interval = interval;
 		this.#tempo = tempo;
+		this.systemTime = systemTime;
 		void this.#audioCtxt.suspend();
 	}
 
@@ -80,6 +83,7 @@ class Metronome
 		this.#intervalID = -1;
 
 		this.#nextNoteTime = 0;
+		this.#noteIdx = 0;
 		void this.#audioCtxt.suspend(); // "void" to tell typescript we do not await the call on purpose
 
 		void this.#wakeLock?.release(); // "void" to tell typescript we do not await the call on purpose
@@ -92,6 +96,7 @@ class Metronome
 	{
 		await this.#audioCtxt.resume();
 		this.#nextNoteTime = this.#audioCtxt.currentTime;
+		this.#noteIdx = 0;
 
 		this.#scheduler();
 
@@ -112,8 +117,14 @@ class Metronome
 			return;
 
 		const audioSource = new AudioBufferSourceNode(this.#audioCtxt, { buffer: this.#audioBuffer });
+		if (this.#noteIdx === 0)
+			audioSource.playbackRate.value = 2;
 		audioSource.connect(this.#audioCtxt.destination);
 		audioSource.start(time);
+
+		this.#noteIdx++;
+		if (this.#noteIdx === this.systemTime)
+			this.#noteIdx = 0;
 	}
 
 	#scheduler()
