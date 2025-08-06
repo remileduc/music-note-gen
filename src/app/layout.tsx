@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import Footer from "@app/components/layout/Footer";
-import Header from "@app/components/layout/Header";
-import Menu from "@app/components/layout/Menu";
-import ServiceWorkerRegister from "@app/components/layout/ServiceWorkerRegister";
+import Footer from "@components/layout/Footer";
+import Header from "@components/layout/Header";
+import Menu from "@components/layout/Menu";
+import ServiceWorkerRegister from "@components/layout/ServiceWorkerRegister";
 import manifest from "./manifest"
 import "./globals.css";
 
