@@ -13,11 +13,12 @@
   "author": "remileduc (https://github.com/remileduc)",
   "license": "MIT",
   "repository": "github:remileduc/music-note-gen",
+  "type": "module",
   "scripts": {
     "dev": "npm run prebuild && next dev --experimental-https",
     "prebuild": "cp LICENSE public/ && marked --gfm --breaks -i README.md -o public/README.html",
     "build": "next build",
-    "postbuild": "cp .next/app-build-manifest.json out/",
+    "postbuild": "node src/list_out_dir.ts out/ out/files_to_cache.json",
     "start": "serve --no-clipboard --ssl-cert certificates/localhost.pem --ssl-key certificates/localhost-key.pem out/ || echo 'You need to run `npm run dev` at least once to create the certificates'",
     "lint": "eslint --cache --cache-location .next/cache/eslint/",
     "test": "jest",
