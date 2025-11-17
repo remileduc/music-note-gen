@@ -1,10 +1,10 @@
 "use client";
 
-import { type ChangeEvent, useContext, useEffect, useState } from "react";
+import { type ChangeEvent, useContext, useState } from "react";
 import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
 import { allInstruments } from "@utils/strings";
 import { InstrumentContext } from "./GeneratorInstrument";
-import { generateEasySettings, generateHardSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
+import { generateEasySettings, generateHardSettings, type GeneratorSettings, settingsComparison, SettingsContext } from "./GeneratorSettings";
 import styles from "./SettingsEditor.module.css";
 
 function simpleNoteToID(note: SimpleNote)
@@ -51,24 +51,33 @@ export default function SettingsEditor()
 		default:
 			attribute = "value"
 		}
-		settingsCtxt.setSettings({ ...settingsCtxt.settings, [event.target.name]: event.target[attribute] });
+		const settings = {
+			...settingsCtxt.settings,
+			[event.target.name]: event.target[attribute]
+		};
+		settingsCtxt.setSettings(settings);
+		checkPreset(settings);
 	}
 
 	function changeHandlerDurations(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const values = Array.from(event.target.selectedOptions).map((option) => option.value);
-		settingsCtxt.setSettings({
+		const settings = {
 			...settingsCtxt.settings,
 			"selectedDurations": values as NoteDuration[]
-		});
+		};
+		settingsCtxt.setSettings(settings);
+		checkPreset(settings);
 	}
 
 	function changeHandlerNotes()
 	{
-		settingsCtxt.setSettings({
+		const settings = {
 			...settingsCtxt.settings,
 			"selectedNotes": getSelectNotes()
-		});
+		};
+		settingsCtxt.setSettings(settings);
+		checkPreset(settings);
 	}
 
 	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
@@ -91,18 +100,19 @@ export default function SettingsEditor()
 		document.getElementById("partition")?.scrollIntoView({ behavior: "smooth", block: "start" });
 	}
 
-	useEffect(() => {
-		if (settingsComparison(settingsCtxt.settings, generateEasySettings(instrCtxt.instrument.name)))
+	function checkPreset(settings: GeneratorSettings)
+	{
+		if (settingsComparison(settings, generateEasySettings(instrCtxt.instrument.name)))
 			setPreset("easy");
-		else if (settingsComparison(settingsCtxt.settings, generateHardSettings(instrCtxt.instrument.name)))
+		else if (settingsComparison(settings, generateHardSettings(instrCtxt.instrument.name)))
 			setPreset("hard");
 		else
 			setPreset("custom");
-	}, [settingsCtxt.settings, instrCtxt.instrument.name]);
+	}
 
 	return (
 		<details className={styles.settingseditor}>
-			<summary>
+			<summary ref={ summary => { if (summary) checkPreset(settingsCtxt.settings) } }>
 				<span className={styles.inputbox}>
 					<span className={styles.noselection}>Configuration</span>
 

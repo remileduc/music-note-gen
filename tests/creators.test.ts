@@ -1,3 +1,4 @@
+import type { Factory } from "vexflow";
 import * as creators from "../src/utils/creators";
 import { Note } from "../src/utils/Note";
 import { MockFactory } from "./utils";
@@ -11,7 +12,7 @@ describe("cerators.ts", () => {
 	];
 
 	describe("createNotes", () => {
-		const result = creators.createNotes(new MockFactory() as any, notes);
+		const result = creators.createNotes(new MockFactory() as Factory, notes);
 		it("should transform Notes into StaveNotes", () => {
 			expect(result.length).toBe(notes.length);
 			expect(result[0].getKeys()[0]).toBe("c/4");

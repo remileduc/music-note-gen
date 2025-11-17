@@ -2,29 +2,7 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v0.9.4";
-
-const BASE_PATH = self.location.pathname.slice(0, self.location.pathname.lastIndexOf(self.location.pathname.slice(self.location.pathname.lastIndexOf("/"))));
-
-const PUBLIC_RESOURCES = [
-	"./1001fonts-chopin-script-eula.txt",
-	"./druminfected__metronome.mp3",
-	"./favicon.ico",
-	"./github.svg",
-	"./LICENSE",
-	"./manifest.webmanifest",
-	"./Open_Source_Initiative.svg",
-	"./opengraph-image.png",
-	"./play.svg",
-	"./remileduc.png",
-	"./Screenshot-phone.jpg",
-	"./Screenshot-wide.jpg",
-	"./stop.svg",
-	"./violin.96x96.png",
-	"./violin.256x256.png",
-	"./violin.512x512.png",
-	"./violin.svg"
-];
+const CACHE_NAME = "offline-violon v0.9.5";
 
 // utils functions
 
@@ -33,38 +11,23 @@ function logMessage(message)
 	self.console.log(`[SW ${CACHE_NAME}] ${message}`);
 }
 
-async function getAllChuncks(appManifestFile)
+async function getAllChuncks(listURI)
 {
-	let appManifest = null;
+	let filesToCache = null;
 	try
 	{
-		appManifest = await fetch(appManifestFile).then((response) => response.json());
-		logMessage(`Successfully fetched '${appManifestFile}'`)
+		filesToCache = await fetch(listURI).then((response) => response.json());
+		logMessage(`Successfully fetched '${listURI}'`)
 	}
 	catch(error)
 	{
-		logMessage(`ERROR when retreiving ${appManifestFile}: ${error}`);
+		logMessage(`ERROR when retreiving ${listURI}: ${error}`);
 	}
 
-	if (!appManifest || !("pages" in appManifest))
+	if (!filesToCache || !Array.isArray(filesToCache))
 		return [];
 
-	let chuncks = new Set(["./README", "./README.html", "./_next/static/media/f6dd45888a0be04b-s.p.ttf"]);
-
-	for (const page of Object.keys(appManifest.pages))
-	{
-		if (page.endsWith("/page"))
-		{
-			let pagename = "." + page.slice(0, page.lastIndexOf("/page"));
-			if (pagename === "./_not-found")
-				pagename = "./404";
-			chuncks.add(pagename);
-		}
-		for (const c of appManifest.pages[page])
-			chuncks.add("./_next/" + c);
-	}
-
-	return Array.from(chuncks);
+	return filesToCache;
 }
 
 function cleanResponse(response)
@@ -118,24 +81,9 @@ function putInCache(request, response)
 async function fetchFromCacheFirst(request)
 {
 	const cache = await caches.open(CACHE_NAME);
-	const cachedRsrc = await cache.match(request);
+	const cachedRsrc = await cache.match(request, { ignoreSearch: true });
 	if (cachedRsrc)
 		return cleanResponse(cachedRsrc);
-	// fix weird bug in nextjs
-	const url = new URL(request.url);
-	if (url.pathname.endsWith(".txt"))
-	{
-		url.pathname = url.pathname.replace(
-			url.pathname.endsWith("/index.txt") ? /\/index\.txt$/ : /\.txt$/,
-			""
-		);
-		if (url.pathname === BASE_PATH)
-			url.pathname += "/";
-		url.search = "";
-		const cachedRsrcTxt = await cache.match(url.toString());
-		if (cachedRsrcTxt)
-			return cleanResponse(cachedRsrcTxt);
-	}
 
 	const fetchRsrc = await fetch(request.clone());
 	putInCache(request, fetchRsrc.clone());
@@ -148,10 +96,9 @@ self.addEventListener("install", async (event) => {
 	event.waitUntil((async () => {
 		logMessage("Installing...");
 
-		const chuncks = await getAllChuncks("./app-build-manifest.json");
-
+		const chuncks = await getAllChuncks("./files_to_cache.json");
 		logMessage(`Adding ${chuncks.length} chuncks to the cache`)
-		await cacheResources(PUBLIC_RESOURCES.concat(chuncks));
+		await cacheResources(chuncks);
 
 		logMessage("Installed");
 	})());

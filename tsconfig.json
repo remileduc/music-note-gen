@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
     "target": "ES2024",
-    "lib": ["dom", "dom.iterable", "ESNext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ESNext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-	"alwaysStrict": true,
+    "alwaysStrict": true,
     "noEmit": true,
-	"noImplicitAny": true,
-	"noImplicitThis": true,
-	"noUnusedLocals": true,
-	"noImplicitReturns": true,
-	"noFallthroughCasesInSwitch": true,
-	"noImplicitOverride": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-	"forceConsistentCasingInFileNames": true,
-    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -27,10 +31,23 @@
       }
     ],
     "paths": {
-      "@*": ["./src/*"],
-	  "@components/*": ["./src/app/components/*"]
+      "@*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/app/components/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+	"**/*.mts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

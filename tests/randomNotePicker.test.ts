@@ -18,7 +18,7 @@ describe("randomNotePicker.ts", () => {
 		});
 
 		it("throws an error if no authorized measures set", () => {
-			expect(() => randomMeasurePicker(["z" as any])).toThrow();
+			expect(() => randomMeasurePicker(["z" as NoteDuration])).toThrow();
 		});
 	});
 

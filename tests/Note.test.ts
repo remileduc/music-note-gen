@@ -1,4 +1,4 @@
-import type { Accidental as VAccidental } from "vexflow";
+import type { Accidental as VAccidental, Factory } from "vexflow";
 import { type FrenchNoteName, Note } from "../src/utils/Note"
 import { MockFactory } from "./utils";
 
@@ -71,7 +71,7 @@ describe("Note", () => {
 
 		// create factory
 		const factory = new MockFactory();
-		const vnote = note.toVexFlow(factory as any);
+		const vnote = note.toVexFlow(factory as Factory);
 
 		it("should have the correct keys", () => {
 			expect(vnote.getKeys().length).toBe(1);

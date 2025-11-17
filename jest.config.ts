@@ -3,12 +3,12 @@
  * https://jestjs.io/docs/configuration
  */
 
-const { createDefaultPreset } = require("ts-jest");
+import type {Config} from 'jest';
+import { createDefaultPreset } from "ts-jest";
 
 const tsJestTransformCfg = createDefaultPreset().transform;
 
-/** @type {import('jest').Config} */
-const config = {
+const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -203,4 +203,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+export default config;
