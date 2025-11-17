@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { validateSettingsJson } from "@utils/jsonTypeValidator";
 import { noteToString, type NoteDuration, type SimpleNote } from "@utils/Note";
 import { allInstruments } from "@utils/strings";
@@ -116,10 +116,6 @@ export default function GeneratorSettingsProvider({ children }: {children: React
 {
 	const [settings, setSettings] = useState(initSettings);
 
-	useEffect(() => {
-		setSettings({...retrieveSettingsInStorage(initSettings), initialized: true});
-	}, []);
-
 	return (
 		<SettingsContext value={{
 			settings: settings,
@@ -128,7 +124,9 @@ export default function GeneratorSettingsProvider({ children }: {children: React
 				setSettings({...value, initialized: true});
 			}
 		}}>
-			{children}
+			<div ref={div => { if (div) setSettings({...retrieveSettingsInStorage(initSettings), initialized: true}) }}>
+				{children}
+			</div>
 		</SettingsContext>
 	);
 }

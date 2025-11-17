@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { validateInstrumentJson } from "@utils/jsonTypeValidator";
 import type { NoteClef } from "@utils/Note";
 
@@ -48,10 +48,6 @@ export default function GeneratorInstrumentProvider({ children }: {children: Rea
 {
 	const [instrument, setInstrument] = useState(initInstrument);
 
-	useEffect(() => {
-		setInstrument({...retrieveInstrumentInStorage(initInstrument), initialized: true});
-	}, []);
-
 	return (
 		<InstrumentContext value={{
 			instrument: instrument,
@@ -60,7 +56,9 @@ export default function GeneratorInstrumentProvider({ children }: {children: Rea
 				setInstrument({...value, initialized: true});
 			}
 		}}>
-			{children}
+			<div ref={div => { if (div) setInstrument({...retrieveInstrumentInStorage(initInstrument), initialized: true}) }}>
+				{children}
+			</div>
 		</InstrumentContext>
 	);
 }

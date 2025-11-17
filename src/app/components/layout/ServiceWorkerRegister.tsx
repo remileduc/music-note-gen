@@ -82,7 +82,6 @@ export default function ServiceWorkerRegister()
 	const [element,  setElement] = useState(<></>);
 
 	useEffect(() => {
-		setElement(<></>);
 		console.log(process.env.NODE_ENV);
 		if (process.env.NODE_ENV !== "development" && "serviceWorker" in navigator)
 			void registerServiceWorker(setElement);
