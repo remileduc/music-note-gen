@@ -83,8 +83,8 @@ export default function SettingsEditor()
 	function changeHandlerPreset(event: ChangeEvent<HTMLSelectElement>)
 	{
 		const value = event.target.value;
-		const easySettings = generateEasySettings(instrCtxt.instrument.name);
-		const hardSettings = generateHardSettings(instrCtxt.instrument.name);
+		const easySettings = generateEasySettings(instrCtxt.instrument.instrName);
+		const hardSettings = generateHardSettings(instrCtxt.instrument.instrName);
 
 		if (value === "custom")
 			return;
@@ -102,9 +102,9 @@ export default function SettingsEditor()
 
 	function checkPreset(settings: GeneratorSettings)
 	{
-		if (settingsComparison(settings, generateEasySettings(instrCtxt.instrument.name)))
+		if (settingsComparison(settings, generateEasySettings(instrCtxt.instrument.instrName)))
 			setPreset("easy");
-		else if (settingsComparison(settings, generateHardSettings(instrCtxt.instrument.name)))
+		else if (settingsComparison(settings, generateHardSettings(instrCtxt.instrument.instrName)))
 			setPreset("hard");
 		else
 			setPreset("custom");
@@ -119,6 +119,7 @@ export default function SettingsEditor()
 					<select
 						id="preset"
 						name="preset"
+						aria-label="preset"
 						value={preset}
 						onChange={changeHandlerPreset}
 					>
@@ -186,7 +187,7 @@ export default function SettingsEditor()
 				</div>
 
 				{/* notes */}
-				{Object.entries(allInstruments[instrCtxt.instrument.name]).map(([stringName, stringNotes]) => {
+				{Object.entries(allInstruments[instrCtxt.instrument.instrName]).map(([stringName, stringNotes]) => {
 					const id = "selectedNotes" + stringName.replaceAll(" ", "");
 					return (
 						<div className={styles.multiplebox} key={stringName} title={tooltip}>

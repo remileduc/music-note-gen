@@ -2,7 +2,7 @@
 
 // constants
 
-const CACHE_NAME = "offline-violon v0.9.5";
+const CACHE_NAME = "offline-violon v0.9.6";
 
 // utils functions
 
@@ -80,8 +80,12 @@ function putInCache(request, response)
 
 async function fetchFromCacheFirst(request)
 {
+	// special case for root
+	const root_path = self.location.pathname.slice(0, self.location.pathname.lastIndexOf('/'));
+	const url = (request.url === root_path) ? "/index.html" : request.url;
+
 	const cache = await caches.open(CACHE_NAME);
-	const cachedRsrc = await cache.match(request, { ignoreSearch: true });
+	const cachedRsrc = await cache.match(url, { ignoreSearch: true });
 	if (cachedRsrc)
 		return cleanResponse(cachedRsrc);
 

@@ -16,7 +16,7 @@ function readDir(dirname: string): string[]
 	for (const item of items)
 	{
 		if (item.isFile())
-			entries.push(dirname.replace(ROOTDIR, ".") + '/' + item.name);
+			entries.push(dirname.replace(ROOTDIR, '.') + '/' + item.name);
 		else if (item.isDirectory())
 			entries = entries.concat(readDir(dirname + '/' + item.name));
 	}
@@ -65,7 +65,7 @@ function main()
 
 	console.log(`processing directory ${ROOTDIR}...`);
 
-	const entries = readDir(ROOTDIR);
+	const entries = ["."].concat(readDir(ROOTDIR));
 	console.log(`Found ${entries.length} entries. Writing to ${OUTFILE}...`);
 	writeFile(OUTFILE, entries);
 	console.log("process finished.");

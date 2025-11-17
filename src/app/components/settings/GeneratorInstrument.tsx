@@ -5,14 +5,14 @@ import { validateInstrumentJson } from "@utils/jsonTypeValidator";
 import type { NoteClef } from "@utils/Note";
 
 export interface GeneratorInstrument {
-	name: string,
+	instrName: string,
 	clef: NoteClef,
 	tempo: number
 	initialized: boolean
 };
 
 const initInstrument: GeneratorInstrument = {
-	name: "violon",
+	instrName: "violon",
 	clef: "treble",
 	tempo: 75,
 	initialized: false

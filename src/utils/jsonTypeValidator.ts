@@ -6,7 +6,7 @@ import { allInstruments } from "./strings";
 
 const instrumentSchema = {
 	properties: {
-		name: { enum: Object.keys(allInstruments) },
+		instrName: { enum: Object.keys(allInstruments) },
 		clef: { enum: clefsEN },
 		tempo: { type: "uint8" }
 	},

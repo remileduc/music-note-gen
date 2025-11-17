@@ -11,7 +11,7 @@ export default function CordesContent()
 
 	return (
 		<>
-			{Object.entries(allInstruments[instrCtxt.instrument.name]).map(([stringName, stringNotes]) =>
+			{Object.entries(allInstruments[instrCtxt.instrument.instrName]).map(([stringName, stringNotes]) =>
 				<AllKeysForString
 					key={stringName}
 					title={stringName}

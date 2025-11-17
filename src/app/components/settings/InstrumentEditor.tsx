@@ -37,8 +37,8 @@ export default function InstrumentEditor()
 			<div className={styles.groupbox}>
 				{/* instrument */}
 				<div className={styles.inputbox}>
-					<label htmlFor="name">Instrument</label>
-					<select id="name" name="name" value={instrCtxt.instrument.name} onChange={changeHandlerInstrument}>
+					<label htmlFor="instrName">Instrument</label>
+					<select id="instrName" name="instrName" value={instrCtxt.instrument.instrName} onChange={changeHandlerInstrument}>
 						<optgroup label="Cordes frottées">
 							{violins.map((inst) =>
 								<option key={inst} value={inst}>{inst}</option>

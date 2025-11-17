@@ -8,7 +8,7 @@ describe("jsonTypeValidator.ts", () => {
 	describe("validateInstrumentJson", () => {
 		it("should validate default value", () => {
 			const instrument: GeneratorInstrument = {
-				name: "violon",
+				instrName: "violon",
 				clef: "treble",
 				tempo: 128,
 				initialized: false
@@ -19,7 +19,7 @@ describe("jsonTypeValidator.ts", () => {
 
 		it("should validate without initialized", () => {
 			const instrument = {
-				name: "basse",
+				instrName: "basse",
 				clef: "alto",
 				tempo: 30
 			} as GeneratorInstrument;
@@ -29,7 +29,7 @@ describe("jsonTypeValidator.ts", () => {
 
 		it("should not validate bad input", () => {
 			const instrument = {
-				name: "piano",
+				instrName: "piano",
 				clef: "bass",
 				tempo: 30
 			} as GeneratorInstrument;
@@ -39,7 +39,7 @@ describe("jsonTypeValidator.ts", () => {
 
 		it("should not validate bad input", () => {
 			const instrument = {
-				name: "contrebasse",
+				instrName: "contrebasse",
 				clef: "lol" as NoteClef,
 				tempo: 12
 			} as GeneratorInstrument;
@@ -49,7 +49,7 @@ describe("jsonTypeValidator.ts", () => {
 
 		it("should not validate bad input", () => {
 			const instrument = {
-				name: "contrebasse",
+				instrName: "contrebasse",
 				clef: "bass",
 				tempo: 3000
 			} as GeneratorInstrument;
